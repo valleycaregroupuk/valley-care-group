@@ -15,5 +15,5 @@
   // Reads a <meta name="api-base" content="..."> tag if present (set by build pipeline)
   // Falls back to the environment-injected global, then to empty string (same-origin).
   var meta = document.head && document.head.querySelector('meta[name="api-base"]');
-  window.API_BASE = (meta && meta.content) || window.__API_BASE__ || '';
+  window.API_BASE = (meta && meta.content) || window.__API_BASE__ || 'https://vcg-backend-kzakkmfhi-anwinws-2615s-projects.vercel.app';
 })();
