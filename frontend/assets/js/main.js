@@ -100,15 +100,175 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
   };
 
-  // ---- Enquiry form submission ----
-  window.submitEnquiry = function (e) {
-    e.preventDefault();
+  function showFormToast(title, msg, isError) {
     const toast = document.getElementById('toast');
-    if (toast) {
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 5000);
+    if (!toast) {
+      window.alert((title ? title + '\n' : '') + (msg || ''));
+      return;
     }
-    e.target.reset();
+    const t = toast.querySelector('.toast-title');
+    const m = toast.querySelector('.toast-msg');
+    if (t) t.textContent = title || '';
+    if (m) m.textContent = msg || '';
+    toast.classList.toggle('toast--error', !!isError);
+    toast.classList.add('show');
+    setTimeout(function () { toast.classList.remove('show'); }, isError ? 8000 : 6000);
+  }
+
+  function readEnquiryPayload(form) {
+    const fd = new FormData(form);
+    var first = String(fd.get('firstName') || '').trim();
+    var last = String(fd.get('lastName') || '').trim();
+    var name = String(fd.get('name') || '').trim() || (first + ' ' + last).trim();
+    var preferred = String(fd.get('preferredHome') || fd.get('homeSlug') || '').trim();
+    return {
+      name: name,
+      email: String(fd.get('email') || '').trim(),
+      phone: String(fd.get('phone') || '').trim(),
+      message: String(fd.get('message') || '').trim(),
+      homeSlug: String(fd.get('homeSlug') || preferred || '').trim(),
+      source: String(fd.get('source') || '').trim(),
+      careType: String(fd.get('careType') || '').trim(),
+      reasonForContact: String(fd.get('reasonForContact') || '').trim(),
+      preferredHome: String(fd.get('preferredHomeLabel') || preferred || '').trim(),
+      postedPackRequested: fd.get('postedPackRequested') === 'on' || fd.get('postedPack') === 'on',
+      gdprConsent: fd.get('gdprConsent') === 'on' || fd.get('gdprConsent') === 'yes',
+      website: String(fd.get('website') || '').trim(),
+    };
+  }
+
+  // ---- Enquiry form submission ----
+  window.submitEnquiry = async function (e) {
+    e.preventDefault();
+    var form = e.target;
+    var base = String(window.API_BASE || '').replace(/\/$/, '');
+    var isLocal = typeof location !== 'undefined' &&
+      (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
+    if (!base && !isLocal) {
+      showFormToast('Cannot send', 'This site is not configured to reach our server. Please call or email us instead.', true);
+      return;
+    }
+    if (!base && isLocal) base = 'http://127.0.0.1:3500';
+
+    var payload = readEnquiryPayload(form);
+    if (!payload.gdprConsent) {
+      showFormToast('Privacy consent', 'Please tick the box to confirm you agree to our privacy policy.', true);
+      return;
+    }
+    if (!payload.name || !payload.email || !payload.phone) {
+      showFormToast('Missing details', 'Please enter your name, email, and phone number.', true);
+      return;
+    }
+
+    var btn = form.querySelector('[type="submit"]');
+    var prevLabel = btn ? btn.textContent : '';
+    if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+    try {
+      var res = await fetch(base + '/api/enquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: payload.name,
+          email: payload.email,
+          phone: payload.phone,
+          message: payload.message,
+          homeSlug: payload.homeSlug,
+          source: payload.source,
+          careType: payload.careType,
+          reasonForContact: payload.reasonForContact,
+          preferredHome: payload.preferredHome,
+          postedPackRequested: payload.postedPackRequested,
+          gdprConsent: true,
+          website: payload.website,
+        }),
+      });
+      var data = await res.json().catch(function () { return {}; });
+      if (!res.ok) throw new Error(data.error || 'Request failed');
+      form.reset();
+      showFormToast('Enquiry sent', 'Thank you — our team will be in touch as soon as possible.', false);
+    } catch (err) {
+      showFormToast('Could not send', err.message || 'Please try again or contact us by phone.', true);
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = prevLabel; }
+    }
+  };
+
+  // ---- Home review (homes & care) — reviews.html → KV + admin ----
+  window.submitHomeReview = async function (e) {
+    e.preventDefault();
+    // Submit event: e.target is often the submit button, not the form — FormData(button) omits fields.
+    var form =
+      (e.currentTarget && e.currentTarget.tagName === 'FORM' && e.currentTarget) ||
+      (e.target && e.target.form) ||
+      (e.target && e.target.tagName === 'FORM' && e.target) ||
+      document.getElementById('home-review-form');
+    if (!form || form.tagName !== 'FORM') {
+      showFormToast('Error', 'Could not read the review form. Please refresh the page and try again.', true);
+      return;
+    }
+
+    var base = String(window.API_BASE || '').replace(/\/$/, '');
+    var isLocal = typeof location !== 'undefined' &&
+      (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
+    if (!base && !isLocal) {
+      showFormToast('Cannot send', 'This site cannot reach our server from here. Please email us or call instead.', true);
+      return;
+    }
+    if (!base && isLocal) base = 'http://127.0.0.1:3500';
+
+    function field(name) {
+      var el = form.querySelector('[name="' + name + '"]');
+      return el ? String(el.value || '').trim() : '';
+    }
+    var ratingRaw = field('hr_rating');
+    var gdprEl = form.querySelector('#hr_gdpr');
+    var pubEl = form.querySelector('#hr_publish');
+    var payload = {
+      name: field('hr_name'),
+      email: field('hr_email'),
+      phone: field('hr_phone'),
+      homeSlug: field('hr_home') || 'group',
+      relationship: field('hr_relation'),
+      review: field('hr_review'),
+      rating: ratingRaw === '' ? null : ratingRaw,
+      gdprConsent: !!(gdprEl && gdprEl.checked),
+      publishConsent: !!(pubEl && pubEl.checked),
+      website: field('hr_website'),
+    };
+
+    if (!payload.gdprConsent) {
+      showFormToast('Privacy', 'Please tick the box to confirm you agree to our privacy policy.', true);
+      return;
+    }
+    if (!payload.publishConsent) {
+      showFormToast('Permission', 'Please confirm you understand how we may use your feedback about our homes and care.', true);
+      return;
+    }
+    if (!payload.name || !payload.email || payload.review.length < 20) {
+      showFormToast('Missing details', 'Please add your name, email, and at least 20 characters about the home or services.', true);
+      return;
+    }
+
+    var btn = form.querySelector('[type="submit"]');
+    var prevLabel = btn ? btn.textContent : '';
+    if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+    try {
+      var res = await fetch(base + '/api/home-reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      var data = await res.json().catch(function () { return {}; });
+      if (!res.ok) throw new Error(data.error || 'Request failed');
+      form.reset();
+      showFormToast('Thank you', 'Your review has been received. It is not shown on the site automatically. For a verified public score, you can also leave a review on carehome.co.uk.', false);
+    } catch (err) {
+      showFormToast('Could not send', err.message || 'Please try again or contact us by phone.', true);
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = prevLabel; }
+    }
   };
 
   // ---- Tab system ----
@@ -139,17 +299,42 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.style.opacity = '1';
   });
 
-  // ---- Job application form ----
-  window.submitJobApplication = function (e) {
+  // ---- Job application form (careers page modal) ----
+  window.submitJobApplication = async function (e) {
     e.preventDefault();
-    const toast = document.getElementById('toast');
-    if (toast) {
-      toast.querySelector('.toast-title').textContent = 'Application Received!';
-      toast.querySelector('.toast-msg').textContent = 'Thank you for applying. Our HR team will review your application and be in touch soon.';
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 5500);
+    var form = e.target;
+    var base = String(window.API_BASE || '').replace(/\/$/, '');
+    var isLocal = typeof location !== 'undefined' &&
+      (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
+    if (!base && !isLocal) {
+      showFormToast('Cannot send', 'This site is not configured to reach our server. Please email your CV instead.', true);
+      return;
     }
-    e.target.reset();
+    if (!base && isLocal) base = 'http://127.0.0.1:3500';
+
+    var fd = new FormData(form);
+    if (fd.get('gdprConsent') !== 'on' && fd.get('gdprConsent') !== 'yes') {
+      showFormToast('Privacy consent', 'Please confirm you agree to our privacy policy.', true);
+      return;
+    }
+
+    var btn = form.querySelector('[type="submit"]');
+    var prev = btn ? btn.textContent : '';
+    if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
+
+    try {
+      var res = await fetch(base + '/api/applications', { method: 'POST', body: fd });
+      var data = await res.json().catch(function () { return {}; });
+      if (!res.ok) throw new Error(data.error || 'Request failed');
+      form.reset();
+      var modal = document.getElementById('job-modal');
+      if (modal) { modal.style.display = 'none'; document.body.style.overflow = ''; }
+      showFormToast('Application received', 'Thank you — our HR team will review and be in touch.', false);
+    } catch (err) {
+      showFormToast('Could not submit', err.message || 'Please try again.', true);
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = prev || 'Submit Application →'; }
+    }
   };
 
 });

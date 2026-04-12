@@ -147,6 +147,20 @@
     tbody tr:last-child { border-bottom: none; }
     tbody tr:hover { background: #fafbfc; }
     tbody td { padding: 0.85rem 1.25rem; font-size: 0.875rem; vertical-align: middle; }
+    .admin-table-scroll {
+      max-height: min(50vh, 24rem);
+      overflow-y: auto;
+      overflow-x: auto;
+      overscroll-behavior: contain;
+      scrollbar-gutter: stable;
+      border-top: 1px solid var(--border);
+    }
+    .admin-table-scroll thead th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      box-shadow: 0 1px 0 var(--border);
+    }
     .job-title-cell   { font-weight: 600; color: var(--midnight); }
     .job-home-cell    { font-size: 0.8rem; color: var(--text-mid); margin-top: 0.15rem; }
     .action-btns { display: flex; gap: 0.4rem; align-items: center; }
@@ -268,6 +282,23 @@
       .admin-main { padding: 1.25rem; }
       .drawer-panel { width: 100%; height: 80vh; border-radius: 16px 16px 0 0; position: fixed; bottom: 0; }
     }
+    @media (max-width: 640px) {
+      .stats-row { grid-template-columns: 1fr; }
+      .field-row { grid-template-columns: 1fr; }
+      .drawer-footer,
+      .confirm-btns {
+        flex-direction: column;
+      }
+      .drawer-footer .btn,
+      .confirm-btns .btn {
+        width: 100%;
+      }
+      .toast {
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -323,6 +354,18 @@
         <button class="sidebar-nav-item" data-section="content" onclick="showSection('content')">
           <span class="sidebar-nav-icon">✏️</span> Content Manager
         </button>
+        <button class="sidebar-nav-item" data-section="homefeed" onclick="showSection('homefeed')">
+          <span class="sidebar-nav-icon">📰</span> News &amp; Events
+        </button>
+        <button class="sidebar-nav-item" data-section="homesextra" onclick="showSection('homesextra')">
+          <span class="sidebar-nav-icon">🗺️</span> Maps &amp; vacancies
+        </button>
+        <button class="sidebar-nav-item" data-section="enquiries" onclick="showSection('enquiries')">
+          <span class="sidebar-nav-icon">📬</span> Enquiries
+        </button>
+        <button class="sidebar-nav-item" data-section="applications" onclick="showSection('applications')">
+          <span class="sidebar-nav-icon">📎</span> Job applications
+        </button>
         <a href="jobs.html" target="_blank" class="sidebar-nav-item">
           <span class="sidebar-nav-icon">🔗</span> View Careers Page
         </a>
@@ -358,7 +401,7 @@
           <div class="stat-card"><div class="stat-card-icon">💼</div><div class="stat-card-num" id="stat-total">—</div><div class="stat-card-label">Total Listings</div></div>
           <div class="stat-card"><div class="stat-card-icon">🏡</div><div class="stat-card-num" id="stat-glan">—</div><div class="stat-card-label">Glan-yr-Afon</div></div>
           <div class="stat-card"><div class="stat-card-icon">🏠</div><div class="stat-card-num" id="stat-llys">—</div><div class="stat-card-label">Llys Gwyn</div></div>
-          <div class="stat-card"><div class="stat-card-icon">🏗️</div><div class="stat-card-num" id="stat-pentwyn">—</div><div class="stat-card-label">Pentwyn</div></div>
+          <div class="stat-card"><div class="stat-card-icon">🏡</div><div class="stat-card-num" id="stat-pentwyn">—</div><div class="stat-card-label">Ty Pentwyn</div></div>
         </div>
 
         <div class="table-card">
@@ -407,7 +450,7 @@
         <div class="page-header">
           <div>
             <div class="page-header-title">Content Manager</div>
-            <div class="page-header-sub">Edit homepage text, announcement bar, stats, and testimonials</div>
+            <div class="page-header-sub">Edit homepage text, carehome.co.uk scores, announcement bar, stats, and testimonials / reviews</div>
           </div>
           <a href="/" target="_blank" class="btn btn-ghost">🔗 Preview Site</a>
         </div>
@@ -429,7 +472,7 @@
               </label>
               <input class="field-input" type="text" id="cs-ann-text" placeholder="Announcement message..." style="margin-bottom:0.5rem">
               <input class="field-input" type="text" id="cs-ann-link" placeholder="Link URL e.g. homes/pentwyn.html">
-              <div class="field-help">Link that ‘Register your interest’ points to.</div>
+              <div class="field-help">URL when someone clicks the announcement bar on the homepage (relative paths are OK, e.g. homes/pentwyn.html).</div>
             </div>
             <div class="field-row">
               <div class="field-group">
@@ -466,35 +509,238 @@
               <label class="field-label" for="ch-sub">Hero Subtitle</label>
               <textarea class="field-textarea" id="ch-sub" style="min-height:80px"></textarea>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem">
+            <div class="field-group" style="padding-top:0.25rem;border-top:1px solid var(--border);margin-top:0.5rem">
+              <label class="field-label">carehome.co.uk scores (site-wide)</label>
+              <div class="field-help" style="margin-bottom:0.75rem">Shown on the homepage, homes overview, and each home’s page. Update when the directory changes (scores are entered manually — we do not scrape carehome.co.uk).</div>
+              <div class="field-row">
+                <div>
+                  <label class="field-label" for="ch-carehome-glan-score" style="font-size:0.8rem">Glan-yr-Afon — score /10</label>
+                  <input class="field-input" type="text" id="ch-carehome-glan-score" placeholder="9.9" inputmode="decimal">
+                </div>
+                <div>
+                  <label class="field-label" for="ch-carehome-glan-reviews" style="font-size:0.8rem">Glan-yr-Afon — review count</label>
+                  <input class="field-input" type="number" id="ch-carehome-glan-reviews" placeholder="41" min="0" step="1">
+                </div>
+                <div>
+                  <label class="field-label" for="ch-carehome-llys-score" style="font-size:0.8rem">Llys Gwyn — score /10</label>
+                  <input class="field-input" type="text" id="ch-carehome-llys-score" placeholder="9.7" inputmode="decimal">
+                </div>
+                <div>
+                  <label class="field-label" for="ch-carehome-llys-reviews" style="font-size:0.8rem">Llys Gwyn — review count</label>
+                  <input class="field-input" type="number" id="ch-carehome-llys-reviews" placeholder="23" min="0" step="1">
+                </div>
+              </div>
+            </div>
+            <div class="field-row" style="margin-bottom:1.25rem">
               <!-- Stats 1–4 -->
               <div id="stat-fields"></div>
               <div id="stat-fields-2"></div>
             </div>
-            <div id="stat-fields-all" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem"></div>
+            <div id="stat-fields-all" class="field-row" style="margin-bottom:1.25rem"></div>
             <button class="btn btn-primary" onclick="saveHomepage()">&#128190; Save Homepage Content</button>
           </div>
         </div>
 
-        <!-- Testimonials -->
+        <!-- Testimonials + submitted reviews (single place) -->
         <div id="ctab-testimonials" class="ctab-pane" style="display:none">
-          <div class="table-card">
+          <p style="font-size:0.85rem;color:var(--text-mid);margin:0 0 1.25rem;line-height:1.55;max-width:760px">Everything here relates to the homepage <strong>Family Voices</strong> section (<a href="index.html#testimonials" target="_blank" rel="noopener noreferrer">index.html#testimonials</a> — <em>What Families Say About Us</em>). <strong>Shown on homepage</strong> is what visitors see. <strong>Submitted reviews</strong> come from <code>reviews.html</code> — edit, delete, or use <strong>Add to homepage</strong> to publish. Deleting an inbox row only removes that submission record; if it was already published, delete or edit the quote in <strong>Shown on homepage</strong> too.</p>
+
+          <div class="table-card" style="margin-bottom:1.5rem">
             <div class="table-card-header">
-              <span class="table-card-title">Testimonials</span>
-              <button class="btn btn-primary btn-sm" onclick="openTestiDrawer(null)">+ Add Testimonial</button>
+              <span class="table-card-title">Shown on homepage</span>
+              <button class="btn btn-primary btn-sm" onclick="openTestiDrawer(null)">+ Add quote</button>
             </div>
             <table>
               <thead><tr><th>Name</th><th>Quote (preview)</th><th>Home</th><th>Actions</th></tr></thead>
               <tbody id="testi-tbody"></tbody>
             </table>
             <div class="empty-state" id="testi-empty" style="display:none">
-              <div class="empty-state-icon">💬</div><p>No testimonials yet. <a href="#" onclick="openTestiDrawer(null);return false">Add one</a>.</p>
+              <div class="empty-state-icon">💬</div><p>No quotes on the homepage yet. Add one manually or publish a submission below.</p>
             </div>
+          </div>
+
+          <div class="table-card">
+            <div class="table-card-header">
+              <span class="table-card-title">Submitted reviews (inbox)</span>
+              <button type="button" class="btn btn-ghost btn-sm" onclick="downloadCsv('/api/admin/home-reviews/export.csv','vcg-home-reviews.csv')">⬇ CSV export</button>
+            </div>
+            <div class="admin-table-scroll">
+              <table>
+                <thead><tr><th>Date</th><th>Name</th><th>Contact</th><th>Home</th><th>★</th><th>Review</th><th>Homepage</th><th>Actions</th></tr></thead>
+                <tbody id="home-reviews-tbody"></tbody>
+              </table>
+            </div>
+            <div class="empty-state" id="home-reviews-empty" style="display:none"><div class="empty-state-icon">📭</div><p>No submitted reviews yet.</p></div>
           </div>
         </div>
       </div>
 
+      <!-- ── NEWS & EVENTS (per home) ── -->
+      <div class="page-section" id="section-homefeed">
+        <div class="page-header">
+          <div>
+            <div class="page-header-title">News &amp; Events</div>
+            <div class="page-header-sub">Per-home stories with optional images · tick “Show on homepage” for the main site feed</div>
+          </div>
+        </div>
+
+        <div class="table-card" style="padding:1.25rem 1.5rem;margin-bottom:1.25rem;max-width:420px">
+          <label class="field-label" for="hf-home-select">Home</label>
+          <select class="field-select" id="hf-home-select" onchange="onHfHomeChange(this.value)" style="width:100%">
+            <option value="glan">Glan-yr-Afon</option>
+            <option value="llys">Llys Gwyn</option>
+            <option value="pentwyn">Ty Pentwyn</option>
+          </select>
+        </div>
+
+        <div class="table-card" style="margin-bottom:1.25rem">
+          <div class="table-card-header">
+            <span class="table-card-title">News</span>
+            <button type="button" class="btn btn-primary btn-sm" onclick="openHfDrawer('news')">+ Add news</button>
+          </div>
+          <div class="admin-table-scroll">
+            <table>
+              <thead><tr><th>Date</th><th>Title</th><th>Image</th><th>Homepage</th><th></th></tr></thead>
+              <tbody id="hf-news-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-card-header">
+            <span class="table-card-title">Events</span>
+            <button type="button" class="btn btn-primary btn-sm" onclick="openHfDrawer('events')">+ Add event</button>
+          </div>
+          <div class="admin-table-scroll">
+            <table>
+              <thead><tr><th>Date</th><th>Title</th><th>Image</th><th>Homepage</th><th></th></tr></thead>
+              <tbody id="hf-events-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <p style="font-size:0.8rem;color:var(--text-light);margin-top:1.5rem;max-width:640px">Image paths are relative to the site root (e.g. <code>assets/images/interior.png</code>) or a full <code>https://</code> URL.</p>
+      </div>
+
+      <!-- ── MAPS & VACANCIES (per home) ── -->
+      <div class="page-section" id="section-homesextra">
+        <div class="page-header">
+          <div>
+            <div class="page-header-title">Maps &amp; vacancies</div>
+            <div class="page-header-sub">Availability line, optional map iframe (Google Maps or OpenStreetMap embed only), CIW PDF link, inspection/awards notes</div>
+          </div>
+        </div>
+        <div class="table-card" style="padding:1.5rem;max-width:900px">
+          <label class="field-label" for="hx-home">Home</label>
+          <select class="field-select" id="hx-home" onchange="loadHomesExtraForm(this.value)" style="max-width:280px;margin-bottom:1.5rem">
+            <option value="glan">Glan-yr-Afon</option>
+            <option value="llys">Llys Gwyn</option>
+            <option value="pentwyn">Ty Pentwyn</option>
+          </select>
+          <div class="field-group">
+            <label class="field-label" for="hx-avail">Vacancy / availability line</label>
+            <input class="field-input" id="hx-avail" type="text" maxlength="500" placeholder="e.g. One en-suite room available — call to discuss">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="hx-map">Map embed (full iframe HTML)</label>
+            <textarea class="field-textarea" id="hx-map" style="min-height:100px;font-family:monospace;font-size:0.8rem" placeholder="&lt;iframe src=&quot;https://www.openstreetmap.org/export/embed.html?...&quot; ...&gt;&lt;/iframe&gt;"></textarea>
+            <div class="field-help">Only HTTPS iframes from Google Maps or Openstreetmap.org are accepted.</div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="hx-pdf">CIW PDF or document URL</label>
+            <input class="field-input" id="hx-pdf" type="url" placeholder="https://...">
+          </div>
+          <div class="field-row">
+            <div class="field-group">
+              <label class="field-label" for="hx-insp">Last inspection note</label>
+              <input class="field-input" id="hx-insp" type="text" maxlength="500">
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="hx-award">Awards / citations (verified only)</label>
+              <input class="field-input" id="hx-award" type="text" maxlength="500">
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary" onclick="saveHomesExtra()">💾 Save this home</button>
+        </div>
+      </div>
+
+      <!-- ── ENQUIRIES ── -->
+      <div class="page-section" id="section-enquiries">
+        <div class="page-header">
+          <div>
+            <div class="page-header-title">Care enquiries</div>
+            <div class="page-header-sub">Submitted from the website forms</div>
+          </div>
+          <button type="button" class="btn btn-ghost" onclick="downloadCsv('/api/admin/enquiries/export.csv','vcg-enquiries.csv')">⬇ CSV export</button>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead><tr><th>Date</th><th>Name</th><th>Contact</th><th>Home</th><th>Status</th><th></th></tr></thead>
+            <tbody id="enquiries-tbody"></tbody>
+          </table>
+          <div class="empty-state" id="enquiries-empty" style="display:none"><div class="empty-state-icon">📭</div><p>No enquiries yet.</p></div>
+        </div>
+      </div>
+
+      <!-- ── APPLICATIONS ── -->
+      <div class="page-section" id="section-applications">
+        <div class="page-header">
+          <div>
+            <div class="page-header-title">Job applications</div>
+            <div class="page-header-sub">CV links open in a new tab (authenticated)</div>
+          </div>
+          <button type="button" class="btn btn-ghost" onclick="downloadCsv('/api/admin/applications/export.csv','vcg-applications.csv')">⬇ CSV export</button>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead><tr><th>Date</th><th>Applicant</th><th>Role</th><th>Status</th><th>CV</th><th></th></tr></thead>
+            <tbody id="applications-tbody"></tbody>
+          </table>
+          <div class="empty-state" id="applications-empty" style="display:none"><div class="empty-state-icon">📭</div><p>No applications yet.</p></div>
+        </div>
+      </div>
+
     </main>
+  </div>
+</div>
+
+<!-- News / Event drawer -->
+<div class="drawer-overlay" id="hf-overlay" onclick="closeHfDrawerIfOutside(event)" style="z-index:1100">
+  <div class="drawer-panel" style="max-width:480px" onclick="event.stopPropagation()">
+    <div class="drawer-header">
+      <span class="drawer-title" id="hf-drawer-title">Add item</span>
+      <button class="drawer-close" type="button" onclick="closeHfDrawer()">✕</button>
+    </div>
+    <div class="alert alert-error" id="hf-error" style="display:none"></div>
+    <form id="hf-form" onsubmit="saveHfItem(event)">
+      <input type="hidden" id="hf-edit-id">
+      <input type="hidden" id="hf-edit-type">
+      <div class="field-group">
+        <label class="field-label" for="hf-date">Date <span>*</span></label>
+        <input class="field-input" type="date" id="hf-date" required>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="hf-title">Title <span>*</span></label>
+        <input class="field-input" type="text" id="hf-title" required maxlength="200">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="hf-excerpt">Excerpt</label>
+        <textarea class="field-textarea" id="hf-excerpt" style="min-height:90px" maxlength="1200"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="hf-image">Image URL (optional)</label>
+        <input class="field-input" type="text" id="hf-image" placeholder="assets/images/interior.png or https://…" maxlength="500">
+      </div>
+      <div class="field-group">
+        <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;cursor:pointer">
+          <input type="checkbox" id="hf-homepage" style="width:16px;height:16px"> Show on main homepage feed
+        </label>
+      </div>
+      <div class="drawer-footer">
+        <button type="button" class="btn btn-ghost" onclick="closeHfDrawer()">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="hf-save-btn">💾 Save</button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -532,7 +778,7 @@
         <select class="field-select" id="tf-home">
           <option>Glan-yr-Afon Nursing Home</option>
           <option>Llys Gwyn Residential Home</option>
-          <option>Pentwyn Nursing Home</option>
+          <option>Ty Pentwyn Nursing Home</option>
         </select>
       </div>
       <div class="field-group">
@@ -546,6 +792,67 @@
     </form>
   </div>
 </div>
+
+<!-- Edit submitted review (inbox only — not yet promoted) -->
+<div class="drawer-overlay" id="hr-overlay" onclick="closeHrDrawer()">
+  <div class="drawer-panel" onclick="event.stopPropagation()" style="max-width:520px">
+    <div class="drawer-header">
+      <span class="drawer-title">Edit submitted review</span>
+      <button type="button" class="drawer-close" onclick="closeHrDrawer()">&#10005;</button>
+    </div>
+    <div class="alert alert-error" id="hr-error" style="display:none"></div>
+    <form id="hr-form" onsubmit="saveHrSubmission(event)">
+      <input type="hidden" id="hr-id">
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label" for="hr-name">Name</label>
+          <input class="field-input" type="text" id="hr-name" required maxlength="120" autocomplete="name">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="hr-email">Email</label>
+          <input class="field-input" type="email" id="hr-email" required maxlength="200" autocomplete="email">
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="hr-phone">Phone</label>
+        <input class="field-input" type="tel" id="hr-phone" maxlength="40" autocomplete="tel">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="hr-homeSlug">Home</label>
+        <select class="field-select" id="hr-homeSlug" required>
+          <option value="glan">Glan-yr-Afon</option>
+          <option value="llys">Llys Gwyn</option>
+          <option value="pentwyn">Ty Pentwyn</option>
+          <option value="group">Any / not sure</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="hr-relationship">Relationship (optional)</label>
+        <input class="field-input" type="text" id="hr-relationship" maxlength="120" placeholder="e.g. Daughter of resident">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="hr-rating">Rating (optional)</label>
+        <select class="field-select" id="hr-rating">
+          <option value="">—</option>
+          <option value="1">1 / 5</option>
+          <option value="2">2 / 5</option>
+          <option value="3">3 / 5</option>
+          <option value="4">4 / 5</option>
+          <option value="5">5 / 5</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="hr-review">Review text</label>
+        <textarea class="field-textarea" id="hr-review" required maxlength="3500" rows="8" placeholder="At least 20 characters"></textarea>
+      </div>
+      <div class="drawer-footer">
+        <button type="button" class="btn btn-ghost" onclick="closeHrDrawer()">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="hr-save-btn">💾 Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawerIfOutside(event)">
   <div class="drawer-panel">
     <div class="drawer-header">
@@ -571,7 +878,7 @@
             <option value="">Select…</option>
             <option value="glan">Glan-yr-Afon Nursing Home</option>
             <option value="llys">Llys Gwyn Residential Home</option>
-            <option value="pentwyn">Pentwyn Nursing Home (Cardiff)</option>
+            <option value="pentwyn">Ty Pentwyn Nursing Home (Treorchy)</option>
           </select>
         </div>
         <div class="field-group">
@@ -669,6 +976,7 @@
 <!-- ════════════════════════════════════════════
      JAVASCRIPT
 ════════════════════════════════════════════ -->
+<script src="assets/js/runtime-config.js"></script>
 <script src="assets/js/config.js"></script>
 <script>
 'use strict';
@@ -680,7 +988,8 @@ const API = (typeof window !== 'undefined' && window.API_BASE) ? window.API_BASE
 const HOME_LABELS = {
   glan:    'Glan-yr-Afon Nursing Home, Blackwood',
   llys:    'Llys Gwyn Residential Home',
-  pentwyn: 'Pentwyn Nursing Home, Cardiff',
+  pentwyn: 'Ty Pentwyn Nursing Home, Treorchy',
+  group:   'Any / not sure',
 };
 
 // ── Token storage (sessionStorage — cleared when tab closes) ────────────────
@@ -1073,17 +1382,297 @@ let cData = {};
 async function loadContent() {
   try {
     cData = await api('GET', '/api/content');
+    ensureHomePagesShape();
     populateSite(cData.site || {});
     populateHomepage(cData.homepage || {});
     renderTestiTable(cData.testimonials || []);
   } catch (ex) { showToast('Failed to load content: ' + ex.message, true); }
 }
 
+function ensureHomePagesShape() {
+  const hp = (cData.homePages = cData.homePages || {});
+  ['glan', 'llys', 'pentwyn'].forEach((k) => {
+    hp[k] = { ...(hp[k] || {}) };
+    if (!Array.isArray(hp[k].news)) hp[k].news = [];
+    if (!Array.isArray(hp[k].events)) hp[k].events = [];
+  });
+}
+
+let allEnquiries = [];
+let allHomeReviews = [];
+let allApplications = [];
+
+async function downloadCsv(path, filename) {
+  try {
+    const tok = getToken();
+    const res = await fetch(API + path, { headers: { Authorization: 'Bearer ' + tok } });
+    if (!res.ok) throw new Error('Export failed');
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('✅ Download started');
+  } catch (e) { showToast(e.message || 'Export failed', true); }
+}
+
+async function loadLeadData() {
+  allEnquiries = await api('GET', '/api/admin/enquiries');
+  allApplications = await api('GET', '/api/admin/applications');
+  renderEnquiriesTable();
+  renderApplicationsTable();
+}
+
+async function loadHomeReviews() {
+  allHomeReviews = await api('GET', '/api/admin/home-reviews');
+  renderHomeReviewsTable();
+}
+
+function renderEnquiriesTable() {
+  const tb = document.getElementById('enquiries-tbody');
+  const empty = document.getElementById('enquiries-empty');
+  if (!tb) return;
+  if (!allEnquiries.length) {
+    tb.innerHTML = '';
+    if (empty) empty.style.display = 'block';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+  tb.innerHTML = allEnquiries.map((en) => {
+    const dt = (en.createdAt || '').slice(0, 16).replace('T', ' ');
+    const opts = ['new', 'contacted', 'closed'].map((s) =>
+      '<option value="' + s + '"' + (en.status === s ? ' selected' : '') + '>' + s + '</option>').join('');
+    return '<tr><td style="font-size:0.78rem;white-space:nowrap">' + esc(dt) + '</td><td>' + esc(en.name) + '</td><td style="font-size:0.8rem">' + esc(en.email) + '<br>' + esc(en.phone) + '</td><td>' + esc(en.homeSlug || '—') + '</td><td><select class="field-select" style="padding:0.25rem;font-size:0.78rem" data-eid="' + esc(en.id) + '" onchange="patchEnquiryStatus(this)">' + opts + '</select></td><td style="font-size:0.75rem;max-width:200px">' + esc((en.message || '').slice(0, 100)) + '</td></tr>';
+  }).join('');
+}
+
+async function patchEnquiryStatus(sel) {
+  const id = sel.getAttribute('data-eid');
+  try {
+    await api('PATCH', '/api/admin/enquiries/' + id, { status: sel.value });
+    showToast('✅ Status updated');
+  } catch (e) {
+    showToast(e.message, true);
+    try { await loadLeadData(); } catch (_) {}
+  }
+}
+
+function renderHomeReviewsTable() {
+  const tb = document.getElementById('home-reviews-tbody');
+  const empty = document.getElementById('home-reviews-empty');
+  if (!tb) return;
+  if (!allHomeReviews.length) {
+    tb.innerHTML = '';
+    if (empty) empty.style.display = 'block';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+  tb.innerHTML = allHomeReviews.map((r) => {
+    const dt = (r.createdAt || '').slice(0, 16).replace('T', ' ');
+    const text = r.review || r.story || '';
+    const prev = text.slice(0, 120) + (text.length > 120 ? '…' : '');
+    const rel = r.relationship ? '<br><span style="font-size:0.72rem;color:var(--text-light)">' + esc(r.relationship) + '</span>' : '';
+    const stars = r.rating != null && r.rating >= 1 && r.rating <= 5 ? esc(String(r.rating)) + ' / 5' : '—';
+    const onHome = r.promotedTestimonialId
+      ? '<span style="font-size:0.78rem;color:#1E8449;font-weight:600">✓ On homepage</span>'
+      : '<button type="button" class="btn btn-primary btn-sm home-review-promote" data-promote-id="' + esc(r.id) + '">Add to homepage</button>';
+    const actions = r.promotedTestimonialId
+      ? '<button type="button" class="btn btn-ghost btn-sm home-review-open-testi" data-testi-id="' + esc(r.promotedTestimonialId) + '">Edit quote</button> '
+        + '<button type="button" class="btn btn-danger btn-sm home-review-del" data-del-id="' + esc(r.id) + '" data-del-name="' + esc(r.name) + '">Delete</button>'
+      : '<button type="button" class="btn btn-ghost btn-sm home-review-edit" data-edit-id="' + esc(r.id) + '">Edit</button> '
+        + '<button type="button" class="btn btn-danger btn-sm home-review-del" data-del-id="' + esc(r.id) + '" data-del-name="' + esc(r.name) + '">Delete</button>';
+    return '<tr><td style="font-size:0.78rem;white-space:nowrap">' + esc(dt) + '</td><td>' + esc(r.name) + '</td><td style="font-size:0.78rem">' + esc(r.email) + (r.phone ? '<br>' + esc(r.phone) : '') + '</td><td style="font-size:0.78rem">' + esc(HOME_LABELS[r.homeSlug] || r.homeSlug || '—') + '</td><td style="font-size:0.78rem">' + stars + '</td><td style="font-size:0.75rem;max-width:240px" title="' + esc(text) + '">' + esc(prev) + rel + '</td><td style="white-space:nowrap">' + onHome + '</td><td><div style="display:flex;flex-wrap:wrap;gap:0.35rem;align-items:center">' + actions + '</div></td></tr>';
+  }).join('');
+}
+
+async function deleteHomeReview(id, name) {
+  if (!confirm('Permanently delete this review from "' + (name || 'submitter') + '"?')) return;
+  try {
+    await api('DELETE', '/api/admin/home-reviews/' + encodeURIComponent(id));
+    allHomeReviews = allHomeReviews.filter((r) => r.id !== id);
+    renderHomeReviewsTable();
+    showToast('🗑️ Review deleted');
+  } catch (e) {
+    showToast(e.message || 'Delete failed', true);
+    try { await loadHomeReviews(); } catch (_) {}
+  }
+}
+
+async function promoteHomeReviewToTestimonial(id) {
+  if (!id) return;
+  try {
+    await api('POST', '/api/admin/home-reviews/' + encodeURIComponent(id) + '/promote-to-testimonial', {});
+    showToast('✅ Now shown on homepage — refresh the site or edit the quote in “Shown on homepage” above');
+    const testis = await api('GET', '/api/admin/content/testimonials');
+    cData.testimonials = testis;
+    renderTestiTable(testis);
+    await loadHomeReviews();
+  } catch (e) {
+    showToast(e.message || 'Could not add to homepage', true);
+  }
+}
+
+function openHrDrawer(id) {
+  const r = (allHomeReviews || []).find((x) => x.id === id);
+  if (!r || r.promotedTestimonialId) return;
+  document.getElementById('hr-error').style.display = 'none';
+  document.getElementById('hr-id').value = r.id;
+  document.getElementById('hr-name').value = r.name || '';
+  document.getElementById('hr-email').value = r.email || '';
+  document.getElementById('hr-phone').value = r.phone || '';
+  document.getElementById('hr-homeSlug').value = ['glan', 'llys', 'pentwyn', 'group'].includes(r.homeSlug) ? r.homeSlug : 'group';
+  document.getElementById('hr-relationship').value = r.relationship || '';
+  document.getElementById('hr-rating').value = r.rating != null && r.rating >= 1 && r.rating <= 5 ? String(r.rating) : '';
+  document.getElementById('hr-review').value = r.review || r.story || '';
+  document.getElementById('hr-overlay').classList.add('open');
+}
+
+function closeHrDrawer() {
+  document.getElementById('hr-overlay').classList.remove('open');
+}
+
+async function saveHrSubmission(e) {
+  e.preventDefault();
+  const id = document.getElementById('hr-id').value;
+  const errEl = document.getElementById('hr-error');
+  const btn = document.getElementById('hr-save-btn');
+  errEl.style.display = 'none';
+  const ratingRaw = document.getElementById('hr-rating').value;
+  const payload = {
+    name: document.getElementById('hr-name').value.trim(),
+    email: document.getElementById('hr-email').value.trim(),
+    phone: document.getElementById('hr-phone').value.trim(),
+    homeSlug: document.getElementById('hr-homeSlug').value,
+    relationship: document.getElementById('hr-relationship').value.trim(),
+    review: document.getElementById('hr-review').value.trim(),
+    rating: ratingRaw === '' ? null : ratingRaw,
+  };
+  btn.disabled = true;
+  try {
+    await api('PATCH', '/api/admin/home-reviews/' + encodeURIComponent(id), payload);
+    showToast('✅ Submission updated');
+    closeHrDrawer();
+    await loadHomeReviews();
+  } catch (ex) {
+    errEl.textContent = ex.message || 'Save failed';
+    errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+document.getElementById('ctab-testimonials')?.addEventListener('click', (ev) => {
+  const openTi = ev.target.closest('.home-review-open-testi');
+  if (openTi) {
+    const tid = openTi.getAttribute('data-testi-id');
+    if (tid) openTestiDrawer(tid);
+    return;
+  }
+  const ed = ev.target.closest('.home-review-edit');
+  if (ed) {
+    const id = ed.getAttribute('data-edit-id');
+    if (id) openHrDrawer(id);
+    return;
+  }
+  const prom = ev.target.closest('.home-review-promote');
+  if (prom) {
+    const id = prom.getAttribute('data-promote-id');
+    if (id) promoteHomeReviewToTestimonial(id);
+    return;
+  }
+  const btn = ev.target.closest('.home-review-del');
+  if (!btn) return;
+  const id = btn.getAttribute('data-del-id');
+  const name = btn.getAttribute('data-del-name') || '';
+  if (id) deleteHomeReview(id, name);
+});
+
+function renderApplicationsTable() {
+  const tb = document.getElementById('applications-tbody');
+  const empty = document.getElementById('applications-empty');
+  if (!tb) return;
+  if (!allApplications.length) {
+    tb.innerHTML = '';
+    if (empty) empty.style.display = 'block';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+  tb.innerHTML = allApplications.map((ap) => {
+    const dt = (ap.createdAt || '').slice(0, 16).replace('T', ' ');
+    const opts = ['new', 'reviewing', 'contacted', 'closed'].map((s) =>
+      '<option value="' + s + '"' + (ap.status === s ? ' selected' : '') + '>' + s + '</option>').join('');
+    const cv = ap.cvUrl
+      ? '<a href="' + esc(ap.cvUrl) + '" target="_blank" rel="noopener noreferrer">CV</a>'
+      : '—';
+    return '<tr><td style="font-size:0.78rem;white-space:nowrap">' + esc(dt) + '</td><td>' + esc(ap.firstName) + ' ' + esc(ap.lastName) + '<br><span style="font-size:0.78rem;color:var(--text-light)">' + esc(ap.email) + '</span></td><td>' + esc(ap.jobTitle || ap.jobId) + '</td><td><select class="field-select" style="padding:0.25rem;font-size:0.78rem" data-aid="' + esc(ap.id) + '" onchange="patchApplicationStatus(this)">' + opts + '</select></td><td>' + cv + '</td><td></td></tr>';
+  }).join('');
+}
+
+async function patchApplicationStatus(sel) {
+  const id = sel.getAttribute('data-aid');
+  try {
+    await api('PATCH', '/api/admin/applications/' + id, { status: sel.value });
+    showToast('✅ Status updated');
+  } catch (e) {
+    showToast(e.message, true);
+    try { await loadLeadData(); } catch (_) {}
+  }
+}
+
+function loadHomesExtraForm(slug) {
+  const h = (cData.homePages || {})[slug] || {};
+  document.getElementById('hx-avail').value = h.availabilityLine || '';
+  document.getElementById('hx-map').value = h.mapEmbedHtml || '';
+  document.getElementById('hx-pdf').value = h.ciwPdfUrl || '';
+  document.getElementById('hx-insp').value = h.lastInspectionDate || '';
+  document.getElementById('hx-award').value = h.awardsNote || '';
+}
+
+async function saveHomesExtra() {
+  const slug = document.getElementById('hx-home').value;
+  await loadContent();
+  const prev = (cData.homePages && cData.homePages[slug]) || {};
+  const payload = {
+    [slug]: {
+      ...prev,
+      availabilityLine: document.getElementById('hx-avail').value.trim(),
+      mapEmbedHtml: document.getElementById('hx-map').value.trim(),
+      ciwPdfUrl: document.getElementById('hx-pdf').value.trim(),
+      lastInspectionDate: document.getElementById('hx-insp').value.trim(),
+      awardsNote: document.getElementById('hx-award').value.trim(),
+    },
+  };
+  try {
+    await api('PUT', '/api/admin/content/homePages', payload);
+    await loadContent();
+    showToast('✅ Saved — refresh the public site to see changes');
+  } catch (e) { showToast(e.message, true); }
+}
+
 // Override showSection to load content when switching to it
 const _origShowSection = showSection;
 showSection = function(name) {
   _origShowSection(name);
-  if (name === 'content') loadContent();
+  if (name === 'content' || name === 'homefeed') {
+    loadContent().then(() => {
+      if (name === 'homefeed') {
+        const sel = document.getElementById('hf-home-select');
+        hfCurrentHome = (sel && sel.value) || 'glan';
+        renderHfTables();
+      }
+      if (name === 'content') {
+        loadHomeReviews().catch((e) => showToast(e.message, true));
+      }
+    });
+  }
+  if (name === 'homesextra') {
+    loadContent().then(() => loadHomesExtraForm(document.getElementById('hx-home').value));
+  }
+  if (name === 'enquiries' || name === 'applications') {
+    loadLeadData().catch((e) => showToast(e.message, true));
+  }
 };
 
 function switchCTab(tab) {
@@ -1091,6 +1680,9 @@ function switchCTab(tab) {
   document.querySelectorAll('.ctab-pane').forEach(p => p.style.display = 'none');
   document.querySelector(`.ctab[data-tab="${tab}"]`).classList.add('active');
   document.getElementById('ctab-' + tab).style.display = '';
+  if (tab === 'testimonials') {
+    loadHomeReviews().catch((e) => showToast(e.message, true));
+  }
 }
 
 // ── Site Settings ─────────────────────────────────────────────────────────────
@@ -1125,6 +1717,10 @@ function populateHomepage(h) {
   document.getElementById('ch-l2').value    = h.heroLine2 || '';
   document.getElementById('ch-l3').value    = h.heroLine3 || '';
   document.getElementById('ch-sub').value   = h.heroSubtitle || '';
+  document.getElementById('ch-carehome-glan-score').value   = h.carehomeGlanScore != null ? String(h.carehomeGlanScore) : '';
+  document.getElementById('ch-carehome-glan-reviews').value = h.carehomeGlanReviews != null ? String(h.carehomeGlanReviews) : '';
+  document.getElementById('ch-carehome-llys-score').value   = h.carehomeLlysScore != null ? String(h.carehomeLlysScore) : '';
+  document.getElementById('ch-carehome-llys-reviews').value = h.carehomeLlysReviews != null ? String(h.carehomeLlysReviews) : '';
 
   // Build stat fields dynamically
   const container = document.getElementById('stat-fields-all');
@@ -1153,8 +1749,14 @@ async function saveHomepage() {
       payload[`stat${i}Suffix`] = document.getElementById(`ch-ss${i}`).value.trim();
       payload[`stat${i}Label`]  = document.getElementById(`ch-sl${i}`).value.trim();
     }
+    payload.carehomeGlanScore = document.getElementById('ch-carehome-glan-score').value.trim();
+    payload.carehomeLlysScore = document.getElementById('ch-carehome-llys-score').value.trim();
+    payload.carehomeGlanReviews = parseInt(document.getElementById('ch-carehome-glan-reviews').value, 10);
+    payload.carehomeLlysReviews = parseInt(document.getElementById('ch-carehome-llys-reviews').value, 10);
+    if (Number.isNaN(payload.carehomeGlanReviews)) payload.carehomeGlanReviews = 0;
+    if (Number.isNaN(payload.carehomeLlysReviews)) payload.carehomeLlysReviews = 0;
     await api('PUT', '/api/admin/content/homepage', payload);
-    showToast('✅ Homepage content saved — refresh the homepage to see changes');
+    showToast('✅ Homepage content saved — refresh the site to see changes (including carehome.co.uk scores)');
   } catch (ex) { showToast('Save failed: ' + ex.message, true); }
 }
 
@@ -1256,6 +1858,157 @@ async function deleteTesti(id, name) {
     renderTestiTable(cData.testimonials);
     showToast('🗑️ Testimonial deleted');
   } catch (ex) { showToast('Delete failed: ' + ex.message, true); }
+}
+
+// ── News & Events (per home) ─────────────────────────────────────────────────
+let hfCurrentHome = 'glan';
+
+function onHfHomeChange(val) {
+  hfCurrentHome = val;
+  renderHfTables();
+}
+
+function renderHfTables() {
+  const newsBody = document.getElementById('hf-news-tbody');
+  const evBody = document.getElementById('hf-events-tbody');
+  if (!newsBody || !evBody) return;
+  const home = cData.homePages?.[hfCurrentHome] || { news: [], events: [] };
+  const sortDesc = (a, b) => (b.date || '').localeCompare(a.date || '');
+
+  function rows(items, type) {
+    const sorted = [...(items || [])].sort(sortDesc);
+    if (!sorted.length) {
+      return '<tr><td colspan="5" style="text-align:center;color:#aaa;padding:1.25rem">No items yet.</td></tr>';
+    }
+    return sorted.map((item) => {
+      const hasImg = item.imageUrl ? '✓' : '—';
+      const hp = item.showOnHomepage ? '<span class="badge badge-active">Yes</span>' : '—';
+      return `<tr>
+        <td style="font-size:0.8rem;white-space:nowrap">${esc(item.date)}</td>
+        <td><strong>${esc(item.title)}</strong></td>
+        <td>${hasImg}</td>
+        <td>${hp}</td>
+        <td><div class="action-btns">
+          <button type="button" class="btn btn-ghost btn-sm" onclick="openHfDrawer(${JSON.stringify(type)}, ${JSON.stringify(item.id)})">✏️ Edit</button>
+          <button type="button" class="btn btn-danger btn-sm" onclick="deleteHfItem(${JSON.stringify(type)}, ${JSON.stringify(item.id)})">🗑️</button>
+        </div></td>
+      </tr>`;
+    }).join('');
+  }
+
+  newsBody.innerHTML = rows(home.news, 'news');
+  evBody.innerHTML = rows(home.events, 'events');
+}
+
+function openHfDrawer(type, id) {
+  document.getElementById('hf-form').reset();
+  document.getElementById('hf-error').style.display = 'none';
+  document.getElementById('hf-edit-type').value = type;
+  document.getElementById('hf-edit-id').value = id || '';
+  document.getElementById('hf-drawer-title').textContent = id
+    ? (type === 'news' ? 'Edit news' : 'Edit event')
+    : (type === 'news' ? 'Add news' : 'Add event');
+
+  if (id) {
+    const h = cData.homePages[hfCurrentHome] || {};
+    const arr = h[type] || [];
+    const item = arr.find((x) => x.id === id);
+    if (!item) return;
+    document.getElementById('hf-date').value = item.date || '';
+    document.getElementById('hf-title').value = item.title || '';
+    document.getElementById('hf-excerpt').value = item.excerpt || '';
+    document.getElementById('hf-image').value = item.imageUrl || '';
+    document.getElementById('hf-homepage').checked = !!item.showOnHomepage;
+  } else {
+    document.getElementById('hf-date').value = new Date().toISOString().slice(0, 10);
+  }
+
+  document.getElementById('hf-overlay').classList.add('open');
+}
+
+function closeHfDrawer() {
+  document.getElementById('hf-overlay').classList.remove('open');
+}
+
+function closeHfDrawerIfOutside(e) {
+  if (e.target === document.getElementById('hf-overlay')) closeHfDrawer();
+}
+
+async function saveHfItem(e) {
+  e.preventDefault();
+  const type = document.getElementById('hf-edit-type').value;
+  const editId = document.getElementById('hf-edit-id').value;
+  const btn = document.getElementById('hf-save-btn');
+  const errEl = document.getElementById('hf-error');
+
+  const item = {
+    id: editId || ('hf-' + Date.now() + '-' + Math.random().toString(36).slice(2, 9)),
+    date: document.getElementById('hf-date').value,
+    title: document.getElementById('hf-title').value.trim(),
+    excerpt: document.getElementById('hf-excerpt').value.trim(),
+    imageUrl: document.getElementById('hf-image').value.trim(),
+    showOnHomepage: document.getElementById('hf-homepage').checked,
+  };
+
+  const home = { ...(cData.homePages[hfCurrentHome] || {}) };
+  const list = [...(home[type] || [])];
+  if (editId) {
+    const idx = list.findIndex((x) => x.id === editId);
+    if (idx > -1) list[idx] = item;
+    else list.push(item);
+  } else {
+    list.push(item);
+  }
+  list.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  cData.homePages[hfCurrentHome] = { ...home, [type]: list };
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Saving…';
+  errEl.style.display = 'none';
+
+  try {
+    const updated = await api('PUT', '/api/admin/content/homePages', {
+      glan: cData.homePages.glan,
+      llys: cData.homePages.llys,
+      pentwyn: cData.homePages.pentwyn,
+    });
+    cData.homePages = updated;
+    ensureHomePagesShape();
+    showToast('✅ News & events saved — refresh the public site to see changes');
+    closeHfDrawer();
+    renderHfTables();
+  } catch (ex) {
+    errEl.textContent = ex.message || 'Save failed.';
+    errEl.style.display = 'block';
+    try { await loadContent(); } catch (_) {}
+    renderHfTables();
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '💾 Save';
+  }
+}
+
+async function deleteHfItem(type, id) {
+  if (!confirm('Delete this item?')) return;
+  const home = { ...(cData.homePages[hfCurrentHome] || {}) };
+  const list = (home[type] || []).filter((x) => x.id !== id);
+  cData.homePages[hfCurrentHome] = { ...home, [type]: list };
+
+  try {
+    const updated = await api('PUT', '/api/admin/content/homePages', {
+      glan: cData.homePages.glan,
+      llys: cData.homePages.llys,
+      pentwyn: cData.homePages.pentwyn,
+    });
+    cData.homePages = updated;
+    ensureHomePagesShape();
+    renderHfTables();
+    showToast('🗑️ Item deleted');
+  } catch (ex) {
+    showToast('Delete failed: ' + ex.message, true);
+    try { await loadContent(); } catch (_) {}
+    renderHfTables();
+  }
 }
 </script>
 </body>

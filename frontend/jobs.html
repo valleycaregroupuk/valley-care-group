@@ -59,7 +59,7 @@
         <div class="value-card fade-up fade-up-delay-3">
           <span class="value-icon">🤝</span>
           <h3 class="value-title">Continuity of Care</h3>
-          <p class="value-desc">No agency staff — you build genuine relationships with residents over time. That's how great care works.</p>
+          <p class="value-desc">Build genuine relationships with residents over time — continuity and teamwork are at the heart of how we work.</p>
         </div>
 
         <div class="value-card fade-up fade-up-delay-1">
@@ -99,7 +99,7 @@
         <button onclick="filterJobs('all')" id="filter-all" style="padding:0.45rem 1.1rem;border-radius:var(--radius-full);border:1.5px solid var(--clr-cobalt);background:var(--clr-cobalt);color:#fff;font-size:0.8rem;font-weight:600;cursor:pointer;font-family:var(--font-sans)">All Homes</button>
         <button onclick="filterJobs('glan')" id="filter-glan" style="padding:0.45rem 1.1rem;border-radius:var(--radius-full);border:1.5px solid rgba(0,0,0,0.15);color:var(--clr-text-mid);font-size:0.8rem;font-weight:600;cursor:pointer;font-family:var(--font-sans);background:none">Glan-yr-Afon</button>
         <button onclick="filterJobs('llys')" id="filter-llys" style="padding:0.45rem 1.1rem;border-radius:var(--radius-full);border:1.5px solid rgba(0,0,0,0.15);color:var(--clr-text-mid);font-size:0.8rem;font-weight:600;cursor:pointer;font-family:var(--font-sans);background:none">Llys Gwyn</button>
-        <button onclick="filterJobs('pentwyn')" id="filter-pentwyn" style="padding:0.45rem 1.1rem;border-radius:var(--radius-full);border:1.5px solid rgba(0,0,0,0.15);color:var(--clr-text-mid);font-size:0.8rem;font-weight:600;cursor:pointer;font-family:var(--font-sans);background:none">Pentwyn (Soon)</button>
+        <button onclick="filterJobs('pentwyn')" id="filter-pentwyn" style="padding:0.45rem 1.1rem;border-radius:var(--radius-full);border:1.5px solid rgba(0,0,0,0.15);color:var(--clr-text-mid);font-size:0.8rem;font-weight:600;cursor:pointer;font-family:var(--font-sans);background:none">Ty Pentwyn</button>
       </div>
 
       <!-- Jobs are loaded dynamically from the API -->
@@ -117,7 +117,7 @@
       <div class="fade-up" style="margin-top:2.5rem;padding:2rem;background:linear-gradient(135deg,var(--clr-cobalt),var(--clr-sky));border-radius:var(--radius-lg);text-align:center;color:#fff">
         <h3 style="font-family:var(--font-serif);font-size:1.5rem;margin-bottom:0.5rem">Don't See Your Perfect Role?</h3>
         <p style="color:rgba(255,255,255,0.8);margin-bottom:1.5rem">We're always open to hearing from exceptional people. Send us a speculative application and we'll get in touch when the right opportunity arises.</p>
-        <button class="btn btn-gold" onclick="openJobApply('Speculative Application', 'Any Home')">Send a Speculative Application</button>
+        <button class="btn btn-gold" onclick="openJobApply('speculative', 'Speculative Application', 'Any Home')">Send a Speculative Application</button>
       </div>
     </div>
   </section>
@@ -131,36 +131,43 @@
         <h2 style="font-family:var(--font-serif);color:var(--clr-midnight)" id="modal-job-title">Job Title</h2>
         <p style="font-size:0.875rem;color:var(--clr-text-light)" id="modal-job-home">Location</p>
       </div>
-      <form onsubmit="submitJobApplication(event)">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem">
-          <div><label class="form-label-light">First Name *</label><input class="form-input-light" type="text" required placeholder="First name"></div>
-          <div><label class="form-label-light">Last Name *</label><input class="form-input-light" type="text" required placeholder="Last name"></div>
+      <form id="job-apply-form" onsubmit="submitJobApplication(event)" novalidate>
+        <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0">
+        <input type="hidden" name="jobId" id="modal-job-id" value="">
+        <input type="hidden" name="jobTitle" id="modal-job-title-field" value="">
+        <div class="responsive-input-row" style="margin-bottom:1.25rem">
+          <div><label class="form-label-light" for="app-fn">First Name *</label><input class="form-input-light" id="app-fn" name="firstName" type="text" required placeholder="First name" autocomplete="given-name"></div>
+          <div><label class="form-label-light" for="app-ln">Last Name *</label><input class="form-input-light" id="app-ln" name="lastName" type="text" required placeholder="Last name" autocomplete="family-name"></div>
         </div>
-        <div style="margin-bottom:1.25rem"><label class="form-label-light">Email Address *</label><input class="form-input-light" type="email" required placeholder="your@email.com"></div>
-        <div style="margin-bottom:1.25rem"><label class="form-label-light">Phone Number *</label><input class="form-input-light" type="tel" required placeholder="Your phone number"></div>
+        <div style="margin-bottom:1.25rem"><label class="form-label-light" for="app-em">Email Address *</label><input class="form-input-light" id="app-em" name="email" type="email" required placeholder="your@email.com" autocomplete="email"></div>
+        <div style="margin-bottom:1.25rem"><label class="form-label-light" for="app-ph">Phone Number *</label><input class="form-input-light" id="app-ph" name="phone" type="tel" required placeholder="Your phone number" autocomplete="tel"></div>
         <div style="margin-bottom:1.25rem">
-          <label class="form-label-light">Current/Most Recent Role</label>
-          <input class="form-input-light" type="text" placeholder="e.g. Care Assistant at XYZ Home">
+          <label class="form-label-light" for="app-role">Current/Most Recent Role</label>
+          <input class="form-input-light" id="app-role" name="currentRole" type="text" placeholder="e.g. Care Assistant at XYZ Home">
         </div>
         <div style="margin-bottom:1.25rem">
-          <label class="form-label-light">Years of Care Experience</label>
-          <select class="form-select-light">
+          <label class="form-label-light" for="app-yrs">Years of Care Experience</label>
+          <select class="form-select-light" id="app-yrs" name="yearsExperience">
             <option value="">Select...</option>
             <option>Brand new to care</option><option>Less than 1 year</option><option>1–2 years</option><option>3–5 years</option><option>5+ years</option>
           </select>
         </div>
         <div style="margin-bottom:1.25rem">
-          <label class="form-label-light">Qualifications</label>
-          <input class="form-input-light" type="text" placeholder="e.g. NVQ Level 2 Care, NMC Registered">
+          <label class="form-label-light" for="app-qual">Qualifications</label>
+          <input class="form-input-light" id="app-qual" name="qualifications" type="text" placeholder="e.g. NVQ Level 2 Care, NMC Registered">
         </div>
         <div style="margin-bottom:1.25rem">
-          <label class="form-label-light">Why Do You Want to Join Valley Care Group?</label>
-          <textarea class="form-textarea-light" style="min-height:100px" placeholder="Tell us a little about yourself and why you'd like to join our team..."></textarea>
+          <label class="form-label-light" for="app-why">Why Do You Want to Join Valley Care Group?</label>
+          <textarea class="form-textarea-light" id="app-why" name="whyJoin" style="min-height:100px" placeholder="Tell us a little about yourself and why you'd like to join our team..."></textarea>
+        </div>
+        <div style="margin-bottom:1rem">
+          <label class="form-label-light" for="app-cv">CV (PDF or Word, max 2MB) *</label>
+          <input class="form-input-light" id="app-cv" name="cv" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required style="padding:0.5rem 0">
         </div>
         <div style="margin-bottom:1.5rem">
           <label style="display:flex;gap:0.75rem;align-items:flex-start;cursor:pointer;font-size:0.875rem;color:var(--clr-text-mid)">
-            <input type="checkbox" required style="margin-top:3px;flex-shrink:0">
-            I agree to my information being processed in line with Valley Care Group's Privacy Policy and UK GDPR.
+            <input type="checkbox" name="gdprConsent" value="yes" required style="margin-top:3px;flex-shrink:0">
+            I agree to my information being processed in line with the <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a> and UK GDPR.
           </label>
         </div>
         <button type="submit" class="form-submit-primary">Submit Application →</button>
@@ -170,12 +177,13 @@
 
   <footer class="footer">
     <div class="container">
-      <div class="footer-bottom" style="padding-top:0"><div class="footer-copy">© 2025 Valley Care Group · <a href="index.html" style="color:var(--clr-gold)">Back to Homepage</a></div><div class="footer-bottom-links"><a href="index.html">Home</a><a href="homes.html">Our Homes</a><a href="contact.html">Contact</a></div></div>
+      <div class="footer-bottom" style="padding-top:0"><div class="footer-copy">© 2026 Valley Care Group · <a href="index.html" style="color:var(--clr-gold)">Back to Homepage</a></div><div class="footer-bottom-links"><a href="index.html">Home</a><a href="homes.html">Our Homes</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a></div></div>
     </div>
   </footer>
 
   <div class="toast" id="toast"><span class="toast-icon">✅</span><div><div class="toast-title">Application Received!</div><div class="toast-msg">Thank you — our HR team will review and be in touch soon.</div></div></div>
 
+  <script src="assets/js/runtime-config.js"></script>
   <script src="assets/js/config.js"></script>
   <script src="assets/js/main.js"></script>
   <script>
@@ -225,7 +233,7 @@
         <div class="job-footer">
           <span class="job-posted">📅 Posted: ${fmtPosted(job.posted)}</span>
           <button class="btn btn-primary btn-sm"
-                  onclick="openJobApply(${JSON.stringify(esc(job.title))}, ${JSON.stringify(esc(job.homeLabel||job.home))})"
+                  onclick="openJobApply(${JSON.stringify(job.id)}, ${JSON.stringify(esc(job.title))}, ${JSON.stringify(esc(job.homeLabel||job.home))})"
           >${esc(job.btnLabel || 'Apply Now')}</button>
         </div>
       </div>
@@ -276,7 +284,9 @@
   // ── Load jobs from API ─────────────────────────────────
   async function loadJobs() {
     try {
-      const res = await fetch((window.API_BASE || '') + '/api/jobs');
+      var b = (window.API_BASE || '').replace(/\/$/, '');
+      if (!b && (location.hostname === 'localhost' || location.hostname === '127.0.0.1')) b = 'http://127.0.0.1:3500';
+      const res = await fetch(b + '/api/jobs');
       if (!res.ok) throw new Error('HTTP ' + res.status);
       _allJobs = await res.json();
     } catch (err) {
@@ -291,10 +301,18 @@
   loadJobs();
 
   // ── Application modal ─────────────────────────────────
-  function openJobApply(title, home) {
+  function openJobApply(jobId, title, home) {
+    var form = document.getElementById('job-apply-form');
+    if (form) form.reset();
+    document.getElementById('modal-job-id').value = jobId || '';
+    document.getElementById('modal-job-title-field').value = title || '';
     document.getElementById('modal-job-title').textContent = title;
     document.getElementById('modal-job-home').textContent = '🏡 ' + home;
-    const modal = document.getElementById('job-modal');
+    var cv = document.getElementById('app-cv');
+    if (cv) {
+      cv.required = jobId !== 'speculative';
+    }
+    var modal = document.getElementById('job-modal');
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
   }
@@ -307,16 +325,6 @@
   document.getElementById('job-modal').addEventListener('click', function(e) {
     if (e.target === this) closeJobModal();
   });
-
-  window.submitJobApplication = function(e) {
-    e.preventDefault();
-    closeJobModal();
-    const toast = document.getElementById('toast');
-    toast.querySelector('.toast-title').textContent = 'Application Received! 🎉';
-    toast.querySelector('.toast-msg').textContent = 'Thank you for applying. Our HR team will review your application and be in touch soon.';
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 5500);
-  };
   </script>
 </body>
 </html>

@@ -7,6 +7,11 @@
 (function () {
   'use strict';
 
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) {
+    document.documentElement.classList.add('reduce-motion');
+  }
+
   // ---- Detect mobile ----
   const isMobile = () => window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768;
 
@@ -71,9 +76,13 @@
 
   function animateCounter(el) {
     const target = parseFloat(el.dataset.target) || 0;
+    const isDecimal = String(target).includes('.');
+    if (reduceMotion) {
+      el.textContent = isDecimal ? target.toFixed(1) : String(Math.floor(target));
+      return;
+    }
     const duration = 2200;
     const start = performance.now();
-    const isDecimal = String(target).includes('.');
 
     function update(now) {
       const elapsed = now - start;
@@ -242,5 +251,102 @@
 
   // (Hero title glow on scroll and testimonial hover tilt removed)
 
+  // ========================================================
+  // 19. TESTIMONIALS — horizontal scroll, raised centre card
+  // ========================================================
+  function initTestimonialsCarousel() {
+    const scrollEl = document.getElementById('testimonials-sig-scroll');
+    const track = document.getElementById('testimonials-grid');
+    if (!scrollEl || !track) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prev = document.getElementById('testi-sig-prev');
+    const next = document.getElementById('testi-sig-next');
+
+    function cards() {
+      return Array.from(track.querySelectorAll('.testimonial-sig-card'));
+    }
+
+    function updateCenterCard() {
+      const list = cards();
+      if (!list.length) return;
+      const r = scrollEl.getBoundingClientRect();
+      const mid = r.left + r.width / 2;
+      let best = list[0];
+      let bestD = Infinity;
+      list.forEach((c) => {
+        const cr = c.getBoundingClientRect();
+        const cx = cr.left + cr.width / 2;
+        const d = Math.abs(cx - mid);
+        if (d < bestD) {
+          bestD = d;
+          best = c;
+        }
+      });
+      list.forEach((c) => c.classList.toggle('testimonial-sig-card--center', c === best));
+    }
+
+    let scrollRaf = 0;
+    function onScrollTick() {
+      cancelAnimationFrame(scrollRaf);
+      scrollRaf = requestAnimationFrame(() => {
+        updateCenterCard();
+        updateNav();
+      });
+    }
+
+    function updateNav() {
+      if (!prev || !next) return;
+      const max = scrollEl.scrollWidth - scrollEl.clientWidth - 2;
+      const show = max > 8;
+      prev.hidden = next.hidden = !show;
+      if (!show) return;
+      prev.disabled = scrollEl.scrollLeft <= 2;
+      next.disabled = scrollEl.scrollLeft >= max - 2;
+    }
+
+    function step() {
+      const list = cards();
+      const first = list[0];
+      if (!first) return scrollEl.clientWidth * 0.85;
+      const w = first.getBoundingClientRect().width;
+      const cs = getComputedStyle(track);
+      const gap = parseFloat(cs.gap) || 20;
+      return Math.min(w + gap, scrollEl.clientWidth * 0.85);
+    }
+
+    if (!scrollEl.dataset.testiBound) {
+      scrollEl.dataset.testiBound = '1';
+      scrollEl.addEventListener('scroll', onScrollTick, { passive: true });
+      window.addEventListener('resize', onScrollTick, { passive: true });
+      if (prev && next) {
+        prev.addEventListener('click', () => {
+          scrollEl.scrollBy({ left: -step(), behavior: reduceMotion ? 'auto' : 'smooth' });
+        });
+        next.addEventListener('click', () => {
+          scrollEl.scrollBy({ left: step(), behavior: reduceMotion ? 'auto' : 'smooth' });
+        });
+      }
+    }
+
+    const list = cards();
+    if (!list.length) {
+      if (prev) prev.hidden = true;
+      if (next) next.hidden = true;
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const midIdx = Math.floor(list.length / 2);
+        list[midIdx].scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'auto' });
+        updateCenterCard();
+        updateNav();
+      });
+    });
+  }
+
+  window.initTestimonialsCarousel = initTestimonialsCarousel;
+  initTestimonialsCarousel();
 
 })();

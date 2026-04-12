@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="assets/css/pages.css">
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <nav class="navbar scrolled" id="navbar">
     <div class="nav-container">
       <a href="index.html" class="nav-logo">
@@ -17,18 +18,18 @@
         <div class="nav-logo-text"><span class="nav-logo-name">Valley Care Group</span><span class="nav-logo-tagline">Caring with Heart · Since 2005</span></div>
       </a>
       <div class="nav-links">
-        <a href="index.html">Home</a><a href="about.html">About Us</a><a href="homes.html">Our Homes</a><a href="services.html">Services</a><a href="jobs.html">Careers</a><a href="contact.html" class="active">Contact</a>
+        <a href="index.html" data-i18n="nav_home">Home</a><a href="about.html" data-i18n="nav_about">About Us</a><a href="homes.html" data-i18n="nav_homes">Our Homes</a><a href="services.html" data-i18n="nav_services">Services</a><a href="jobs.html" data-i18n="nav_careers">Careers</a><a href="contact.html" class="active" data-i18n="nav_contact">Contact</a>
       </div>
-      <button class="nav-cta-btn" onclick="document.getElementById('contact-form').scrollIntoView({behavior:'smooth'})">Care Enquiry</button>
+      <button class="nav-cta-btn" onclick="document.getElementById('contact-form').scrollIntoView({behavior:'smooth'})" data-i18n="nav_enquiry">Care Enquiry</button>
       <div class="hamburger" id="hamburger" onclick="toggleMobileNav()"><span></span><span></span><span></span></div>
     </div>
   </nav>
   <div class="mobile-nav" id="mobile-nav">
-    <a href="index.html" onclick="toggleMobileNav()">Home</a><a href="about.html" onclick="toggleMobileNav()">About Us</a><a href="homes.html" onclick="toggleMobileNav()">Our Homes</a><a href="services.html" onclick="toggleMobileNav()">Services</a><a href="jobs.html" onclick="toggleMobileNav()">Careers</a><a href="contact.html" onclick="toggleMobileNav()">Contact</a>
+    <a href="index.html" onclick="toggleMobileNav()" data-i18n="nav_home">Home</a><a href="about.html" onclick="toggleMobileNav()" data-i18n="nav_about">About Us</a><a href="homes.html" onclick="toggleMobileNav()" data-i18n="nav_homes">Our Homes</a><a href="services.html" onclick="toggleMobileNav()" data-i18n="nav_services">Services</a><a href="jobs.html" onclick="toggleMobileNav()" data-i18n="nav_careers">Careers</a><a href="contact.html" onclick="toggleMobileNav()" data-i18n="nav_contact">Contact</a>
   </div>
 
   <!-- Hero -->
-  <section class="page-hero">
+  <section class="page-hero" id="main-content">
     <div class="page-hero-eyebrow" data-edit-key="contact.hero.eyebrow">Contact Us</div>
     <h1 class="page-hero-title" data-edit-key="contact.hero.title">We're Here to <em style="font-style:italic;color:var(--clr-gold-light)">Help</em></h1>
     <p class="page-hero-subtitle" data-edit-key="contact.hero.sub">Whether you're ready to take the next step or just starting to explore your options, we're ready to listen and help — with kindness and without pressure.</p>
@@ -37,12 +38,12 @@
   <!-- Quick contact cards -->
   <section style="background:var(--clr-cream);padding:3.5rem 0">
     <div class="container">
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem">
+      <div class="responsive-grid-3">
         <div class="fade-up fade-up-delay-1" style="background:#fff;border-radius:var(--radius-lg);padding:2rem;text-align:center;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow-xs)">
           <div style="font-size:2.5rem;margin-bottom:1rem" data-edit-key="contact.card1.icon">📞</div>
-          <h3 style="font-family:var(--font-serif);color:var(--clr-midnight);margin-bottom:0.5rem" data-edit-key="contact.card1.title">Call Us</h3>
-          <p style="font-size:0.875rem;color:var(--clr-text-mid);margin-bottom:1rem" data-edit-key="contact.card1.desc">Speak directly with our care advisors, Monday–Sunday, 8am–8pm.</p>
-          <a href="tel:01633680217" style="font-size:1.2rem;font-weight:700;color:var(--clr-cobalt)">01633 680217</a>
+          <h3 style="font-family:var(--font-serif);color:var(--clr-midnight);margin-bottom:0.5rem" data-edit-key="contact.card1.title">Call a home</h3>
+          <p style="font-size:0.875rem;color:var(--clr-text-mid);margin-bottom:1rem" data-edit-key="contact.card1.desc">Each home has its own main number — see below for Glan-yr-Afon, Llys Gwyn, and Ty Pentwyn.</p>
+          <a href="#contact-form" style="font-size:0.95rem;font-weight:700;color:var(--clr-cobalt)">Numbers below →</a>
         </div>
         <div class="fade-up fade-up-delay-2" style="background:#fff;border-radius:var(--radius-lg);padding:2rem;text-align:center;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow-xs)">
           <div style="font-size:2.5rem;margin-bottom:1rem" data-edit-key="contact.card2.icon">✉️</div>
@@ -71,15 +72,15 @@
           <div style="margin-top:2rem">
             <div style="padding:1.5rem;background:rgba(255,255,255,0.06);border-radius:var(--radius-md);border:1px solid rgba(255,255,255,0.1);margin-bottom:1rem">
               <h4 style="color:var(--clr-gold-light);font-family:var(--font-serif);margin-bottom:0.75rem">🏡 Glan-yr-Afon Nursing Home</h4>
-              <p style="font-size:0.875rem;color:rgba(255,255,255,0.65);line-height:1.7">Off Ford Road, Fleur-de-Lys,<br>Blackwood NP12 3WA<br><br><a href="tel:01633680217" style="color:var(--clr-gold-light)">📞 01633 680217</a></p>
+              <p style="font-size:0.875rem;color:rgba(255,255,255,0.65);line-height:1.7">Off Ford Road, Fleur-de-Lys,<br>Blackwood NP12 3WA<br><br><a href="tel:01443835196" style="color:var(--clr-gold-light)">📞 01443 835196</a></p>
             </div>
             <div style="padding:1.5rem;background:rgba(255,255,255,0.06);border-radius:var(--radius-md);border:1px solid rgba(255,255,255,0.1);margin-bottom:1rem">
               <h4 style="color:var(--clr-gold-light);font-family:var(--font-serif);margin-bottom:0.75rem">🏡 Llys Gwyn Residential Home</h4>
-              <p style="font-size:0.875rem;color:rgba(255,255,255,0.65);line-height:1.7">Wales<br><br><a href="tel:01633680217" style="color:var(--clr-gold-light)">📞 01633 680217</a></p>
+              <p style="font-size:0.875rem;color:rgba(255,255,255,0.65);line-height:1.7">Heol Broom, Maudlum,<br>Pyle, Bridgend CF33 4PN<br><br><a href="tel:01633680217" style="color:var(--clr-gold-light)">📞 01633 680217</a></p>
             </div>
-            <div style="padding:1.5rem;background:rgba(201,168,76,0.08);border-radius:var(--radius-md);border:1px solid rgba(201,168,76,0.25)">
-              <h4 style="color:var(--clr-gold-light);font-family:var(--font-serif);margin-bottom:0.5rem">🏗️ Pentwyn Nursing Home (Coming Soon)</h4>
-              <p style="font-size:0.875rem;color:rgba(255,255,255,0.65);line-height:1.7">Marshfield Road, Cardiff CF3 2TU<br><em style="font-size:0.8rem">Opening late 2025</em></p>
+            <div style="padding:1.5rem;background:rgba(255,255,255,0.06);border-radius:var(--radius-md);border:1px solid rgba(255,255,255,0.1)">
+              <h4 style="color:var(--clr-gold-light);font-family:var(--font-serif);margin-bottom:0.75rem">🏡 Ty Pentwyn Nursing Home</h4>
+              <p style="font-size:0.875rem;color:rgba(255,255,255,0.65);line-height:1.7">Pentwyn Road,<br>Treorchy CF42 6HD<br><em style="display:block;margin:0.5rem 0 0.35rem;font-size:0.8rem;opacity:0.9">Operator: Quality Care (Surrey) Ltd</em><a href="mailto:managertypentwyn@outlook.com" style="color:var(--clr-gold-light)">✉️ managertypentwyn@outlook.com</a><br><a href="https://www.carehome.co.uk/carehome.cfm/searchazref/20005017TYPA" target="_blank" rel="noopener noreferrer" style="color:var(--clr-gold-light)">📋 Phone &amp; profile — carehome.co.uk</a></p>
             </div>
           </div>
         </div>
@@ -87,25 +88,29 @@
         <div class="enquiry-form-card fade-up fade-up-delay-2">
           <div class="form-title">Get in Touch</div>
           <div class="form-subtitle">Care enquiry, visit booking, or general contact — we're ready to help.</div>
-          <form onsubmit="submitEnquiry(event)">
+          <form onsubmit="submitEnquiry(event)" novalidate>
+            <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <input type="hidden" name="source" value="contact-page">
             <div class="form-row">
-              <div class="form-group"><label class="form-label">Name *</label><input class="form-input" type="text" placeholder="Your full name" required></div>
-              <div class="form-group"><label class="form-label">Phone *</label><input class="form-input" type="tel" placeholder="Phone number" required></div>
+              <div class="form-group"><label class="form-label" for="ct-name">Name *</label><input class="form-input" id="ct-name" name="name" type="text" placeholder="Your full name" required autocomplete="name"></div>
+              <div class="form-group"><label class="form-label" for="ct-phone">Phone *</label><input class="form-input" id="ct-phone" name="phone" type="tel" placeholder="Phone number" required autocomplete="tel"></div>
             </div>
-            <div class="form-group"><label class="form-label">Email *</label><input class="form-input" type="email" placeholder="Email address" required></div>
+            <div class="form-group"><label class="form-label" for="ct-email">Email *</label><input class="form-input" id="ct-email" name="email" type="email" placeholder="Email address" required autocomplete="email"></div>
             <div class="form-group">
-              <label class="form-label">Reason for Contact</label>
-              <select class="form-select">
+              <label class="form-label" for="ct-reason">Reason for Contact</label>
+              <select class="form-select" id="ct-reason" name="reasonForContact">
                 <option>Care Enquiry</option><option>Book a Visit</option><option>General Question</option><option>Media / Press Enquiry</option><option>Careers</option><option>Compliment or Complaint</option>
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label">Preferred Home</label>
-              <select class="form-select">
-                <option>Glan-yr-Afon Nursing Home</option><option>Llys Gwyn Residential Home</option><option>Pentwyn Nursing Home (Cardiff)</option><option>General / Not Sure</option>
+              <label class="form-label" for="ct-home">Preferred Home</label>
+              <select class="form-select" id="ct-home" name="preferredHome">
+                <option value="glan">Glan-yr-Afon Nursing Home</option><option value="llys">Llys Gwyn Residential Home</option><option value="pentwyn">Ty Pentwyn Nursing Home (Treorchy)</option><option value="">General / Not Sure</option>
               </select>
             </div>
-            <div class="form-group"><label class="form-label">Your Message</label><textarea class="form-textarea" placeholder="How can we help you?"></textarea></div>
+            <div class="form-group"><label class="form-label" for="ct-msg">Your Message</label><textarea class="form-textarea" id="ct-msg" name="message" placeholder="How can we help you?"></textarea></div>
+            <label class="form-consent"><input type="checkbox" name="gdprConsent" value="yes" required> I agree to processing as described in the <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</label>
+            <label class="form-consent"><input type="checkbox" name="postedPackRequested" value="on"> Request a printed information pack.</label>
             <button type="submit" class="form-submit">Send Message →</button>
             <div class="form-privacy">🔒 Strictly confidential · UK GDPR compliant</div>
           </form>
@@ -114,19 +119,39 @@
     </div>
   </section>
 
-  <!-- Map placeholder -->
-  <div style="width:100%;height:400px;background:var(--clr-slate);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem">
-    <div style="font-size:3rem">🗺️</div>
-    <div style="color:rgba(255,255,255,0.6);font-family:var(--font-serif);font-size:1.25rem">Interactive Map</div>
-    <div style="font-size:0.875rem;color:rgba(255,255,255,0.35)">Google Maps / Mapbox integration coming soon</div>
+  <!-- Map (embed from admin / content API, or OSM fallback) -->
+  <div id="contact-map-wrap" style="width:100%;min-height:380px;background:var(--clr-slate)">
+    <iframe title="Glan-yr-Afon area map" width="100%" height="380" style="border:0;display:block" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.openstreetmap.org/export/embed.html?bbox=-3.28%2C51.62%2C-3.14%2C51.71&amp;layer=mapnik"></iframe>
   </div>
 
   <footer class="footer">
-    <div class="container"><div class="footer-bottom" style="padding-top:0"><div class="footer-copy">© 2025 Valley Care Group</div><div class="footer-bottom-links"><a href="index.html">Home</a><a href="homes.html">Our Homes</a><a href="jobs.html">Careers</a></div></div></div>
+    <div class="container"><div class="footer-bottom" style="padding-top:0"><div class="footer-copy">© 2026 Valley Care Group</div><div class="footer-bottom-links"><a href="index.html">Home</a><a href="homes.html">Our Homes</a><a href="jobs.html">Careers</a><a href="privacy.html">Privacy</a><a href="cookies.html">Cookies</a><a href="complaints.html">Complaints</a></div></div></div>
   </footer>
 
   <div class="toast" id="toast"><span class="toast-icon">✅</span><div><div class="toast-title">Message Sent!</div><div class="toast-msg">Thank you — we'll be in touch very soon.</div></div></div>
+  <div class="lang-toggle-bar" aria-label="Language">
+    <button type="button" id="vcg-lang-en" class="active">EN</button>
+    <button type="button" id="vcg-lang-cy">CY</button>
+  </div>
+  <script src="assets/js/runtime-config.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/consent-banner.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/live-edit.js"></script>
+  <script>
+  (function () {
+    var base = (window.API_BASE || '').replace(/\/$/, '');
+    var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+    if (!base && isLocal) base = 'http://127.0.0.1:3500';
+    if (!base) return;
+    fetch(base + '/api/content').then(function (r) { return r.ok ? r.json() : null; }).then(function (c) {
+      if (!c || !c.homePages || !c.homePages.glan) return;
+      var html = c.homePages.glan.mapEmbedHtml;
+      var el = document.getElementById('contact-map-wrap');
+      if (html && el) el.innerHTML = html;
+    }).catch(function () {});
+  })();
+  </script>
 </body>
 </html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leave a review — Valley Care Group</title>
+  <meta name="description" content="Share feedback about our care homes and services. This form is for experiences with Valley Care Group homes — not for comments about this website.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏡</text></svg>">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <link rel="stylesheet" href="assets/css/signature.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">🏡</div>
+        <div class="nav-logo-text">
+          <span class="nav-logo-name">Valley Care Group</span>
+          <span class="nav-logo-tagline">Caring with Heart · Since 2005</span>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="homes.html">Our Homes</a>
+        <a href="services.html">Services</a>
+        <a href="jobs.html">Careers</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <button class="nav-cta-btn" onclick="window.location='contact.html'">Care Enquiry</button>
+      <div class="hamburger" id="hamburger" onclick="toggleMobileNav()"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="index.html" onclick="toggleMobileNav()">Home</a>
+    <a href="about.html" onclick="toggleMobileNav()">About Us</a>
+    <a href="homes.html" onclick="toggleMobileNav()">Our Homes</a>
+    <a href="services.html" onclick="toggleMobileNav()">Services</a>
+    <a href="jobs.html" onclick="toggleMobileNav()">Careers</a>
+    <a href="contact.html" onclick="toggleMobileNav()">Contact</a>
+    <a href="contact.html" onclick="toggleMobileNav()" style="color:var(--clr-gold)">Care Enquiry</a>
+  </div>
+
+  <section class="page-hero" id="main-content" style="padding-bottom:1.5rem">
+    <div class="page-hero-eyebrow">Home reviews</div>
+    <h1 class="page-hero-title">Leave a <em style="font-style:italic;color:var(--clr-gold-light)">review</em></h1>
+    <p class="page-hero-subtitle">Tell us about <strong>our homes and care</strong> — staff, environment, or support for your relative. This is not for comments about the website itself. For care enquiries or visits, use <a href="contact.html" style="color:var(--clr-cobalt);font-weight:600">Contact</a> instead.</p>
+  </section>
+
+  <section class="review-page-section section" style="background:var(--clr-cream);padding-top:0">
+    <div class="container">
+      <a href="index.html#testimonials" class="news-hub-back" style="margin-bottom:1.5rem;display:inline-block">← Back to home</a>
+
+      <div class="family-story-flow" style="margin-top:0">
+        <div class="family-story-form-card">
+          <h2 class="family-story-form-title" style="font-size:1.35rem">Your review</h2>
+          <p class="family-story-form-lead">Submissions are stored securely. They <strong>do not</strong> appear on the website automatically. After you submit, staff can review your message in the admin console and may add it to the homepage <strong>Family Voices</strong> section if appropriate.</p>
+          <form id="home-review-form" class="family-story-form" onsubmit="submitHomeReview(event)" novalidate>
+            <input type="text" name="hr_website" class="family-story-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <div class="family-story-field-row">
+              <div class="family-story-field">
+                <label for="hr_name">Your name <span class="family-story-req">*</span></label>
+                <input id="hr_name" name="hr_name" type="text" required maxlength="120" autocomplete="name" placeholder="e.g. Sarah Matthews">
+              </div>
+              <div class="family-story-field">
+                <label for="hr_email">Email <span class="family-story-req">*</span></label>
+                <input id="hr_email" name="hr_email" type="email" required maxlength="200" autocomplete="email" placeholder="So we can reply if needed">
+              </div>
+            </div>
+            <div class="family-story-field-row">
+              <div class="family-story-field">
+                <label for="hr_phone">Phone <span class="family-story-opt">(optional)</span></label>
+                <input id="hr_phone" name="hr_phone" type="tel" maxlength="40" autocomplete="tel">
+              </div>
+              <div class="family-story-field">
+                <label for="hr_home">Which home? <span class="family-story-req">*</span></label>
+                <select id="hr_home" name="hr_home" required>
+                  <option value="">Please select…</option>
+                  <option value="glan">Glan-yr-Afon Nursing Home</option>
+                  <option value="llys">Llys Gwyn Residential Home</option>
+                  <option value="pentwyn">Ty Pentwyn Nursing Home</option>
+                  <option value="group">Several homes / group overall</option>
+                </select>
+              </div>
+            </div>
+            <div class="family-story-field">
+              <label for="hr_rating">Overall experience <span class="family-story-opt">(optional)</span></label>
+              <select id="hr_rating" name="hr_rating">
+                <option value="">Prefer not to say</option>
+                <option value="5">5 — Excellent</option>
+                <option value="4">4 — Very good</option>
+                <option value="3">3 — Good</option>
+                <option value="2">2 — Fair</option>
+                <option value="1">1 — Poor</option>
+              </select>
+            </div>
+            <div class="family-story-field">
+              <label for="hr_relation">Your link to the home <span class="family-story-opt">(optional)</span></label>
+              <input id="hr_relation" name="hr_relation" type="text" maxlength="120" placeholder="e.g. Daughter of a resident">
+            </div>
+            <div class="family-story-field">
+              <label for="hr_review">Your review <span class="family-story-req">*</span></label>
+              <textarea id="hr_review" name="hr_review" required maxlength="3500" rows="6" placeholder="Describe your experience with the home, care team, or services (at least 20 characters)."></textarea>
+            </div>
+            <label class="family-story-check">
+              <input type="checkbox" name="hr_publish" id="hr_publish">
+              <span>I understand my feedback may be edited for length and, only if the home agrees, used on our website or materials — usually with first name and surname initial only.</span>
+            </label>
+            <label class="family-story-check">
+              <input type="checkbox" name="hr_gdpr" id="hr_gdpr">
+              <span>I agree to the <a href="privacy.html" target="_blank" rel="noopener noreferrer">privacy policy</a> and to you using these details to respond to this review. <span class="family-story-req">*</span></span>
+            </label>
+            <button type="submit" class="btn btn-primary family-story-submit">Submit review</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo-wrap">
+            <div class="nav-logo-icon" style="width:40px;height:40px;font-size:1.3rem">🏡</div>
+            <div class="nav-logo-text">
+              <span class="nav-logo-name">Valley Care Group</span>
+              <span class="nav-logo-tagline">Caring with Heart · Since 2005</span>
+            </div>
+          </div>
+          <p class="footer-brand-desc">Nursing and residential care across South Wales.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Quick Links</div>
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="index.html#testimonials">Testimonials</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2026 Valley Care Group. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">
+    <span class="toast-icon">✅</span>
+    <div>
+      <div class="toast-title"></div>
+      <div class="toast-msg"></div>
+    </div>
+  </div>
+
+  <script src="assets/js/runtime-config.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

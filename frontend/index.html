@@ -4,24 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Valley Care Group — Compassionate Care Homes in South Wales</title>
-  <meta name="description" content="Valley Care Group — where every day feels like home. Premium nursing and residential care across South Wales: Glan-yr-Afon Nursing Home, Llys Gwyn Residential Home, and the upcoming Pentwyn Nursing Home in Cardiff.">
-  <meta name="keywords" content="care home Wales, nursing home Blackwood, Llys Gwyn, Glan-yr-Afon, Pentwyn, residential care South Wales, Cardiff care home">
+  <meta name="description" content="Valley Care Group — where every day feels like home. Premium nursing and residential care across South Wales: Glan-yr-Afon Nursing Home, Llys Gwyn Residential Home, and Ty Pentwyn Nursing Home in Treorchy.">
+  <meta name="keywords" content="care home Wales, nursing home Blackwood, Llys Gwyn, Glan-yr-Afon, Ty Pentwyn, Treorchy, residential care South Wales, Rhondda care home">
   <meta property="og:title" content="Valley Care Group — Care Homes in Wales">
-  <meta property="og:description" content="Premium, compassionate care homes across South Wales. CIW Registered. 9.9 rated on carehome.co.uk.">
+  <meta property="og:description" content="Nursing and residential care across South Wales: Glan-yr-Afon, Llys Gwyn, and Ty Pentwyn. CIW registered. Glan-yr-Afon and Llys Gwyn are highly rated on carehome.co.uk; Ty Pentwyn is listed on the directory.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏡</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/pages.css">
   <link rel="stylesheet" href="assets/css/signature.css">
+  <script type="application/ld+json" id="jsonld-org">{"@context":"https://schema.org","@type":"Organization","name":"Valley Care Group","url":"https://www.valleycare.wales"}</script>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- Scroll Progress -->
   <div class="scroll-progress" id="scroll-progress"></div>
 
-
-  <!-- Navigation -->
-  <nav class="navbar transparent" id="navbar">
+  <!-- Fixed stack: announcement + nav (avoids bar covering the header) -->
+  <header class="site-fixed-top" id="site-fixed-top">
+    <div id="announcebar" class="announce-bar" role="region" aria-label="Site announcement">
+      <span class="announce-dot" aria-hidden="true"></span>
+      <a id="announce-link" href="homes/pentwyn.html" style="color:inherit;text-decoration:none">
+        <span id="announce-text">🏡 Explore Ty Pentwyn Nursing Home in the Rhondda — specialist nursing &amp; residential care →</span>
+      </a>
+    </div>
+    <nav class="navbar transparent" id="navbar">
     <div class="nav-container">
       <a href="index.html" class="nav-logo">
         <div class="nav-logo-icon">🏡</div>
@@ -31,33 +39,34 @@
         </div>
       </a>
       <div class="nav-links">
-        <a href="index.html" class="active">Home</a>
-        <a href="about.html">About Us</a>
-        <a href="homes.html">Our Homes</a>
-        <a href="services.html">Services</a>
-        <a href="jobs.html">Careers</a>
-        <a href="contact.html">Contact</a>
+        <a href="index.html" class="active" data-i18n="nav_home">Home</a>
+        <a href="about.html" data-i18n="nav_about">About Us</a>
+        <a href="homes.html" data-i18n="nav_homes">Our Homes</a>
+        <a href="services.html" data-i18n="nav_services">Services</a>
+        <a href="jobs.html" data-i18n="nav_careers">Careers</a>
+        <a href="contact.html" data-i18n="nav_contact">Contact</a>
       </div>
-      <button class="nav-cta-btn mag-btn" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">Care Enquiry</button>
+      <button class="nav-cta-btn mag-btn" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})" data-i18n="nav_enquiry">Care Enquiry</button>
       <div class="hamburger" id="hamburger" onclick="toggleMobileNav()"><span></span><span></span><span></span></div>
     </div>
-  </nav>
+    </nav>
+  </header>
 
   <!-- Mobile Nav -->
   <div class="mobile-nav" id="mobile-nav">
-    <a href="index.html" onclick="toggleMobileNav()">Home</a>
-    <a href="about.html" onclick="toggleMobileNav()">About Us</a>
-    <a href="homes.html" onclick="toggleMobileNav()">Our Homes</a>
-    <a href="services.html" onclick="toggleMobileNav()">Services</a>
-    <a href="jobs.html" onclick="toggleMobileNav()">Careers</a>
-    <a href="contact.html" onclick="toggleMobileNav()">Contact</a>
-    <a href="#enquiry" onclick="toggleMobileNav()" style="color:var(--clr-gold)">Care Enquiry</a>
+    <a href="index.html" onclick="toggleMobileNav()" data-i18n="nav_home">Home</a>
+    <a href="about.html" onclick="toggleMobileNav()" data-i18n="nav_about">About Us</a>
+    <a href="homes.html" onclick="toggleMobileNav()" data-i18n="nav_homes">Our Homes</a>
+    <a href="services.html" onclick="toggleMobileNav()" data-i18n="nav_services">Services</a>
+    <a href="jobs.html" onclick="toggleMobileNav()" data-i18n="nav_careers">Careers</a>
+    <a href="contact.html" onclick="toggleMobileNav()" data-i18n="nav_contact">Contact</a>
+    <a href="#enquiry" onclick="toggleMobileNav()" style="color:var(--clr-gold)" data-i18n="nav_enquiry">Care Enquiry</a>
   </div>
 
   <!-- ═══════════════════════════════════════════════
        HERO — SIGNATURE CINEMATIC
   ═══════════════════════════════════════════════ -->
-  <section class="hero-sig" id="hero">
+  <section class="hero-sig" id="main-content">
     <div class="hero-sig-bg" id="hero-bg"></div>
     <div class="hero-sig-overlay"></div>
     <div class="hero-sig-particles" id="particles"></div>
@@ -69,7 +78,7 @@
     <div class="hero-sig-content">
       <div class="hero-sig-badge">
         <span class="hero-badge-dot"></span>
-        <span id="hero-badge-text">CIW Registered · South Wales · Est. 2005 · 9.9 Rating</span>
+        <span id="hero-badge-text">CIW Registered · South Wales · Est. 2005 · Rated on carehome.co.uk</span>
       </div>
 
       <h1 class="hero-sig-title">
@@ -79,7 +88,7 @@
       </h1>
 
       <p class="hero-sig-subtitle" id="hero-subtitle">
-        Premium residential and nursing care across South Wales. Three unique homes, one unwavering promise — to care for your loved ones as if they were our own family.
+        Nursing and residential care across South Wales — Glan-yr-Afon, Llys Gwyn, and Ty Pentwyn. Regulated by CIW; Glan-yr-Afon and Llys Gwyn are rated on carehome.co.uk.
       </p>
 
       <div class="hero-sig-actions">
@@ -101,20 +110,20 @@
           <div class="hero-stat-label" id="sl2">Care Homes</div>
         </div>
         <div class="hero-stat">
-          <div class="hero-stat-num"><span class="count-num" id="sv3" data-target="120">0</span><sup id="ss3">+</sup></div>
-          <div class="hero-stat-label" id="sl3">Residents Cared For</div>
+          <div class="hero-stat-num"><span class="count-num" id="sv3" data-target="105">0</span><sup id="ss3"></sup></div>
+          <div class="hero-stat-label" id="sl3">Registered places (max.)</div>
         </div>
         <div class="hero-stat">
-          <div class="hero-stat-num"><span class="count-num" id="sv4" data-target="41">0</span><sup id="ss4"></sup></div>
-          <div class="hero-stat-label" id="sl4">5-Star Reviews</div>
+          <div class="hero-stat-num"><span class="count-num" id="sv4" data-target="64">0</span><sup id="ss4"></sup></div>
+          <div class="hero-stat-label" id="sl4">Directory reviews (Glan &amp; Llys)</div>
         </div>
       </div>
     </div>
 
     <!-- Floating rating badge -->
     <div class="hero-float-badge">
-      <div class="float-badge-num">9.9</div>
-      <div class="float-badge-label">Outstanding<br>carehome.co.uk</div>
+      <div class="float-badge-num" id="ch-float-rating-num">9.9</div>
+      <div class="float-badge-label">Glan-yr-Afon<br><span id="ch-float-rating-sub" style="font-weight:500;font-size:0.72em;opacity:0.9">Llys Gwyn 9.7 · Ty Pentwyn listed</span></div>
     </div>
 
     <!-- Scroll indicator -->
@@ -147,8 +156,8 @@
       <div class="accred-sig-item">
         <div class="accred-sig-icon-wrap">⭐</div>
         <div>
-          <div class="accred-sig-title">9.9 / 10 Rating</div>
-          <div class="accred-sig-sub">carehome.co.uk · 41 Reviews</div>
+          <div class="accred-sig-title" id="ch-accred-carehome">9.9 &amp; 9.7 / 10</div>
+          <div class="accred-sig-sub">carehome.co.uk — Glan-yr-Afon &amp; Llys Gwyn</div>
         </div>
       </div>
       <div class="accred-sig-item">
@@ -159,10 +168,10 @@
         </div>
       </div>
       <div class="accred-sig-item">
-        <div class="accred-sig-icon-wrap">🚫</div>
+        <div class="accred-sig-icon-wrap">🤝</div>
         <div>
-          <div class="accred-sig-title">No Agency Staff</div>
-          <div class="accred-sig-sub">Continuity of Care Policy</div>
+          <div class="accred-sig-title">Dedicated Teams</div>
+          <div class="accred-sig-sub">Continuity &amp; familiar faces</div>
         </div>
       </div>
       <div class="accred-sig-item">
@@ -194,9 +203,9 @@
           <div class="bento-card-overlay"></div>
           <!-- Rating pill -->
           <div class="bento-rating">
-            <div class="bento-rating-num">9.9</div>
+            <div class="bento-rating-num" id="bento-glan-rating-num">9.9</div>
             <div class="bento-rating-stars">★★★★★</div>
-            <div class="bento-rating-label">41 Reviews</div>
+            <div class="bento-rating-label" id="bento-glan-rating-label">41 Reviews</div>
           </div>
           <div class="bento-card-body">
             <div class="bento-card-status bento-status-open">
@@ -225,13 +234,18 @@
         <div class="bento-card tilt-card fade-up fade-up-delay-2">
           <img class="bento-card-img" src="assets/images/interior.png" alt="Llys Gwyn Residential Home — warm and welcoming interior">
           <div class="bento-card-overlay"></div>
+          <div class="bento-rating">
+            <div class="bento-rating-num" id="bento-llys-rating-num">9.7</div>
+            <div class="bento-rating-stars">★★★★★</div>
+            <div class="bento-rating-label" id="bento-llys-rating-label">23 Reviews</div>
+          </div>
           <div class="bento-card-body">
             <div class="bento-card-status bento-status-open">
               <span data-edit-key="index.homes.llys.status-icon">●</span> <span data-edit-key="index.homes.llys.status-text">Currently Open</span>
             </div>
             <div class="bento-card-name" data-edit-key="index.homes.llys.name">Llys Gwyn<br>Residential Home</div>
-            <div class="bento-card-type" data-edit-key="index.homes.llys.type">Residential Home · Wales</div>
-            <div class="bento-card-desc" data-edit-key="index.homes.llys.desc">A warm, family-oriented community where residents truly feel at home. Vibrant activities, no agency staff, and a dedicated team who know and love each resident.</div>
+            <div class="bento-card-type" data-edit-key="index.homes.llys.type">Residential Home · Pyle, Bridgend</div>
+            <div class="bento-card-desc" data-edit-key="index.homes.llys.desc">A warm, family-oriented community where residents truly feel at home — vibrant activities and a dedicated team who know each resident.</div>
             <div class="bento-card-tags">
               <span class="bento-tag">Residential Care</span>
               <span class="bento-tag">Activities</span>
@@ -243,30 +257,29 @@
           </div>
         </div>
 
-        <!-- Pentwyn — bottom right -->
-        <div class="bento-card tilt-card fade-up fade-up-delay-3" style="border:2px solid rgba(201,168,76,0.2)">
-          <img class="bento-card-img" src="assets/images/caregiver.png" alt="Pentwyn Nursing Home Cardiff — opening soon">
-          <div class="bento-card-overlay" style="background:linear-gradient(to top,rgba(13,27,42,0.99) 0%,rgba(13,27,42,0.7) 50%,rgba(13,27,42,0.25) 100%)"></div>
-          <!-- Countdown badge -->
-          <div class="bento-rating" style="background:rgba(201,168,76,0.15);border-color:rgba(201,168,76,0.35)">
-            <div class="bento-rating-num" style="font-size:1rem;color:var(--clr-gold-light)">2025</div>
-            <div class="bento-rating-stars" style="color:var(--clr-gold)">🏗️</div>
-            <div class="bento-rating-label" style="color:rgba(201,168,76,0.7)">Opening</div>
+        <!-- Ty Pentwyn — bottom right -->
+        <div class="bento-card tilt-card fade-up fade-up-delay-3">
+          <img class="bento-card-img" src="assets/images/caregiver.png" alt="Ty Pentwyn Nursing Home Treorchy">
+          <div class="bento-card-overlay"></div>
+          <div class="bento-rating" style="background:rgba(27,79,114,0.92)">
+            <div class="bento-rating-num" style="font-size:1rem">✓</div>
+            <div class="bento-rating-stars" style="font-size:0.65rem;letter-spacing:0.02em">carehome.co.uk</div>
+            <div class="bento-rating-label">Listed</div>
           </div>
           <div class="bento-card-body">
-            <div class="bento-card-status bento-status-soon">
-              <span data-edit-key="index.homes.pentwyn.status-icon">🏗️</span> <span data-edit-key="index.homes.pentwyn.status-text">Coming Soon</span>
+            <div class="bento-card-status bento-status-open">
+              <span data-edit-key="index.homes.pentwyn.status-icon">●</span> <span data-edit-key="index.homes.pentwyn.status-text">Currently Open</span>
             </div>
-            <div class="bento-card-name" data-edit-key="index.homes.pentwyn.name">Pentwyn<br>Nursing Home</div>
-            <div class="bento-card-type" data-edit-key="index.homes.pentwyn.type">Dual Registered · Marshfield Road, Cardiff CF3</div>
-            <div class="bento-card-desc" data-edit-key="index.homes.pentwyn.desc">Our newest jewel — a purpose-built, state-of-the-art nursing &amp; residential home coming to Cardiff. Register your priority interest today.</div>
+            <div class="bento-card-name" data-edit-key="index.homes.pentwyn.name">Ty Pentwyn<br>Nursing Home</div>
+            <div class="bento-card-type" data-edit-key="index.homes.pentwyn.type">Dual Registered · Treorchy, Rhondda</div>
+            <div class="bento-card-desc" data-edit-key="index.homes.pentwyn.desc">A dedicated nursing and residential home providing specialist support for older people, including dementia and disability care in the heart of the Rhondda.</div>
             <div class="bento-card-tags">
-              <span class="bento-tag">Dual Registered</span>
-              <span class="bento-tag">Nursing &amp; Residential</span>
-              <span class="bento-tag">Cardiff</span>
+              <span class="bento-tag">Nursing Care</span>
+              <span class="bento-tag">Dementia Support</span>
+              <span class="bento-tag">Specialist PD/LD</span>
             </div>
             <div class="bento-card-actions">
-              <a href="homes/pentwyn.html" class="bento-btn bento-btn-gold">Register Interest →</a>
+              <a href="homes/pentwyn.html" class="bento-btn bento-btn-gold">Explore Home →</a>
             </div>
           </div>
         </div>
@@ -275,6 +288,25 @@
 
       <div style="text-align:center;margin-top:2.5rem" class="fade-up">
         <a href="homes.html" class="btn btn-primary mag-btn">View All Homes &amp; Compare →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest from our homes (news & events flagged for homepage) -->
+  <section class="home-feed-section section" id="home-feed-section" style="display:none">
+    <div class="container">
+      <div class="text-center fade-up">
+        <span class="section-eyebrow">Across our homes</span>
+        <h2 class="section-title">News &amp; <em>Events</em></h2>
+        <p class="section-subtitle" style="margin:0 auto;max-width:560px">Highlights from all three homes when “Show on homepage” is ticked in the admin console. Scroll sideways to browse — open any story for the full reading view.</p>
+        <p class="section-subtitle" style="margin:0.75rem auto 0;font-size:0.88rem"><a href="news.html" style="color:var(--clr-cobalt);font-weight:600">Full news view — all stories →</a></p>
+      </div>
+    </div>
+    <div class="home-feed-rail fade-up" id="home-feed-rail">
+      <button type="button" class="home-feed-nav home-feed-nav--prev" id="home-feed-prev" aria-label="Scroll stories left" hidden>‹</button>
+      <button type="button" class="home-feed-nav home-feed-nav--next" id="home-feed-next" aria-label="Scroll stories right" hidden>›</button>
+      <div class="home-feed-scroll" id="home-feed-scroll">
+        <div class="home-feed-track" id="home-feed-grid"></div>
       </div>
     </div>
   </section>
@@ -378,15 +410,15 @@
             </div>
             <div class="story-stat">
               <div class="story-stat-num"><span class="count-num" data-target="9">0</span><span style="font-size:1.5rem">.9</span></div>
-              <div class="story-stat-label">carehome.co.uk Rating</div>
+              <div class="story-stat-label">Top score (Glan-yr-Afon)</div>
             </div>
             <div class="story-stat">
-              <div class="story-stat-num"><span class="count-num" data-target="41">0</span></div>
-              <div class="story-stat-label">5-Star Reviews</div>
+              <div class="story-stat-num"><span class="count-num" data-target="64">0</span></div>
+              <div class="story-stat-label">Directory reviews (Glan &amp; Llys)</div>
             </div>
             <div class="story-stat">
-              <div class="story-stat-num"><span class="count-num" data-target="0">0</span></div>
-              <div class="story-stat-label">Agency Staff Used</div>
+              <div class="story-stat-num"><span class="count-num" data-target="105">0</span></div>
+              <div class="story-stat-label">Registered places (max.)</div>
             </div>
           </div>
 
@@ -399,10 +431,10 @@
               </div>
             </div>
             <div class="story-proof-item">
-              <span class="story-proof-icon" data-edit-key="index.story.p2.icon">🚫</span>
+              <span class="story-proof-icon" data-edit-key="index.story.p2.icon">🤝</span>
               <div>
-                <div class="story-proof-text" data-edit-key="index.story.p2.title">Zero Agency Staff Policy</div>
-                <div class="story-proof-sub" data-edit-key="index.story.p2.sub">The same familiar faces, every single day</div>
+                <div class="story-proof-text" data-edit-key="index.story.p2.title">Stable, familiar teams</div>
+                <div class="story-proof-sub" data-edit-key="index.story.p2.sub">We invest in continuity so residents know who is caring for them</div>
               </div>
             </div>
             <div class="story-proof-item">
@@ -432,8 +464,8 @@
           </div>
           <img class="story-image-accent" src="assets/images/caregiver.png" alt="Compassionate caregiver building rapport with resident">
           <div class="story-award-badge">
-            <div class="story-award-num">9.9</div>
-            <div class="story-award-label">Care Rating</div>
+            <div class="story-award-num" id="story-award-rating-num">9.9</div>
+            <div class="story-award-label">Glan-yr-Afon · carehome.co.uk</div>
           </div>
         </div>
 
@@ -456,12 +488,15 @@
       <div class="text-center fade-up">
         <span class="section-eyebrow">Family Voices</span>
         <h2 class="section-title">What Families <em>Say About Us</em></h2>
-        <p class="section-subtitle" style="margin:0 auto">Real words from real families — people who trusted us with their most precious loved ones.</p>
+        <p class="section-subtitle" style="margin:0 auto;max-width:640px">Real words from real families — people who trusted us with their most precious loved ones. Quotes are added in the admin <strong>Content Manager → Testimonials</strong> (or published from submitted reviews). Verified star ratings live on <a href="https://www.carehome.co.uk" target="_blank" rel="noopener noreferrer" style="color:var(--clr-cobalt);font-weight:600">carehome.co.uk</a>.</p>
       </div>
 
-      <div class="testimonials-sig-grid" id="testimonials-grid">
+      <div class="testimonials-sig-rail">
+        <button type="button" class="testi-sig-nav testi-sig-nav--prev" id="testi-sig-prev" aria-label="Previous testimonial" hidden>‹</button>
+        <div class="testimonials-sig-scroll" id="testimonials-sig-scroll">
+          <div class="testimonials-sig-track" id="testimonials-grid">
 
-        <div class="testimonial-sig-card fade-up fade-up-delay-1">
+        <div class="testimonial-sig-card fade-up visible fade-up-delay-1">
           <div class="testi-quote-mark">"</div>
           <div class="testi-stars">★ ★ ★ ★ ★</div>
           <p class="testi-text">"The care Mum receives at Glan-yr-Afon is truly exceptional. The staff know her personally — her likes, her quirks, her stories. She's not just a resident, she's family to them. We could not have found a better place."</p>
@@ -475,7 +510,7 @@
           </div>
         </div>
 
-        <div class="testimonial-sig-card fade-up fade-up-delay-2">
+        <div class="testimonial-sig-card fade-up visible fade-up-delay-2">
           <div class="testi-quote-mark">"</div>
           <div class="testi-stars">★ ★ ★ ★ ★</div>
           <p class="testi-text">"Dad is genuinely happy at Llys Gwyn. He has friends, joins activities he loves, and talks about the staff with real warmth. Seeing him flourish has been the most enormous relief for our whole family. We are so grateful."</p>
@@ -489,7 +524,7 @@
           </div>
         </div>
 
-        <div class="testimonial-sig-card fade-up fade-up-delay-3">
+        <div class="testimonial-sig-card fade-up visible fade-up-delay-3">
           <div class="testi-quote-mark">"</div>
           <div class="testi-stars">★ ★ ★ ★ ★</div>
           <p class="testi-text">"The nursing team at Glan-yr-Afon go above and beyond every single day. The clinical care is outstanding, and the home is always spotless and cheerful. When I visit my husband I leave feeling at peace, not worried. That's priceless."</p>
@@ -503,21 +538,38 @@
           </div>
         </div>
 
+          </div>
+        </div>
+        <button type="button" class="testi-sig-nav testi-sig-nav--next" id="testi-sig-next" aria-label="Next testimonial" hidden>›</button>
       </div>
 
-      <!-- Trust numbers row -->
-      <div class="fade-up" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem;text-align:center">
-        <div style="padding:1.5rem;background:#fff;border-radius:var(--radius-lg);border:1px solid rgba(0,0,0,0.06)">
-          <div style="font-family:var(--font-serif);font-size:2.5rem;font-weight:700;color:var(--clr-cobalt);line-height:1">9.9</div>
-          <div style="font-size:0.78rem;color:var(--clr-text-light);margin-top:0.3rem;text-transform:uppercase;letter-spacing:0.07em">Average Rating</div>
+      <!-- carehome.co.uk — per-home listings -->
+      <div class="testi-trust-block fade-up">
+        <p class="testi-trust-footnote">Verified scores and reviews for each home are published on carehome.co.uk — open a card to view the live listing.</p>
+        <div class="testi-trust-homes">
+          <a class="testi-trust-home-card" href="https://www.carehome.co.uk/carehome.cfm/searchazref/20005032GLAB" target="_blank" rel="noopener noreferrer">
+            <span class="testi-trust-home-name">Glan-yr-Afon</span>
+            <span class="testi-trust-home-score"><span id="testi-glan-score">9.9</span> <span class="testi-trust-home-max">/ 10</span></span>
+            <span class="testi-trust-home-meta" id="testi-glan-meta">41 reviews · carehome.co.uk →</span>
+          </a>
+          <a class="testi-trust-home-card" href="https://www.carehome.co.uk/carehome.cfm/searchazref/10005015LLYA" target="_blank" rel="noopener noreferrer">
+            <span class="testi-trust-home-name">Llys Gwyn</span>
+            <span class="testi-trust-home-score"><span id="testi-llys-score">9.7</span> <span class="testi-trust-home-max">/ 10</span></span>
+            <span class="testi-trust-home-meta" id="testi-llys-meta">23 reviews · carehome.co.uk →</span>
+          </a>
+          <a class="testi-trust-home-card" href="https://www.carehome.co.uk/carehome.cfm/searchazref/20005017TYPA" target="_blank" rel="noopener noreferrer">
+            <span class="testi-trust-home-name">Ty Pentwyn</span>
+            <span class="testi-trust-home-score testi-trust-home-score--sm">Directory listing</span>
+            <span class="testi-trust-home-meta">Scores &amp; contact on carehome.co.uk →</span>
+          </a>
         </div>
-        <div style="padding:1.5rem;background:#fff;border-radius:var(--radius-lg);border:1px solid rgba(0,0,0,0.06)">
-          <div style="font-family:var(--font-serif);font-size:2.5rem;font-weight:700;color:var(--clr-cobalt);line-height:1">41</div>
-          <div style="font-size:0.78rem;color:var(--clr-text-light);margin-top:0.3rem;text-transform:uppercase;letter-spacing:0.07em">Verified Reviews</div>
-        </div>
-        <div style="padding:1.5rem;background:#fff;border-radius:var(--radius-lg);border:1px solid rgba(0,0,0,0.06)">
-          <div style="font-family:var(--font-serif);font-size:2.5rem;font-weight:700;color:var(--clr-cobalt);line-height:1">100%</div>
-          <div style="font-size:0.78rem;color:var(--clr-text-light);margin-top:0.3rem;text-transform:uppercase;letter-spacing:0.07em">Recommend Us</div>
+      </div>
+
+      <div class="testi-review-cta fade-up" id="family-story">
+        <p class="testi-review-cta-text">We welcome feedback about <strong>our homes and care</strong> — not about this website. Your review is sent securely to our team; it does not appear online until we choose to use it (for example in testimonials).</p>
+        <div class="testi-review-cta-actions">
+          <a href="reviews.html" class="btn btn-primary mag-btn">Leave a review — homes &amp; services</a>
+          <a href="#enquiry" class="btn btn-outline mag-btn" style="border-color:var(--clr-midnight);color:var(--clr-midnight)">Care enquiry / visit</a>
         </div>
       </div>
     </div>
@@ -570,7 +622,9 @@
         </div>
 
         <div class="enq-contact-bar">
-          <a href="tel:01633680217" class="enq-contact-link">📞 01633 680217</a>
+          <a href="tel:01443835196" class="enq-contact-link">📞 Glan-yr-Afon 01443 835196</a>
+          <a href="tel:01633680217" class="enq-contact-link">📞 Llys Gwyn 01633 680217</a>
+          <a href="contact.html" class="enq-contact-link">📋 Ty Pentwyn &amp; all details</a>
           <a href="mailto:care@valleycare.wales" class="enq-contact-link">✉️ care@valleycare.wales</a>
         </div>
       </div>
@@ -580,40 +634,42 @@
         <div class="glass-form-title">Make a Care Enquiry</div>
         <div class="glass-form-sub">Confidential &amp; no-obligation · UK GDPR compliant</div>
 
-        <form id="enquiry-form" onsubmit="submitEnquiry(event)">
+        <form id="enquiry-form" onsubmit="submitEnquiry(event)" novalidate>
+          <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input type="hidden" name="source" value="homepage">
           <div class="glass-form-row">
             <div>
               <label class="glass-label" for="g-fname">First Name</label>
-              <input class="glass-input" type="text" id="g-fname" placeholder="First name" required>
+              <input class="glass-input" type="text" id="g-fname" name="firstName" placeholder="First name" required autocomplete="given-name">
             </div>
             <div>
               <label class="glass-label" for="g-lname">Last Name</label>
-              <input class="glass-input" type="text" id="g-lname" placeholder="Last name" required>
+              <input class="glass-input" type="text" id="g-lname" name="lastName" placeholder="Last name" required autocomplete="family-name">
             </div>
           </div>
           <div class="glass-form-row">
             <div>
               <label class="glass-label" for="g-phone">Phone Number</label>
-              <input class="glass-input" type="tel" id="g-phone" placeholder="Your phone" required>
+              <input class="glass-input" type="tel" id="g-phone" name="phone" placeholder="Your phone" required autocomplete="tel">
             </div>
             <div>
               <label class="glass-label" for="g-email">Email Address</label>
-              <input class="glass-input" type="email" id="g-email" placeholder="Your email" required>
+              <input class="glass-input" type="email" id="g-email" name="email" placeholder="Your email" required autocomplete="email">
             </div>
           </div>
           <div class="glass-form-group">
             <label class="glass-label" for="g-home">Preferred Home</label>
-            <select class="glass-select" id="g-home">
+            <select class="glass-select" id="g-home" name="preferredHome">
               <option value="">Select a home...</option>
-              <option>Glan-yr-Afon Nursing Home (Blackwood)</option>
-              <option>Llys Gwyn Residential Home</option>
-              <option>Pentwyn Nursing Home (Cardiff — Coming Soon)</option>
-              <option>Not sure — please advise me</option>
+              <option value="glan">Glan-yr-Afon Nursing Home (Blackwood)</option>
+              <option value="llys">Llys Gwyn Residential Home</option>
+              <option value="pentwyn">Ty Pentwyn Nursing Home (Treorchy)</option>
+              <option value="unsure">Not sure — please advise me</option>
             </select>
           </div>
           <div class="glass-form-group">
             <label class="glass-label" for="g-type">Type of Care Needed</label>
-            <select class="glass-select" id="g-type">
+            <select class="glass-select" id="g-type" name="careType">
               <option value="">Select care type...</option>
               <option>Nursing Care</option>
               <option>Residential Care</option>
@@ -625,8 +681,16 @@
           </div>
           <div class="glass-form-group">
             <label class="glass-label" for="g-msg">Tell Us About Your Loved One</label>
-            <textarea class="glass-textarea" id="g-msg" placeholder="Share any relevant information — care needs, preferences, or questions..."></textarea>
+            <textarea class="glass-textarea" id="g-msg" name="message" placeholder="Share any relevant information — care needs, preferences, or questions..."></textarea>
           </div>
+          <label class="glass-consent">
+            <input type="checkbox" name="gdprConsent" value="yes" required>
+            <span>I agree to Valley Care Group processing my data as described in the <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</span>
+          </label>
+          <label class="glass-consent">
+            <input type="checkbox" name="postedPackRequested" value="on">
+            <span>Please send a printed information pack (if available).</span>
+          </label>
           <button type="submit" class="glass-submit">Send Enquiry — We'll Be in Touch ✦</button>
           <div class="glass-privacy">🔒 Strictly confidential · Your data is never shared or sold</div>
         </form>
@@ -644,8 +708,8 @@
         <h2 class="care-strip-title">Come and See<br><em>What Makes Us Different</em></h2>
         <p class="care-strip-sub">We welcome families to visit any time. Come and feel the warmth, meet our teams, and see why so many families trust us with the people they love most.</p>
         <div class="care-strip-actions">
-          <a href="tel:01633680217" class="btn btn-gold btn-lg mag-btn">📞 Call Us: 01633 680217</a>
-          <a href="contact.html" class="btn btn-outline btn-lg mag-btn">📅 Book a Free Visit</a>
+          <a href="contact.html" class="btn btn-gold btn-lg mag-btn">📞 Contact numbers by home</a>
+          <a href="contact.html" class="btn btn-outline btn-lg mag-btn">📅 Book a visit</a>
         </div>
       </div>
     </div>
@@ -681,7 +745,7 @@
           <div class="footer-links">
             <a href="homes/glan-yr-afon.html">Glan-yr-Afon Nursing Home</a>
             <a href="homes/llys-gwyn.html">Llys Gwyn Residential Home</a>
-            <a href="homes/pentwyn.html">Pentwyn Nursing Home (Soon)</a>
+            <a href="homes/pentwyn.html">Ty Pentwyn Nursing Home</a>
           </div>
         </div>
         <div>
@@ -693,6 +757,7 @@
             <a href="contact.html">Contact Us</a>
             <a href="contact.html">Book a Visit</a>
             <a href="#enquiry">Care Enquiry</a>
+            <a href="reviews.html">Leave a review</a>
           </div>
         </div>
         <div>
@@ -700,8 +765,12 @@
           <div class="footer-contact-item">
             <span class="footer-contact-icon">📞</span>
             <div>
-              <div class="footer-contact-label">Phone</div>
-              <div class="footer-contact-value"><a href="tel:01633680217" style="color:rgba(255,255,255,0.55)">01633 680217</a></div>
+              <div class="footer-contact-label">Phones</div>
+              <div class="footer-contact-value" style="line-height:1.6">
+                <a href="tel:01443835196" style="color:rgba(255,255,255,0.55)">Glan-yr-Afon 01443 835196</a><br>
+                <a href="tel:01633680217" style="color:rgba(255,255,255,0.55)">Llys Gwyn 01633 680217</a><br>
+                <a href="contact.html" style="color:rgba(255,255,255,0.55)">Ty Pentwyn — contact page</a>
+              </div>
             </div>
           </div>
           <div class="footer-contact-item">
@@ -714,28 +783,33 @@
           <div class="footer-contact-item">
             <span class="footer-contact-icon">📍</span>
             <div>
-              <div class="footer-contact-label">Glan-yr-Afon</div>
+              <div class="footer-contact-label">Head office / Glan-yr-Afon</div>
               <div class="footer-contact-value">Off Ford Road, Fleur-de-Lys,<br>Blackwood NP12 3WA</div>
             </div>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
-        <div class="footer-copy">© 2025 Valley Care Group. All rights reserved. Registered in England &amp; Wales No. 5745419</div>
+        <div class="footer-copy">© 2026 Valley Care Group. All rights reserved.</div>
         <div class="footer-bottom-links">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms &amp; Conditions</a>
-          <a href="#">CIW Registration</a>
-          <a href="#">Accessibility</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="cookies.html">Cookies</a>
+          <a href="complaints.html">Complaints</a>
+          <a href="https://careinspectorate.wales/" target="_blank" rel="noopener noreferrer">CIW</a>
         </div>
       </div>
     </div>
   </footer>
 
+  <div class="lang-toggle-bar" aria-label="Language">
+    <button type="button" id="vcg-lang-en" class="active">EN</button>
+    <button type="button" id="vcg-lang-cy">CY</button>
+  </div>
+
   <!-- Sticky Buttons -->
   <div class="sticky-enquiry">
     <button class="sticky-btn sticky-btn-primary" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">💬 Care Enquiry</button>
-    <a href="tel:01633680217" class="sticky-btn sticky-btn-phone">📞 Call Now</a>
+    <a href="contact.html" class="sticky-btn sticky-btn-phone">📞 Contact</a>
   </div>
 
   <!-- Toast -->
@@ -747,10 +821,15 @@
     </div>
   </div>
 
+  <script src="assets/js/runtime-config.js"></script>
   <script src="assets/js/config.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/consent-banner.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/signature.js"></script>
   <script src="assets/js/live-edit.js"></script>
+  <script>window.__vcgCarehomeFromIndex = true;</script>
+  <script src="assets/js/carehome-ratings.js"></script>
   <script>
   // ── Content loader: fetches /api/content and applies to DOM ──────────────
   (async function () {
@@ -759,11 +838,55 @@
       const el = document.getElementById(id);
       if (el) el.textContent = val;
     }
+    function escH(s) {
+      return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
     try {
-      const res = await fetch((window.API_BASE || '') + '/api/content');
+      let apiBase = (window.API_BASE || '').replace(/\/$/, '');
+      if (!apiBase && (location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
+        apiBase = 'http://127.0.0.1:3500';
+      }
+      const res = await fetch(apiBase + '/api/content');
       if (!res.ok) return;
       const c = await res.json();
       const s = c.site || {}, h = c.homepage || {};
+
+      (function ldJson() {
+        const el = document.getElementById('jsonld-org');
+        if (!el) return;
+        const base = (s.canonicalBase || window.location.origin || '').replace(/\/$/, '') || window.location.origin;
+        const org = {
+          '@context': 'https://schema.org',
+          '@type': 'Organization',
+          name: 'Valley Care Group',
+          url: base,
+          email: s.email || undefined,
+          department: [],
+        };
+        const hp = c.homePages || {};
+        [
+          { slug: 'glan', name: 'Glan-yr-Afon Nursing Home', path: 'homes/glan-yr-afon.html' },
+          { slug: 'llys', name: 'Llys Gwyn Residential Home', path: 'homes/llys-gwyn.html' },
+          { slug: 'pentwyn', name: 'Ty Pentwyn Nursing Home', path: 'homes/pentwyn.html' },
+        ].forEach(({ slug, name, path }) => {
+          const hm = hp[slug];
+          if (!hm) return;
+          const dept = {
+            '@type': 'MedicalOrganization',
+            name,
+            url: base + '/' + path,
+            telephone: hm.phoneDisplay || undefined,
+          };
+          if (hm.structuredAddress) {
+            dept.address = { '@type': 'PostalAddress', streetAddress: hm.structuredAddress };
+          }
+          if (hm.structuredLat && hm.structuredLng) {
+            dept.geo = { '@type': 'GeoCoordinates', latitude: hm.structuredLat, longitude: hm.structuredLng };
+          }
+          org.department.push(dept);
+        });
+        el.textContent = JSON.stringify(org);
+      })();
 
       // Announcement bar
       if (s.announcementEnabled === false) {
@@ -795,17 +918,93 @@
         }
       }
 
-      // Testimonials
+      if (typeof window.applyCarehomeRatings === 'function') {
+        window.applyCarehomeRatings(h);
+      }
+
+      // Home feed (news & events with showOnHomepage) — horizontal rail, all items
+      (function feedHome() {
+        const hp = c.homePages || {};
+        const items = [];
+        const homes = [
+          { slug: 'glan', label: 'Glan-yr-Afon', href: 'homes/glan-yr-afon.html' },
+          { slug: 'llys', label: 'Llys Gwyn', href: 'homes/llys-gwyn.html' },
+          { slug: 'pentwyn', label: 'Ty Pentwyn', href: 'homes/pentwyn.html' },
+        ];
+        homes.forEach(({ slug, label, href }) => {
+          const h = hp[slug];
+          if (!h) return;
+          (h.news || []).forEach((n) => {
+            if (n.showOnHomepage) items.push({ ...n, kind: 'News', homeLabel: label, homeHref: href, homeSlug: slug });
+          });
+          (h.events || []).forEach((e) => {
+            if (e.showOnHomepage) items.push({ ...e, kind: 'Event', homeLabel: label, homeHref: href, homeSlug: slug });
+          });
+        });
+        items.sort((a, b) => new Date(b.date) - new Date(a.date));
+        const sec = document.getElementById('home-feed-section');
+        const grid = document.getElementById('home-feed-grid');
+        const scrollEl = document.getElementById('home-feed-scroll');
+        const btnPrev = document.getElementById('home-feed-prev');
+        const btnNext = document.getElementById('home-feed-next');
+        if (!sec || !grid || !items.length) return;
+        function assetPath(u) {
+          if (!u || !String(u).trim()) return '';
+          const s = String(u).trim();
+          if (/^https?:\/\//i.test(s)) return s;
+          return s.replace(/^\//, '');
+        }
+        function fd(iso) {
+          try {
+            return new Date(iso + 'T12:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+          } catch (_) { return iso; }
+        }
+        function storyUrl(it) {
+          const id = encodeURIComponent(it.id || '');
+          const h = encodeURIComponent(it.homeSlug || '');
+          return 'news.html?home=' + h + '&id=' + id;
+        }
+        grid.innerHTML = items.map((it) => {
+          const img = assetPath(it.imageUrl);
+          const top = img
+            ? `<img class="home-feed-card-img" src="${escH(img)}" alt="" loading="lazy" decoding="async">`
+            : '<div class="home-feed-placeholder" aria-hidden="true">🏡</div>';
+          const su = storyUrl(it);
+          return `<article class="home-feed-card"><a class="home-feed-card-hit" href="${escH(su)}"><div class="home-feed-card-hit-media">${top}</div><div class="home-feed-card-body"><div class="home-feed-card-meta">${escH(it.kind)} · ${escH(it.homeLabel)} · ${escH(fd(it.date))}</div><h3 class="home-feed-card-title">${escH(it.title)}</h3><p class="home-feed-card-excerpt">${escH(it.excerpt || '')}</p><span class="home-feed-card-cta">Read full story →</span></div></a><a class="home-feed-card-secondary" href="${escH(it.homeHref)}">${escH(it.homeLabel)} — home page →</a></article>`;
+        }).join('');
+        sec.style.display = '';
+        function updateNavButtons() {
+          if (!scrollEl || !btnPrev || !btnNext) return;
+          const max = scrollEl.scrollWidth - scrollEl.clientWidth - 2;
+          const show = max > 8;
+          btnPrev.hidden = btnNext.hidden = !show;
+          if (!show) return;
+          btnPrev.disabled = scrollEl.scrollLeft <= 2;
+          btnNext.disabled = scrollEl.scrollLeft >= max - 2;
+        }
+        if (scrollEl && btnPrev && btnNext) {
+          const step = () => Math.min(360, scrollEl.clientWidth * 0.85);
+          btnPrev.addEventListener('click', () => { scrollEl.scrollBy({ left: -step(), behavior: 'smooth' }); });
+          btnNext.addEventListener('click', () => { scrollEl.scrollBy({ left: step(), behavior: 'smooth' }); });
+          scrollEl.addEventListener('scroll', updateNavButtons, { passive: true });
+          window.addEventListener('resize', updateNavButtons, { passive: true });
+          requestAnimationFrame(updateNavButtons);
+        }
+      })();
+
+      // Testimonials — "Family Voices" (#testimonials); data from Content Manager → Testimonials
+      // Injected after load: must use .visible on .fade-up — scroll observers only run at first paint.
       const testis = c.testimonials;
-      if (testis && testis.length) {
-        const grid = document.getElementById('testimonials-grid');
-        if (grid) grid.innerHTML = testis.map(t => `
-          <div class="testimonial-sig-card fade-up">
+      const grid = document.getElementById('testimonials-grid');
+      if (grid && Array.isArray(testis)) {
+        if (testis.length > 0) {
+          grid.innerHTML = testis.map(t => `
+          <div class="testimonial-sig-card fade-up visible">
             <div class="testi-quote-mark">"</div>
             <div class="testi-stars">★ ★ ★ ★ ★</div>
             <p class="testi-text">"${escH(t.text)}"</p>
             <div class="testi-author">
-              <div class="testi-avatar" style="background:linear-gradient(135deg,${escH(t.avatarColor||'#1B4F72')},#2E86C1)">${escH(t.initials||t.name[0])}</div>
+              <div class="testi-avatar" style="background:linear-gradient(135deg,${escH(t.avatarColor||'#1B4F72')},#2E86C1)">${escH(t.initials||(t.name&&t.name[0])||'?')}</div>
               <div>
                 <div class="testi-name">${escH(t.name)}</div>
                 <div class="testi-relation">${escH(t.relation)}</div>
@@ -813,12 +1012,12 @@
               </div>
             </div>
           </div>`).join('');
+        } else {
+          grid.innerHTML = '<p class="section-subtitle" style="text-align:center;max-width:520px;margin:1rem auto 0;line-height:1.65;color:var(--clr-text-mid)">Testimonials will appear here once they are added in the admin console (Content Manager → Testimonials), or when a submitted review is approved for the homepage.</p>';
+        }
+        if (typeof window.initTestimonialsCarousel === 'function') window.initTestimonialsCarousel();
       }
     } catch (_) { /* fail silently — static content remains */ }
-
-    function escH(s) {
-      return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
   })();
   </script>
 </body>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News &amp; Events — Valley Care Group</title>
+  <meta name="description" content="News and events from Valley Care Group homes across South Wales — stories for families and residents.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏡</text></svg>">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">🏡</div>
+        <div class="nav-logo-text">
+          <span class="nav-logo-name">Valley Care Group</span>
+          <span class="nav-logo-tagline">Caring with Heart · Since 2005</span>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="homes.html">Our Homes</a>
+        <a href="services.html">Services</a>
+        <a href="jobs.html">Careers</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <button class="nav-cta-btn" onclick="window.location='contact.html'">Care Enquiry</button>
+      <div class="hamburger" id="hamburger" onclick="toggleMobileNav()"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="index.html" onclick="toggleMobileNav()">Home</a>
+    <a href="about.html" onclick="toggleMobileNav()">About Us</a>
+    <a href="homes.html" onclick="toggleMobileNav()">Our Homes</a>
+    <a href="services.html" onclick="toggleMobileNav()">Services</a>
+    <a href="jobs.html" onclick="toggleMobileNav()">Careers</a>
+    <a href="contact.html" onclick="toggleMobileNav()">Contact</a>
+    <a href="contact.html" onclick="toggleMobileNav()" style="color:var(--clr-gold)">Care Enquiry</a>
+  </div>
+
+  <section class="page-hero" style="padding-bottom:2rem">
+    <div class="page-hero-eyebrow">Across our homes</div>
+    <h1 class="page-hero-title">News &amp; <em style="font-style:italic;color:var(--clr-gold-light)">Events</em></h1>
+    <p class="page-hero-subtitle">Read the full story — browse every highlight from our homepage feed in one place.</p>
+  </section>
+
+  <section class="news-hub">
+    <div class="container">
+      <a href="index.html#home-feed-section" class="news-hub-back">← Back to home</a>
+      <div id="news-hub-empty" class="news-hub-empty" style="display:none">
+        <p>No homepage stories are available right now. Items appear here when they are marked “Show on main homepage feed” in the admin console.</p>
+        <p style="margin-top:1rem"><a href="index.html">Return to homepage</a></p>
+      </div>
+      <div id="news-hub-layout" class="news-hub-inner" style="display:none">
+        <article class="news-hub-main" id="news-hub-main"></article>
+        <aside class="news-hub-aside" aria-label="All stories">
+          <h2 class="news-hub-aside-title">All stories</h2>
+          <ul class="news-hub-aside-list" id="news-hub-list"></ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo-wrap">
+            <div class="nav-logo-icon" style="width:40px;height:40px;font-size:1.3rem">🏡</div>
+            <div class="nav-logo-text">
+              <span class="nav-logo-name">Valley Care Group</span>
+              <span class="nav-logo-tagline">Caring with Heart · Since 2005</span>
+            </div>
+          </div>
+          <p class="footer-brand-desc">Providing compassionate, person-centred nursing and residential care across South Wales.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Our Homes</div>
+          <div class="footer-links">
+            <a href="homes/glan-yr-afon.html">Glan-yr-Afon Nursing Home</a>
+            <a href="homes/llys-gwyn.html">Llys Gwyn Residential Home</a>
+            <a href="homes/pentwyn.html">Ty Pentwyn Nursing Home</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Quick Links</div>
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="contact.html">Contact Us</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Get In Touch</div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">📞</span>
+            <div>
+              <div class="footer-contact-label">Phone</div>
+              <div class="footer-contact-value"><a href="tel:01633680217" style="color:rgba(255,255,255,0.55)">01633 680217</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2026 Valley Care Group. All rights reserved.</div>
+        <div class="footer-bottom-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="cookies.html">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/runtime-config.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+  (function () {
+    function esc(s) {
+      return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function assetPath(u) {
+      if (!u || !String(u).trim()) return '';
+      const x = String(u).trim();
+      if (/^https?:\/\//i.test(x)) return x;
+      return x.replace(/^\//, '');
+    }
+    function formatDate(iso) {
+      try {
+        return new Date(iso + 'T12:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      } catch (_) {
+        return iso;
+      }
+    }
+    function collectHomepageFeed(hp) {
+      const items = [];
+      const homes = [
+        { slug: 'glan', label: 'Glan-yr-Afon', href: 'homes/glan-yr-afon.html' },
+        { slug: 'llys', label: 'Llys Gwyn', href: 'homes/llys-gwyn.html' },
+        { slug: 'pentwyn', label: 'Ty Pentwyn', href: 'homes/pentwyn.html' },
+      ];
+      homes.forEach(({ slug, label, href }) => {
+        const h = hp[slug];
+        if (!h) return;
+        (h.news || []).forEach((n) => {
+          if (n.showOnHomepage) items.push({ ...n, kind: 'News', homeLabel: label, homeHref: href, homeSlug: slug });
+        });
+        (h.events || []).forEach((e) => {
+          if (e.showOnHomepage) items.push({ ...e, kind: 'Event', homeLabel: label, homeHref: href, homeSlug: slug });
+        });
+      });
+      items.sort((a, b) => new Date(b.date) - new Date(a.date));
+      return items;
+    }
+    function storyHref(it) {
+      return 'news.html?home=' + encodeURIComponent(it.homeSlug || '') + '&id=' + encodeURIComponent(it.id || '');
+    }
+    function pickItem(items, homeParam, idParam) {
+      if (!items.length) return null;
+      let found = items.find((it) => it.homeSlug === homeParam && it.id === idParam);
+      if (!found && idParam) found = items.find((it) => it.id === idParam);
+      return found || items[0];
+    }
+    function renderMain(it) {
+      const img = assetPath(it.imageUrl);
+      const media = img
+        ? '<img class="news-hub-main-media" src="' + esc(img) + '" alt="" width="1200" height="630">'
+        : '<div class="news-hub-main-placeholder" aria-hidden="true">🏡</div>';
+      const meta = esc(it.kind) + ' · ' + esc(it.homeLabel) + ' · ' + esc(formatDate(it.date));
+      const body = (it.excerpt || '').trim()
+        ? '<p class="news-hub-main-text">' + esc(it.excerpt) + '</p>'
+        : '<p class="news-hub-main-text">Thank you for reading — for more detail or to arrange a visit, please contact the home directly.</p>';
+      return (
+        media +
+        '<div class="news-hub-main-body">' +
+        '<div class="news-hub-main-meta">' + meta + '</div>' +
+        '<h2 class="news-hub-main-title">' + esc(it.title) + '</h2>' +
+        body +
+        '<div class="news-hub-main-actions">' +
+        '<a href="' + esc(it.homeHref) + '" class="btn btn-primary">Visit ' + esc(it.homeLabel) + '</a>' +
+        '<a href="contact.html" class="btn btn-outline">Care enquiry</a>' +
+        '</div></div>'
+      );
+    }
+
+    async function run() {
+      let apiBase = (window.API_BASE || '').replace(/\/$/, '');
+      if (!apiBase && (location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
+        apiBase = 'http://127.0.0.1:3500';
+      }
+      const params = new URLSearchParams(location.search);
+      const homeParam = params.get('home') || '';
+      const idParam = params.get('id') || '';
+
+      const emptyEl = document.getElementById('news-hub-empty');
+      const layoutEl = document.getElementById('news-hub-layout');
+      const mainEl = document.getElementById('news-hub-main');
+      const listEl = document.getElementById('news-hub-list');
+
+      let items = [];
+      try {
+        const res = await fetch(apiBase + '/api/content');
+        if (res.ok) {
+          const c = await res.json();
+          items = collectHomepageFeed(c.homePages || {});
+        }
+      } catch (_) {}
+
+      if (!items.length) {
+        emptyEl.style.display = 'block';
+        return;
+      }
+
+      const current = pickItem(items, homeParam, idParam);
+
+      layoutEl.style.display = '';
+      document.title = current.title + ' — News | Valley Care Group';
+      mainEl.innerHTML = renderMain(current);
+
+      listEl.innerHTML = items
+        .map((it) => {
+          const active = it.id === current.id && it.homeSlug === current.homeSlug;
+          const liCls = 'news-hub-aside-item' + (active ? ' is-active' : '');
+          return (
+            '<li class="' + liCls + '">' +
+            '<a href="' + esc(storyHref(it)) + '">' +
+            '<div class="news-hub-aside-kind">' + esc(it.kind) + ' · ' + esc(it.homeLabel) + '</div>' +
+            '<div class="news-hub-aside-item-title">' + esc(it.title) + '</div>' +
+            '<div class="news-hub-aside-date">' + esc(formatDate(it.date)) + '</div>' +
+            '</a></li>'
+          );
+        })
+        .join('');
+
+      const activeLink = listEl.querySelector('.is-active a');
+      if (activeLink) activeLink.scrollIntoView({ block: 'nearest' });
+    }
+
+    run();
+  })();
+  </script>
+</body>
+</html>

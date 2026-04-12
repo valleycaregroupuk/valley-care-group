@@ -166,9 +166,41 @@ Note the **frontend production URL**, e.g. `https://vcg-frontend.vercel.app`
 ## ✅ Final Checklist
 
 - [ ] Frontend loads at your Vercel URL
-- [ ] Job listings load on `/jobs.html`
+- [ ] `PUBLIC_API_BASE` is set on the **frontend** Vercel project (see below) so `npm run build` injects the live API URL
+- [ ] Job listings load on `/jobs.html` and applications submit with CV (Vercel Blob token on backend)
+- [ ] Care enquiry forms return success and rows appear under **Admin → Enquiries**
 - [ ] Admin panel works at `/admin.html`
 - [ ] Admin changes (jobs, content) persist after page refresh
+
+### Frontend build (`PUBLIC_API_BASE`)
+
+The static site runs `npm install && npm run build` before deploy ([`frontend/vercel.json`](frontend/vercel.json)). Set in the **frontend** Vercel project:
+
+| Variable | Example |
+|----------|---------|
+| `PUBLIC_API_BASE` | `https://your-backend.vercel.app` |
+
+Optional: `PUBLIC_GA_ID` (Google Analytics measurement ID — only loads after cookie consent), `PUBLIC_SENTRY_DSN` (browser errors; wire a loader if you use Sentry).
+
+---
+
+## 🧪 Staging vs production
+
+Use a **separate** Vercel backend project (or preview environment) with its **own Vercel KV** database so testing does not overwrite live jobs, content, enquiries, or applications. Point staging `ALLOWED_ORIGIN` at your preview frontend URL.
+
+---
+
+## 📡 Monitoring & uptime
+
+- Ping `GET /` on the API (expect JSON `status: ok`) and optionally `GET /api/content` from an external uptime monitor.
+- Set `SENTRY_DSN` on the backend to capture uncaught errors (optional).
+
+---
+
+## ✉️ Email & file storage (production)
+
+- **Resend**: set `RESEND_API_KEY`, `RESEND_FROM_EMAIL` (verified domain), `ENQUIRY_NOTIFY_TO`, and `APPLICATION_NOTIFY_TO` on the backend.
+- **CV uploads**: create **Vercel Blob** storage and set `BLOB_READ_WRITE_TOKEN` on the backend. Without it, local/dev may still accept applications without a file; production with Blob configured requires a CV except for **speculative** applications.
 
 ---
 
@@ -177,7 +209,8 @@ Note the **frontend production URL**, e.g. `https://vcg-frontend.vercel.app`
 - [ ] Change `ADMIN_PASSWORD` to something strong (12+ chars)
 - [ ] Set `JWT_SECRET` to a long random string (64+ chars)
 - [ ] Set `NODE_ENV=production` in Vercel env vars
-- [ ] Set `ALLOWED_ORIGIN` to your exact frontend domain
+- [ ] Set `ALLOWED_ORIGIN` to your exact frontend domain (comma-separated if you use `www` and apex)
+- [ ] If `NODE_ENV=production`, the API **refuses all requests** with `503` until `JWT_SECRET` (32+ chars), `ADMIN_PASSWORD` (12+ chars), and at least one `ALLOWED_ORIGIN` are set — this is intentional
 - [ ] Enable **2-Factor Authentication** on your Vercel and GitHub accounts
 
 ---
@@ -205,8 +238,8 @@ npx serve frontend
 ## 🏡 About
 
 Valley Care Group provides compassionate nursing and residential care across South Wales.
-- **Glan-yr-Afon Nursing Home** — Blackwood, Caerphilly
-- **Llys Gwyn Residential Home** — Wales
-- **Pentwyn Nursing Home** — Cardiff (Opening 2025)
+- **Glan-yr-Afon Nursing Home** — Blackwood, Caerphilly — **01443 835196**
+- **Llys Gwyn Residential Home** — Pyle, Bridgend (CF33 4PN) — **01633 680217**
+- **Ty Pentwyn Nursing Home** — Treorchy, RCT (CF42 6HD) — **managertypentwyn@outlook.com** · telephone on [carehome.co.uk listing](https://www.carehome.co.uk/carehome.cfm/searchazref/20005017TYPA) (operator: Quality Care (Surrey) Ltd)
 
-📞 01633 680217 | ✉️ care@valleycare.wales
+✉️ **care@valleycare.wales** — see **contact.html** for all numbers.

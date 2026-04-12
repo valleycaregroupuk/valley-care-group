@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Our Homes — Valley Care Group | South Wales Care Homes</title>
-  <meta name="description" content="Explore Valley Care Group's three care homes in South Wales: Glan-yr-Afon Nursing Home in Blackwood, Llys Gwyn Residential Home, and Pentwyn Nursing Home in Cardiff.">
+  <meta name="description" content="Explore Valley Care Group's three care homes in South Wales: Glan-yr-Afon Nursing Home in Blackwood, Llys Gwyn Residential Home in Pyle, and Ty Pentwyn Nursing Home in Treorchy.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏡</text></svg>">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/pages.css">
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <nav class="navbar scrolled" id="navbar">
     <div class="nav-container">
       <a href="index.html" class="nav-logo">
@@ -17,27 +18,27 @@
         <div class="nav-logo-text"><span class="nav-logo-name">Valley Care Group</span><span class="nav-logo-tagline">Caring with Heart · Since 2005</span></div>
       </a>
       <div class="nav-links">
-        <a href="index.html">Home</a><a href="about.html">About Us</a><a href="homes.html" class="active">Our Homes</a><a href="services.html">Services</a><a href="jobs.html">Careers</a><a href="contact.html">Contact</a>
+        <a href="index.html" data-i18n="nav_home">Home</a><a href="about.html" data-i18n="nav_about">About Us</a><a href="homes.html" class="active" data-i18n="nav_homes">Our Homes</a><a href="services.html" data-i18n="nav_services">Services</a><a href="jobs.html" data-i18n="nav_careers">Careers</a><a href="contact.html" data-i18n="nav_contact">Contact</a>
       </div>
-      <button class="nav-cta-btn" onclick="window.location='contact.html'">Care Enquiry</button>
+      <button class="nav-cta-btn" onclick="window.location='contact.html'" data-i18n="nav_enquiry">Care Enquiry</button>
       <div class="hamburger" id="hamburger" onclick="toggleMobileNav()"><span></span><span></span><span></span></div>
     </div>
   </nav>
   <div class="mobile-nav" id="mobile-nav">
-    <a href="index.html" onclick="toggleMobileNav()">Home</a><a href="about.html" onclick="toggleMobileNav()">About Us</a><a href="homes.html" onclick="toggleMobileNav()">Our Homes</a><a href="services.html" onclick="toggleMobileNav()">Services</a><a href="jobs.html" onclick="toggleMobileNav()">Careers</a><a href="contact.html" onclick="toggleMobileNav()">Contact</a>
+    <a href="index.html" onclick="toggleMobileNav()" data-i18n="nav_home">Home</a><a href="about.html" onclick="toggleMobileNav()" data-i18n="nav_about">About Us</a><a href="homes.html" onclick="toggleMobileNav()" data-i18n="nav_homes">Our Homes</a><a href="services.html" onclick="toggleMobileNav()" data-i18n="nav_services">Services</a><a href="jobs.html" onclick="toggleMobileNav()" data-i18n="nav_careers">Careers</a><a href="contact.html" onclick="toggleMobileNav()" data-i18n="nav_contact">Contact</a>
   </div>
 
   <!-- Hero -->
-  <section class="page-hero">
+  <section class="page-hero" id="main-content">
     <div class="page-hero-eyebrow" data-edit-key="homes.hero.eyebrow">Our Care Homes</div>
     <h1 class="page-hero-title" data-edit-key="homes.hero.title">Three Homes, <em style="font-style:italic;color:var(--clr-gold-light)">One Family</em></h1>
-    <p class="page-hero-subtitle" data-edit-key="homes.hero.sub">Whether you need specialist nursing care, residential support, or are exploring your options for a loved one in Cardiff, we have a home that's right for you.</p>
+    <p class="page-hero-subtitle" data-edit-key="homes.hero.sub">Whether you need specialist nursing care, residential support, or are exploring your options for a loved one, we have a home that's right for you across South Wales.</p>
   </section>
 
   <!-- Glan-yr-Afon feature -->
   <section class="section" style="background:#fff">
     <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center">
+      <div class="responsive-feature-split">
         <div class="fade-up">
           <img src="assets/images/hero_bg.png" alt="Glan-yr-Afon Nursing Home Blackwood" style="width:100%;border-radius:var(--radius-xl);box-shadow:var(--shadow-lg)">
         </div>
@@ -46,7 +47,7 @@
           <span class="section-eyebrow" data-edit-key="homes.glan.eyebrow">Home 1</span>
           <h2 class="section-title" data-edit-key="homes.glan.title">Glan-yr-Afon<br><em>Nursing Home</em></h2>
           <p style="color:var(--clr-text-mid);line-height:1.8;margin-bottom:1rem" data-edit-key="homes.glan.loc">📍 Off Ford Road, Fleur-de-Lys, Blackwood NP12 3WA</p>
-          <p style="color:var(--clr-text-mid);line-height:1.8;margin-bottom:1.5rem" data-edit-key="homes.glan.desc">Our flagship nursing home in Blackwood nestled in beautiful Welsh countryside. Glan-yr-Afon holds an outstanding <strong>9.9 rating</strong> on carehome.co.uk across 41 reviews and is CIW-registered. We provide nursing, dementia, palliative, and respite care delivered by nurse-led teams, 24 hours a day.</p>
+          <p style="color:var(--clr-text-mid);line-height:1.8;margin-bottom:1.5rem" data-edit-key="homes.glan.desc">Our flagship nursing home in Blackwood nestled in beautiful Welsh countryside. Glan-yr-Afon holds an outstanding <strong><span id="homes-inline-glan-score">9.9</span> rating</strong> on carehome.co.uk across <span id="homes-inline-glan-reviews">41</span> reviews and is CIW-registered. We provide nursing, dementia, palliative, and respite care delivered by nurse-led teams, 24 hours a day.</p>
           <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.75rem">
             <span class="home-feature-tag">Nursing Care</span>
             <span class="home-feature-tag">Dementia Support</span>
@@ -56,8 +57,8 @@
             <span class="home-feature-tag">CIW Registered</span>
           </div>
           <div style="display:flex;align-items:center;gap:1rem;padding:1rem;background:var(--clr-cream);border-radius:var(--radius-md);margin-bottom:1.75rem">
-            <div style="background:linear-gradient(135deg,#1B4F72,#2E86C1);color:#fff;font-size:1.4rem;font-weight:800;padding:0.4rem 0.9rem;border-radius:8px;font-family:var(--font-serif)">9.9</div>
-            <div><div style="font-weight:700;color:var(--clr-midnight)">Outstanding Rating</div><div style="font-size:0.8rem;color:var(--clr-text-light)">41 Reviews on carehome.co.uk</div></div>
+            <div id="homes-glan-badge-num" style="background:linear-gradient(135deg,#1B4F72,#2E86C1);color:#fff;font-size:1.4rem;font-weight:800;padding:0.4rem 0.9rem;border-radius:8px;font-family:var(--font-serif)">9.9</div>
+            <div><div style="font-weight:700;color:var(--clr-midnight)">Outstanding Rating</div><div id="homes-glan-badge-meta" style="font-size:0.8rem;color:var(--clr-text-light)">41 Reviews on carehome.co.uk</div></div>
           </div>
           <div style="display:flex;gap:1rem;flex-wrap:wrap">
             <a href="homes/glan-yr-afon.html" class="btn btn-primary">Explore This Home →</a>
@@ -71,25 +72,30 @@
   <!-- Llys Gwyn feature -->
   <section class="section" style="background:var(--clr-cream)">
     <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center">
+      <div class="responsive-feature-split">
         <div class="fade-up fade-up-delay-2">
           <div style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.35rem 0.9rem;background:rgba(39,174,96,0.1);border-radius:var(--radius-full);font-size:0.75rem;font-weight:700;color:#27AE60;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem">● Currently Open</div>
           <span class="section-eyebrow" data-edit-key="homes.llys.eyebrow">Home 2</span>
           <h2 class="section-title" data-edit-key="homes.llys.title">Llys Gwyn<br><em>Residential Home</em></h2>
-          <p style="color:var(--clr-text-mid);line-height:1.8;margin-bottom:1rem" data-edit-key="homes.llys.loc">📍 Wales</p>
-          <p style="color:var(--clr-text-mid);line-height:1.8;margin-bottom:1.5rem" data-edit-key="homes.llys.desc">Llys Gwyn is a warm, family-oriented residential home where residents feel genuinely at home. We offer a vibrant social community, excellent nutrition, and dedicated, consistent care teams who know and love each resident as an individual. No agency staff — ever.</p>
+          <p style="color:var(--clr-text-mid);line-height:1.8;margin-bottom:1rem" data-edit-key="homes.llys.loc">📍 Heol Broom, Maudlum, Pyle, Bridgend CF33 4PN</p>
+          <p style="color:var(--clr-text-mid);line-height:1.8;margin-bottom:1.5rem" data-edit-key="homes.llys.desc">Llys Gwyn is a warm, family-oriented residential home where residents feel genuinely at home. We offer a vibrant social community, excellent nutrition, and dedicated, consistent care teams who know each resident as an individual.</p>
           <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.75rem">
             <span class="home-feature-tag">Residential Care</span>
             <span class="home-feature-tag">Social Activities</span>
             <span class="home-feature-tag">Freshly Cooked Meals</span>
             <span class="home-feature-tag">Family Visits Welcome</span>
-            <span class="home-feature-tag">No Agency Staff</span>
+            <span class="home-feature-tag">Dedicated teams</span>
             <span class="home-feature-tag">CIW Registered</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:1rem;padding:1rem;background:var(--clr-cream);border-radius:var(--radius-md);margin-bottom:1.75rem">
+            <div id="homes-llys-badge-num" style="background:linear-gradient(135deg,#1B4F72,#2E86C1);color:#fff;font-size:1.4rem;font-weight:800;padding:0.4rem 0.9rem;border-radius:8px;font-family:var(--font-serif)">9.7</div>
+            <div><div style="font-weight:700;color:var(--clr-midnight)">Excellent Rating</div><div id="homes-llys-badge-meta" style="font-size:0.8rem;color:var(--clr-text-light)">23 Reviews on carehome.co.uk</div></div>
           </div>
           <div style="display:flex;gap:1rem;flex-wrap:wrap">
             <a href="homes/llys-gwyn.html" class="btn btn-primary">Explore This Home →</a>
             <a href="contact.html" class="btn" style="border:1.5px solid var(--clr-cobalt);color:var(--clr-cobalt);border-radius:var(--radius-full)">Make Enquiry</a>
           </div>
+
         </div>
         <div class="fade-up">
           <img src="assets/images/interior.png" alt="Llys Gwyn Residential Home" style="width:100%;border-radius:var(--radius-xl);box-shadow:var(--shadow-lg)">
@@ -98,35 +104,36 @@
     </div>
   </section>
 
-  <!-- Pentwyn feature -->
+  <!-- Ty Pentwyn feature -->
   <section class="section" style="background:var(--clr-midnight);position:relative;overflow:hidden">
     <div style="position:absolute;inset:0;background:url('assets/images/caregiver.png') center/cover;opacity:0.08"></div>
     <div class="container" style="position:relative;z-index:2">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center">
+      <div class="responsive-feature-split">
         <div class="fade-up">
-          <img src="assets/images/caregiver.png" alt="Pentwyn Nursing Home Cardiff" style="width:100%;border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);border:2px solid rgba(201,168,76,0.3)">
+          <img src="assets/images/caregiver.png" alt="Ty Pentwyn Nursing Home Treorchy" style="width:100%;border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);border:2px solid rgba(201,168,76,0.3)">
         </div>
         <div class="fade-up fade-up-delay-2">
-          <div style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.35rem 0.9rem;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.4);border-radius:var(--radius-full);font-size:0.75rem;font-weight:700;color:var(--clr-gold-light);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem">🏗️ Coming Soon</div>
+          <div style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.35rem 0.9rem;background:rgba(39,174,96,0.15);border:1px solid rgba(39,174,96,0.4);border-radius:var(--radius-full);font-size:0.75rem;font-weight:700;color:#27AE60;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem">● Currently Open</div>
           <span class="section-eyebrow" style="color:var(--clr-gold-light)" data-edit-key="homes.pentwyn.eyebrow">Home 3</span>
-          <h2 class="section-title" style="color:#fff" data-edit-key="homes.pentwyn.title">Pentwyn<br><em style="color:var(--clr-gold-light)">Nursing Home</em></h2>
-          <p style="color:rgba(255,255,255,0.65);line-height:1.8;margin-bottom:1rem" data-edit-key="homes.pentwyn.loc">📍 Marshfield Road, Cardiff CF3 2TU</p>
-          <p style="color:rgba(255,255,255,0.65);line-height:1.8;margin-bottom:1.5rem" data-edit-key="homes.pentwyn.desc">Our exciting new care home is coming to Cardiff in late 2025. Pentwyn House will be a purpose-built, dual-registered nursing and residential care home — bringing the very best of Valley Care Group's proven approach to the Welsh capital.</p>
+          <h2 class="section-title" style="color:#fff" data-edit-key="homes.pentwyn.title">Ty Pentwyn<br><em style="color:var(--clr-gold-light)">Nursing Home</em></h2>
+          <p style="color:rgba(255,255,255,0.65);line-height:1.8;margin-bottom:1rem" data-edit-key="homes.pentwyn.loc">📍 Pentwyn Road, Treorchy CF42 6HD</p>
+          <p style="color:rgba(255,255,255,0.65);line-height:1.8;margin-bottom:1.5rem" data-edit-key="homes.pentwyn.desc">Ty Pentwyn Nursing Home (operated by Quality Care (Surrey) Ltd) offers nursing and residential care for up to 35 people in Treorchy — including dementia residential care and support for learning disability, autism, physical disability, and sensory impairment, as registered with CIW.</p>
           <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.75rem">
-            <span style="padding:0.3rem 0.75rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-full);font-size:0.72rem;font-weight:600;color:rgba(255,255,255,0.7)">Dual Registered</span>
-            <span style="padding:0.3rem 0.75rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-full);font-size:0.72rem;font-weight:600;color:rgba(255,255,255,0.7)">Nursing &amp; Residential</span>
-            <span style="padding:0.3rem 0.75rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-full);font-size:0.72rem;font-weight:600;color:rgba(255,255,255,0.7)">Cardiff Location</span>
-            <span style="padding:0.3rem 0.75rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-full);font-size:0.72rem;font-weight:600;color:rgba(255,255,255,0.7)">Modern Facilities</span>
-            <span style="padding:0.3rem 0.75rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-full);font-size:0.72rem;font-weight:600;color:rgba(255,255,255,0.7)">Opening Late 2025</span>
+            <span style="padding:0.3rem 0.75rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-full);font-size:0.72rem;font-weight:600;color:rgba(255,255,255,0.7)">Nursing Care</span>
+            <span style="padding:0.3rem 0.75rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-full);font-size:0.72rem;font-weight:600;color:rgba(255,255,255,0.7)">Residential Care</span>
+            <span style="padding:0.3rem 0.75rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-full);font-size:0.72rem;font-weight:600;color:rgba(255,255,255,0.7)">Dementia Support</span>
+            <span style="padding:0.3rem 0.75rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-full);font-size:0.72rem;font-weight:600;color:rgba(255,255,255,0.7)">Learning Disabilities</span>
+            <span style="padding:0.3rem 0.75rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-full);font-size:0.72rem;font-weight:600;color:rgba(255,255,255,0.7)">Rhondda Valley</span>
           </div>
           <div style="display:flex;gap:1rem;flex-wrap:wrap">
-            <a href="homes/pentwyn.html" class="btn btn-gold">Register Priority Interest →</a>
-            <a href="homes/pentwyn.html" class="btn btn-outline">Find Out More</a>
+            <a href="homes/pentwyn.html" class="btn btn-gold">Explore This Home →</a>
+            <a href="contact.html" class="btn btn-outline">Make Enquiry</a>
           </div>
         </div>
       </div>
     </div>
   </section>
+
 
   <!-- Comparison table -->
   <section class="section" style="background:#fff">
@@ -135,29 +142,43 @@
         <span class="section-eyebrow" data-edit-key="homes.comp.eyebrow">Compare Our Homes</span>
         <h2 class="section-title" data-edit-key="homes.comp.title">Finding the <em>Right Fit</em></h2>
       </div>
-      <div class="fade-up" style="overflow-x:auto">
+      <div class="fade-up responsive-table-wrap">
         <table style="width:100%;border-collapse:collapse;font-size:0.9rem">
           <thead>
             <tr style="background:var(--clr-midnight);color:#fff">
               <th style="padding:1rem 1.5rem;text-align:left;font-family:var(--font-serif);font-weight:600">Feature</th>
               <th style="padding:1rem 1.5rem;text-align:center;font-weight:600">Glan-yr-Afon</th>
               <th style="padding:1rem 1.5rem;text-align:center;font-weight:600">Llys Gwyn</th>
-              <th style="padding:1rem 1.5rem;text-align:center;font-weight:600;background:rgba(201,168,76,0.15)">Pentwyn (Soon)</th>
+              <th style="padding:1rem 1.5rem;text-align:center;font-weight:600">Ty Pentwyn</th>
             </tr>
           </thead>
           <tbody>
-            <tr style="background:#fff"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">Home Type</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">Nursing Home</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">Residential Home</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid);background:rgba(201,168,76,0.05)">Dual Registered</td></tr>
-            <tr style="background:var(--clr-cream)"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">Nursing Care</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">❌</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid);background:rgba(201,168,76,0.05)">✅</td></tr>
-            <tr style="background:#fff"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">Residential Care</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid);background:rgba(201,168,76,0.05)">✅</td></tr>
-            <tr style="background:var(--clr-cream)"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">Dementia Support</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">Limited</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid);background:rgba(201,168,76,0.05)">✅</td></tr>
-            <tr style="background:#fff"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">Palliative Care</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">❌</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid);background:rgba(201,168,76,0.05)">✅</td></tr>
-            <tr style="background:var(--clr-cream)"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">Respite Care</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid);background:rgba(201,168,76,0.05)">✅</td></tr>
-            <tr style="background:#fff"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">carehome.co.uk Rating</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">⭐ 9.9</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">Outstanding</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid);background:rgba(201,168,76,0.05)">New Home</td></tr>
-            <tr style="background:var(--clr-cream)"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">Location</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">Blackwood, Caerphilly</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">Wales</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid);background:rgba(201,168,76,0.05)">Cardiff CF3</td></tr>
-            <tr style="background:#fff"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">CIW Registered</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid);background:rgba(201,168,76,0.05)">✅ (Pending)</td></tr>
-            <tr style="background:var(--clr-cream)"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">Currently Open</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid);background:rgba(201,168,76,0.05)">🏗️ Late 2025</td></tr>
+            <tr style="background:#fff"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">Home Type</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">Nursing Home</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">Residential Home</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">Nursing &amp; residential</td></tr>
+            <tr style="background:var(--clr-cream)"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">Operator (directory)</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid);font-size:0.82rem">See listing</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid);font-size:0.82rem">Grayson Enterprises Ltd</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid);font-size:0.82rem">Quality Care (Surrey) Ltd</td></tr>
+            <tr style="background:#fff"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">Nursing Care</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">❌</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td></tr>
+            <tr style="background:var(--clr-cream)"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">Residential Care</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td></tr>
+            <tr style="background:#fff"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">Dementia Support</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td></tr>
+            <tr style="background:var(--clr-cream)"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">Palliative Care</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td></tr>
+            <tr style="background:#fff"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">Respite Care</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td></tr>
+            <tr style="background:var(--clr-cream)"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">carehome.co.uk</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">⭐ <span id="homes-compare-glan-score">9.9</span> · <a href="https://www.carehome.co.uk/carehome.cfm/searchazref/20005032GLAB" target="_blank" rel="noopener noreferrer" style="color:var(--clr-cobalt);font-weight:600">Listing</a></td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">⭐ <span id="homes-compare-llys-score">9.7</span> · <a href="https://www.carehome.co.uk/carehome.cfm/searchazref/10005015LLYA" target="_blank" rel="noopener noreferrer" style="color:var(--clr-cobalt);font-weight:600">Listing</a></td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)"><a href="https://www.carehome.co.uk/carehome.cfm/searchazref/20005017TYPA" target="_blank" rel="noopener noreferrer" style="color:var(--clr-cobalt);font-weight:600">View profile</a></td></tr>
+            <tr style="background:#fff"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">Location</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">Blackwood, Caerphilly</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">Pyle, Bridgend</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">Treorchy, Rhondda</td></tr>
+            <tr style="background:var(--clr-cream)"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">CIW Registered</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td></tr>
+            <tr style="background:#fff"><td style="padding:0.9rem 1.5rem;font-weight:600;color:var(--clr-midnight)">Currently Open</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td><td style="padding:0.9rem 1.5rem;text-align:center;color:var(--clr-text-mid)">✅</td></tr>
           </tbody>
         </table>
+      </div>
+      <div class="carehome-directory-cta carehome-directory-cta--compact fade-up" style="margin-top:2rem">
+        <div class="carehome-directory-cta-inner">
+          <div class="carehome-directory-cta-text">
+            <div class="carehome-directory-cta-title">Independent directory listings</div>
+            <p class="carehome-directory-cta-sub" style="margin:0">Each home maintains a verified profile on carehome.co.uk with reviews and service information.</p>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:flex-end">
+            <a class="carehome-directory-cta-btn" style="font-size:0.8rem;padding:0.5rem 1rem" href="https://www.carehome.co.uk/carehome.cfm/searchazref/20005032GLAB" target="_blank" rel="noopener noreferrer">Glan-yr-Afon</a>
+            <a class="carehome-directory-cta-btn" style="font-size:0.8rem;padding:0.5rem 1rem" href="https://www.carehome.co.uk/carehome.cfm/searchazref/10005015LLYA" target="_blank" rel="noopener noreferrer">Llys Gwyn</a>
+            <a class="carehome-directory-cta-btn" style="font-size:0.8rem;padding:0.5rem 1rem" href="https://www.carehome.co.uk/carehome.cfm/searchazref/20005017TYPA" target="_blank" rel="noopener noreferrer">Ty Pentwyn</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -170,16 +191,25 @@
         <p class="cta-subtitle">Our care advisors are here to help you find the perfect fit for your loved one — just give us a call or fill in our enquiry form and we'll guide you through the options.</p>
         <div class="cta-actions">
           <a href="contact.html" class="btn btn-gold btn-lg">💬 Make an Enquiry</a>
-          <a href="tel:01633680217" class="btn btn-outline btn-lg">📞 01633 680217</a>
+          <a href="contact.html" class="btn btn-outline btn-lg">📞 Contact numbers</a>
         </div>
       </div>
     </div>
   </section>
 
   <footer class="footer">
-    <div class="container"><div class="footer-bottom" style="padding-top:0"><div class="footer-copy">© 2025 Valley Care Group</div><div class="footer-bottom-links"><a href="index.html">Home</a><a href="about.html">About Us</a><a href="contact.html">Contact</a></div></div></div>
+    <div class="container"><div class="footer-bottom" style="padding-top:0"><div class="footer-copy">© 2026 Valley Care Group</div><div class="footer-bottom-links"><a href="index.html">Home</a><a href="about.html">About Us</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a><a href="cookies.html">Cookies</a></div></div></div>
   </footer>
+  <div class="lang-toggle-bar" aria-label="Language">
+    <button type="button" id="vcg-lang-en" class="active">EN</button>
+    <button type="button" id="vcg-lang-cy">CY</button>
+  </div>
+  <script src="assets/js/runtime-config.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/consent-banner.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/live-edit.js"></script>
+  <script src="assets/js/carehome-ratings.js"></script>
 </body>
 </html>

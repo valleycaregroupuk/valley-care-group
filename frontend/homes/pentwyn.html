@@ -1,27 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- Official carehome.co.uk listing: https://www.carehome.co.uk/carehome.cfm/searchazref/20005017TYPA -->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pentwyn Nursing Home — Coming Soon | Valley Care Group</title>
-  <meta name="description" content="Pentwyn House Nursing Home is coming soon to Cardiff. A new dual-registered nursing and residential care home on Marshfield Road. Register your interest today.">
+  <title>Ty Pentwyn Nursing Home — Treorchy | Valley Care Group</title>
+  <meta name="description" content="Ty Pentwyn Nursing Home, Pentwyn Road, Treorchy CF42 6HD — up to 35 residents. Nursing and residential care, dementia support, learning disability and autism, physical disability, sensory impairment. Operated by Quality Care (Surrey) Ltd. CIW registered.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏡</text></svg>">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/pages.css">
-  <style>
-    .countdown { display:flex;gap:1.5rem;margin:2rem 0;flex-wrap:wrap }
-    .countdown-unit { text-align:center;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius-md);padding:1.25rem 1.75rem;min-width:90px }
-    .countdown-num { font-family:var(--font-serif);font-size:2.5rem;font-weight:700;color:var(--clr-gold-light);line-height:1;display:block }
-    .countdown-label { font-size:0.7rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;margin-top:0.35rem }
-    .coming-hero { min-height:100vh;background:linear-gradient(135deg,var(--clr-midnight) 0%,var(--clr-cobalt) 60%,var(--clr-midnight) 100%);display:flex;align-items:center;padding:7rem 0 4rem;position:relative;overflow:hidden }
-    .coming-hero::before { content:'';position:absolute;top:-20%;right:-15%;width:60%;height:140%;background:radial-gradient(ellipse,rgba(201,168,76,0.1) 0%,transparent 70%);pointer-events:none }
-    .coming-hero::after { content:'';position:absolute;bottom:-20%;left:-10%;width:40%;height:80%;background:radial-gradient(ellipse,rgba(46,134,193,0.15) 0%,transparent 70%);pointer-events:none }
-    .feature-preview { display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem }
-    @media(max-width:768px) { .feature-preview { grid-template-columns:1fr 1fr } .countdown { gap:1rem } }
-  </style>
 </head>
 <body>
-  <nav class="navbar transparent" id="navbar">
+  <nav class="navbar scrolled" id="navbar">
     <div class="nav-container">
       <a href="../index.html" class="nav-logo">
         <div class="nav-logo-icon">🏡</div>
@@ -30,7 +20,7 @@
       <div class="nav-links">
         <a href="../index.html">Home</a><a href="../about.html">About Us</a><a href="../homes.html" class="active">Our Homes</a><a href="../services.html">Services</a><a href="../jobs.html">Careers</a><a href="../contact.html">Contact</a>
       </div>
-      <button class="nav-cta-btn" onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">Register Interest</button>
+      <button class="nav-cta-btn" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">Care Enquiry</button>
       <div class="hamburger" id="hamburger" onclick="toggleMobileNav()"><span></span><span></span><span></span></div>
     </div>
   </nav>
@@ -38,175 +28,472 @@
     <a href="../index.html" onclick="toggleMobileNav()">Home</a><a href="../about.html" onclick="toggleMobileNav()">About Us</a><a href="../homes.html" onclick="toggleMobileNav()">Our Homes</a><a href="../services.html" onclick="toggleMobileNav()">Services</a><a href="../jobs.html" onclick="toggleMobileNav()">Careers</a><a href="../contact.html" onclick="toggleMobileNav()">Contact</a>
   </div>
 
-  <!-- Coming Soon Hero -->
-  <section class="coming-hero">
-    <div class="container" style="position:relative;z-index:2">
-      <div style="max-width:750px">
-        <div class="breadcrumbs" style="justify-content:flex-start;margin-bottom:2rem">
-          <a href="../index.html">Home</a> › <a href="../homes.html">Our Homes</a> › <span>Pentwyn Nursing Home</span>
-        </div>
-        <div class="hero-badge" style="margin-bottom:1.5rem">
-          <span class="hero-badge-dot"></span>
-          🏗️ Opening Soon · Cardiff
-        </div>
-        <h1 style="font-family:var(--font-serif);font-size:clamp(2.5rem,6vw,5rem);font-weight:700;color:#fff;line-height:1.08;margin-bottom:1rem" data-edit-key="pentwyn.hero.title">
-          Something<br>
-          <em style="font-style:italic;color:var(--clr-gold-light)">Exceptional</em><br>
-          is Coming to Cardiff
-        </h1>
-        <p style="font-size:1.1rem;color:rgba(255,255,255,0.75);line-height:1.7;max-width:580px;margin-bottom:2rem" data-edit-key="pentwyn.hero.sub">
-          Pentwyn House Nursing Home is our newest care home — a stunning, state-of-the-art dual-registered facility coming to <strong style="color:#fff">Marshfield Road, Cardiff CF3 2TU</strong>. Reserve your priority place today.
-        </p>
-
-        <!-- Countdown -->
-        <div class="countdown" id="countdown-display">
-          <div class="countdown-unit"><span class="countdown-num" id="cd-days">--</span><span class="countdown-label">Days</span></div>
-          <div class="countdown-unit"><span class="countdown-num" id="cd-hours">--</span><span class="countdown-label">Hours</span></div>
-          <div class="countdown-unit"><span class="countdown-num" id="cd-mins">--</span><span class="countdown-label">Minutes</span></div>
-          <div class="countdown-unit"><span class="countdown-num" id="cd-secs">--</span><span class="countdown-label">Seconds</span></div>
-        </div>
-
-        <button class="btn btn-gold btn-lg" onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">
-          📋 Register Your Priority Interest
-        </button>
-        <a href="tel:01633680217" class="btn btn-outline btn-lg" style="margin-left:1rem">📞 Call Us</a>
+  <section class="home-detail-hero" style="background-image:url('../assets/images/caregiver.png')">
+    <div class="home-detail-content">
+      <div class="breadcrumbs">
+        <a href="../index.html">Home</a> › <a href="../homes.html">Our Homes</a> › <span>Ty Pentwyn</span>
+      </div>
+      <div class="hero-badge" style="margin-bottom:1rem"><span class="hero-badge-dot"></span>Currently Open · CIW Registered</div>
+      <h1 style="font-family:var(--font-serif);font-size:clamp(2.2rem,5vw,4rem);font-weight:700;color:#fff;line-height:1.1;max-width:700px;margin-bottom:0.75rem">Ty Pentwyn<br><em style="font-style:italic;color:var(--clr-gold-light)">Nursing Home</em></h1>
+      <p style="color:rgba(255,255,255,0.75);font-size:1.05rem;margin-bottom:1.5rem">Pentwyn Road, Treorchy CF42 6HD</p>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap">
+        <button class="btn btn-gold" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">💬 Make an Enquiry</button>
+        <a href="mailto:managertypentwyn@outlook.com" class="btn btn-outline" id="pentwyn-hero-email">✉️ Email the home</a>
+        <a href="https://www.carehome.co.uk/carehome.cfm/searchazref/20005017TYPA" class="btn btn-outline" target="_blank" rel="noopener noreferrer" id="pentwyn-hero-directory">📋 Directory profile</a>
       </div>
     </div>
   </section>
 
-  <!-- About Pentwyn -->
-  <section class="section" style="background:#fff">
+  <div class="rating-strip">
     <div class="container">
-      <div style="text-align:center;max-width:700px;margin:0 auto" class="fade-up">
-        <span class="section-eyebrow" data-edit-key="pentwyn.about.eyebrow">About Pentwyn House</span>
-        <h2 class="section-title" data-edit-key="pentwyn.about.title">Dual-Registered Care at Its <em>Finest</em></h2>
-        <p class="section-subtitle" style="margin:0 auto" data-edit-key="pentwyn.about.sub">Pentwyn House Nursing Home will be a CIW-registered dual facility offering both nursing and residential care — the only home you'll ever need to consider for your loved one.</p>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:4rem;align-items:center">
-        <div class="fade-up">
-          <img src="../assets/images/caregiver.png" alt="Compassionate care" style="width:100%;border-radius:var(--radius-xl);box-shadow:var(--shadow-lg)">
+      <div class="rating-strip-inner">
+        <div class="rating-badge-large">
+          <span class="rating-num" style="font-size:1.05rem;padding:0.55rem 0.85rem">✓</span>
+          <div>
+            <div class="rating-label">Listed on carehome.co.uk</div>
+            <div class="rating-sub">Ty Pentwyn Nursing Home · Treorchy</div>
+          </div>
         </div>
-        <div class="fade-up fade-up-delay-2">
-          <h3 style="font-family:var(--font-serif);font-size:1.75rem;color:var(--clr-midnight);margin-bottom:1rem">Why Pentwyn House?</h3>
-          <p style="color:var(--clr-text-mid);line-height:1.8;margin-bottom:1.25rem">Pentwyn House will carry the same Valley Care Group values that have made Glan-yr-Afon and Llys Gwyn so beloved — but with modern facilities and an expanded range of specialist services, purpose-built for 21st century care provision.</p>
-          <p style="color:var(--clr-text-mid);line-height:1.8;margin-bottom:2rem">Located in Cardiff, we will serve the local community with unmatched compassion, professionalism, and love.</p>
-          <div style="display:flex;flex-direction:column;gap:0.75rem">
-            ${[['📍','Cardiff Location','Marshfield Road, Cardiff CF3 2TU — easily accessible'],['🩺','Dual Registered','Both nursing and residential care under one roof'],['🌿','Modern Facilities','Purpose-built to the highest contemporary standards'],['👩‍⚕️','Experienced Team','Valley Care Group's proven staff standards & training']].map(([icon,title,desc])=>`<div style="display:flex;gap:0.75rem;align-items:flex-start"><span style="font-size:1.3rem;flex-shrink:0">${icon}</span><div><strong style="color:var(--clr-midnight)">${title}</strong><br><span style="font-size:0.875rem;color:var(--clr-text-mid)">${desc}</span></div></div>`).join('')}
+        <div class="rating-divider"></div>
+        <div class="rating-fact"><span class="rating-fact-label">Type</span><span class="rating-fact-value">Nursing &amp; residential · 35 places</span></div>
+        <div class="rating-divider"></div>
+        <div class="rating-fact"><span class="rating-fact-label">Operator</span><span class="rating-fact-value">Quality Care (Surrey) Ltd</span></div>
+        <div class="rating-divider"></div>
+        <div class="rating-fact"><span class="rating-fact-label">Location</span><span class="rating-fact-value">Treorchy, RCT</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carehome-directory-cta">
+    <div class="container carehome-directory-cta-inner">
+      <div class="carehome-directory-cta-text">
+        <div class="carehome-directory-cta-title">Verified profile on carehome.co.uk</div>
+        <p class="carehome-directory-cta-sub">Full service details, funding options, and how to contact or review Ty Pentwyn are on the national directory.</p>
+      </div>
+      <a class="carehome-directory-cta-btn" href="https://www.carehome.co.uk/carehome.cfm/searchazref/20005017TYPA" target="_blank" rel="noopener noreferrer" id="pentwyn-cta-directory">View listing →</a>
+    </div>
+  </div>
+
+  <section class="section" style="background:var(--clr-cream)">
+    <div class="container">
+      <div class="tabs-nav">
+        <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview')">Overview</button>
+        <button class="tab-btn" data-tab="news" onclick="switchTab('news')">News &amp; Events</button>
+        <button class="tab-btn" data-tab="care" onclick="switchTab('care')">Care Provided</button>
+        <button class="tab-btn" data-tab="funding" onclick="switchTab('funding')">Funding &amp; Fees</button>
+        <button class="tab-btn" data-tab="life" onclick="switchTab('life')">Life &amp; Wellbeing</button>
+        <button class="tab-btn" data-tab="facilities" onclick="switchTab('facilities')">Facilities &amp; Info</button>
+        <button class="tab-btn" data-tab="awards" onclick="switchTab('awards')">Awards</button>
+        <button class="tab-btn" data-tab="faq" onclick="switchTab('faq')">FAQs</button>
+        <button class="tab-btn" data-tab="team" onclick="switchTab('team')">Team</button>
+        <button class="tab-btn" data-tab="gallery" onclick="switchTab('gallery')">Gallery</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-overview">
+        <div class="home-meta-grid">
+          <div class="fade-up">
+            <span class="section-eyebrow">About Ty Pentwyn</span>
+            <h2 class="section-title">Nursing &amp; residential care in the <em>Rhondda</em></h2>
+            <p class="body-text mb-med">Ty Pentwyn Nursing Home on <strong>Pentwyn Road, Treorchy</strong> is registered for up to <strong>35 service users</strong>. We provide <strong>residential care</strong> and <strong>dementia residential care</strong>, with nurse-led support for older people and those with dementia, learning disability or autism, physical disability, and sensory impairment — in line with our registration with <strong>Care Inspectorate Wales (CIW)</strong>.</p>
+            <p class="body-text mb-med">The home is operated by <strong>Quality Care (Surrey) Ltd</strong> (privately owned). <strong>Susan Rosser</strong> is the <strong>Registered Manager</strong>. The local authority is <strong>Rhondda Cynon Taff County Borough Council</strong>.</p>
+            <p class="body-text" style="margin-bottom:2rem">For telephone contact and the latest vacancies, please use our <a href="https://www.carehome.co.uk/carehome.cfm/searchazref/20005017TYPA" target="_blank" rel="noopener noreferrer" style="color:var(--clr-cobalt);font-weight:600">carehome.co.uk profile</a> or email <a href="mailto:managertypentwyn@outlook.com" class="pentwyn-email-inline" style="color:var(--clr-cobalt);font-weight:600">managertypentwyn@outlook.com</a>.</p>
+            <button class="btn btn-primary" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">Make an Enquiry →</button>
+          </div>
+          <div class="fade-up fade-up-delay-2">
+            <div class="home-facts">
+              <h3 class="home-facts-title">Key information</h3>
+              <div class="home-fact"><span class="home-fact-label">Capacity</span><span class="home-fact-value">Up to 35 residents</span></div>
+              <div class="home-fact"><span class="home-fact-label">Operator</span><span class="home-fact-value">Quality Care (Surrey) Ltd</span></div>
+              <div class="home-fact"><span class="home-fact-label">Ownership</span><span class="home-fact-value">Private</span></div>
+              <div class="home-fact"><span class="home-fact-label">Registered manager</span><span class="home-fact-value">Susan Rosser</span></div>
+              <div class="home-fact"><span class="home-fact-label">Local authority</span><span class="home-fact-value">Rhondda Cynon Taff CBC</span></div>
+              <div class="home-fact"><span class="home-fact-label">Ages</span><span class="home-fact-value">50+</span></div>
+              <div class="home-fact"><span class="home-fact-label">Building</span><span class="home-fact-value">Not purpose-built · 2 floors</span></div>
+              <div class="home-fact"><span class="home-fact-label">Rooms</span><span class="home-fact-value">33 single · 1 couples/companion</span></div>
+              <div class="home-fact"><span class="home-fact-label">Email</span><a href="mailto:managertypentwyn@outlook.com" class="home-fact-value pentwyn-email-inline" style="color:var(--clr-cobalt)">managertypentwyn@outlook.com</a></div>
+              <div class="home-fact"><span class="home-fact-label">Phone</span><span class="home-fact-value" style="color:var(--clr-text-mid)">See carehome.co.uk listing</span></div>
+              <div class="home-fact"><span class="home-fact-label">Directory</span><a href="https://www.carehome.co.uk/carehome.cfm/searchazref/20005017TYPA" class="home-fact-value" style="color:var(--clr-cobalt)" target="_blank" rel="noopener noreferrer" id="pentwyn-fact-directory">carehome.co.uk profile →</a></div>
+            </div>
+            <div class="availability-banner" style="margin-top:1rem">
+              <div class="availability-label">Bed vacancies</div>
+              <div class="availability-text" id="pentwyn-availability-text">Please contact us for the latest vacancies.</div>
+              <a href="mailto:managertypentwyn@outlook.com" class="availability-phone pentwyn-email-inline">✉️ Email the home</a>
+            </div>
+            <div class="home-facts" style="margin-top:1.25rem">
+              <h3 class="home-facts-title">CIW (Wales regulator)</h3>
+              <p class="body-text" style="font-size:0.82rem;margin-top:0;margin-bottom:0.75rem">Care Inspectorate Wales registers and inspects social care services in Wales. Inspection reports and service information are published on the CIW digital directory.</p>
+              <a href="https://digital.careinspectorate.wales/" class="btn btn-primary" id="pentwyn-ciw-link" style="display:inline-block;padding:0.5rem 1rem;font-size:0.85rem;border-radius:var(--radius-full)" target="_blank" rel="noopener noreferrer">CIW digital directory →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-news">
+        <div class="fade-up">
+          <span class="section-eyebrow">Stay in touch</span>
+          <h2 class="section-title" style="margin-bottom:0.5rem">News &amp; <em>Events</em></h2>
+          <p class="body-text" style="margin-bottom:2.5rem;max-width:640px">Updates for Ty Pentwyn — content can be edited in the admin console (News &amp; Events).</p>
+          <div class="glan-news-events-grid">
+            <div>
+              <h3 class="glan-feed-title">News</h3>
+              <div class="glan-feed-column-scroll">
+                <ul class="glan-feed-list" id="pentwyn-news-list"></ul>
+              </div>
+            </div>
+            <div>
+              <h3 class="glan-feed-title">Upcoming events</h3>
+              <div class="glan-feed-column-scroll">
+                <ul class="glan-feed-list" id="pentwyn-events-list"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-care">
+        <div class="fade-up">
+          <h2 class="section-title" style="margin-bottom:0.75rem">Care <em>provided</em></h2>
+          <p class="body-text" style="margin-bottom:2.5rem;max-width:680px">Ty Pentwyn is registered for a <strong>maximum of 35 service users</strong>, including <strong>dementia residential care</strong>.</p>
+          <div class="responsive-grid-2" style="gap:2.5rem">
+            <div>
+              <h3 style="font-family:var(--font-serif);font-size:1.25rem;color:var(--clr-midnight);margin-bottom:1.25rem">Primary care categories</h3>
+              <div class="services-list-grid" style="grid-template-columns:1fr;gap:0.75rem">
+                <div class="service-list-item">Older Person Care</div>
+                <div class="service-list-item">Dementia</div>
+                <div class="service-list-item">Learning Disability / Autism</div>
+                <div class="service-list-item">Physical Disability</div>
+                <div class="service-list-item">Visual / Hearing Impairment</div>
+              </div>
+            </div>
+            <div>
+              <h3 style="font-family:var(--font-serif);font-size:1.25rem;color:var(--clr-midnight);margin-bottom:1.25rem">Length of stay</h3>
+              <div class="services-list-grid" style="grid-template-columns:1fr;gap:0.75rem">
+                <div class="service-list-item">Permanent Care</div>
+                <div class="service-list-item">Respite Care</div>
+              </div>
+            </div>
+            <div>
+              <h3 style="font-family:var(--font-serif);font-size:1.25rem;color:var(--clr-midnight);margin-bottom:1.25rem">Care types provided</h3>
+              <div class="services-list-grid" style="grid-template-columns:1fr;gap:0.75rem">
+                <div class="service-list-item">Residential Care</div>
+                <div class="service-list-item">Dementia Residential Care</div>
+              </div>
+            </div>
+            <div>
+              <h3 style="font-family:var(--font-serif);font-size:1.25rem;color:var(--clr-midnight);margin-bottom:1.25rem">Dementia care types</h3>
+              <div class="services-list-grid" style="grid-template-columns:1fr;gap:0.75rem">
+                <div class="service-list-item">Mild Dementia</div>
+                <div class="service-list-item">Moderate Dementia</div>
+              </div>
+            </div>
+            <div style="grid-column:1/-1">
+              <h3 style="font-family:var(--font-serif);font-size:1.25rem;color:var(--clr-midnight);margin-bottom:1.25rem">Other care provided</h3>
+              <div class="services-list-grid" style="gap:0.75rem">
+                <div class="service-list-item">Palliative / End of Life Care</div>
+                <div class="service-list-item">Convalescent Care</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-funding">
+        <div class="fade-up">
+          <h2 class="section-title" style="margin-bottom:0.75rem">Funding &amp; <em>fees</em></h2>
+          <p class="body-text" style="margin-bottom:2rem;max-width:680px">Funding types accepted, as listed on the home’s directory profile:</p>
+          <div class="services-list-grid" style="grid-template-columns:1fr;gap:0.75rem;max-width:520px">
+            <div class="service-list-item">Self Funding (Private)</div>
+            <div class="service-list-item">Local Authority with Top Up</div>
+            <div class="service-list-item">Local Authority</div>
+            <div class="service-list-item">NHS Continuing Healthcare (CHC)</div>
+          </div>
+          <p class="body-text" style="margin-top:2rem;max-width:680px;font-size:0.9rem;color:var(--clr-text-mid)">Fees and availability change over time — please contact the home or your social worker for a personalised indication.</p>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-life">
+        <div class="fade-up">
+          <h2 class="section-title">Life &amp; <em>wellbeing</em></h2>
+          <p class="body-text" style="margin-bottom:2rem;max-width:680px">We aim for a homely, supportive environment with nutritious food, meaningful activity, and strong links with families — tailored to each person’s needs and preferences.</p>
+          <div class="responsive-grid-2" style="gap:2rem;margin-top:1rem">
+            <div style="display:flex;gap:1rem;padding:1.5rem;background:#fff;border-radius:var(--radius-md);border:1px solid rgba(0,0,0,0.06)"><span style="font-size:1.75rem;flex-shrink:0">🏠</span><div><h4 style="font-family:var(--font-serif);color:var(--clr-midnight);margin-bottom:0.5rem">Accommodation</h4><p style="font-size:0.875rem;color:var(--clr-text-mid);line-height:1.65">Single and companion rooms; bring your own furniture if you wish.</p></div></div>
+            <div style="display:flex;gap:1rem;padding:1.5rem;background:#fff;border-radius:var(--radius-md);border:1px solid rgba(0,0,0,0.06)"><span style="font-size:1.75rem;flex-shrink:0">🍽️</span><div><h4 style="font-family:var(--font-serif);color:var(--clr-midnight);margin-bottom:0.5rem">Dining</h4><p style="font-size:0.875rem;color:var(--clr-text-mid);line-height:1.65">Freshly prepared meals; dietary needs accommodated.</p></div></div>
+            <div style="display:flex;gap:1rem;padding:1.5rem;background:#fff;border-radius:var(--radius-md);border:1px solid rgba(0,0,0,0.06)"><span style="font-size:1.75rem;flex-shrink:0">🎭</span><div><h4 style="font-family:var(--font-serif);color:var(--clr-midnight);margin-bottom:0.5rem">Activities</h4><p style="font-size:0.875rem;color:var(--clr-text-mid);line-height:1.65">Social and therapeutic activities to support wellbeing.</p></div></div>
+            <div style="display:flex;gap:1rem;padding:1.5rem;background:#fff;border-radius:var(--radius-md);border:1px solid rgba(0,0,0,0.06)"><span style="font-size:1.75rem;flex-shrink:0">👨‍👩‍👧</span><div><h4 style="font-family:var(--font-serif);color:var(--clr-midnight);margin-bottom:0.5rem">Families</h4><p style="font-size:0.875rem;color:var(--clr-text-mid);line-height:1.65">We welcome enquiries about visiting and how we can support you to stay connected.</p></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-facilities">
+        <div class="fade-up">
+          <h2 class="section-title" style="margin-bottom:1rem">Facilities &amp; <em>good to know</em></h2>
+          <p class="body-text" style="margin-bottom:2rem;max-width:680px">Facilities and services as listed for Ty Pentwyn Nursing Home.</p>
+          <h3 style="font-family:var(--font-serif);font-size:1.15rem;margin-bottom:1rem">Facilities</h3>
+          <div style="display:grid;grid-template-columns:1fr;gap:0.75rem;max-width:720px;margin-bottom:2rem">
+            <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:#fff;border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">🏠 Own Furniture if required</div>
+            <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:#fff;border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">🐾 Pet Friendly (or by arrangement)</div>
+            <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:#fff;border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">🛗 Lift</div>
+            <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:#fff;border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">♿ Wheelchair Access</div>
+            <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:#fff;border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">🌿 Gardens</div>
+            <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:#fff;border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">🍳 Residents Kitchenette</div>
+            <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:#fff;border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">📞 Phone Point in own room</div>
+            <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:#fff;border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">📺 Television point in own room</div>
+            <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:#fff;border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">📶 Residents Internet Access</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-awards">
+        <div class="fade-up">
+          <h2 class="section-title" style="margin-bottom:0.75rem">Awards &amp; <em>recognitions</em></h2>
+          <p class="body-text" style="max-width:560px">There are currently no awards or recognitions listed on the public directory for Ty Pentwyn. If you receive an award, we can add it here.</p>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-faq">
+        <div class="fade-up">
+          <h2 class="section-title" style="margin-bottom:0.75rem">Frequently asked <em>questions</em></h2>
+          <div style="max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:1rem">
+            <div style="background:#fff;border-radius:var(--radius-md);border:1px solid rgba(0,0,0,0.06);overflow:hidden">
+              <div style="padding:1.25rem;font-weight:700;color:var(--clr-midnight);background:var(--clr-cream)">What types of care is Ty Pentwyn registered for?</div>
+              <div style="padding:1.25rem;color:var(--clr-text-mid);line-height:1.6;font-size:0.95rem">Older Person Care, Dementia, Learning Disability / Autism, Physical Disability &amp; Visual / Hearing Impairment are the registered categories with <strong>Care Inspectorate Wales (CIW)</strong> — the regulator for Wales (not the CQC, which applies in England).</div>
+            </div>
+            <div style="background:#fff;border-radius:var(--radius-md);border:1px solid rgba(0,0,0,0.06);overflow:hidden">
+              <div style="padding:1.25rem;font-weight:700;color:var(--clr-midnight);background:var(--clr-cream)">How many rooms does Ty Pentwyn have?</div>
+              <div style="padding:1.25rem;color:var(--clr-text-mid);line-height:1.6;font-size:0.95rem">There are <strong>33 single rooms</strong> and <strong>1 couples/companion room</strong>.</div>
+            </div>
+            <div style="background:#fff;border-radius:var(--radius-md);border:1px solid rgba(0,0,0,0.06);overflow:hidden">
+              <div style="padding:1.25rem;font-weight:700;color:var(--clr-midnight);background:var(--clr-cream)">What are the facilities &amp; services?</div>
+              <div style="padding:1.25rem;color:var(--clr-text-mid);line-height:1.6;font-size:0.95rem">Own Furniture if required, Pet Friendly (or by arrangement), Lift, Wheelchair Access, Gardens, Residents Kitchenette, Phone Point in own room, Television point in own room &amp; Residents Internet Access — see the Facilities tab for the full list.</div>
+            </div>
+            <div style="background:#fff;border-radius:var(--radius-md);border:1px solid rgba(0,0,0,0.06);overflow:hidden">
+              <div style="padding:1.25rem;font-weight:700;color:var(--clr-midnight);background:var(--clr-cream)">How far is Ty Pentwyn to the centre of Treorchy?</div>
+              <div style="padding:1.25rem;color:var(--clr-text-mid);line-height:1.6;font-size:0.95rem">Approximately <strong>0.7 mile(s) as the crow flies</strong> — distance by road may be significantly further.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-team">
+        <div class="fade-up">
+          <h2 class="section-title" style="margin-bottom:0.75rem">Meet our <em>team</em></h2>
+          <p class="body-text" style="margin-bottom:1rem;max-width:650px"><strong>Registered Manager:</strong> Susan Rosser.</p>
+          <p class="body-text" style="margin-bottom:2rem;max-width:650px;font-size:0.9rem;color:var(--clr-text-mid)">Named team profiles and photos can be added when available.</p>
+          <div class="team-grid">
+            <div class="team-card">
+              <div class="team-avatar team-avatar--teal">👩‍💼</div>
+              <div class="team-info">
+                <div class="team-name">Registered Manager</div>
+                <div class="team-role">Susan Rosser</div>
+              </div>
+            </div>
+            <div class="team-card">
+              <div class="team-avatar team-avatar--blue">🩺</div>
+              <div class="team-info">
+                <div class="team-name">Nursing &amp; care</div>
+                <div class="team-role">Person-centred support</div>
+              </div>
+            </div>
+            <div class="team-card">
+              <div class="team-avatar team-avatar--purple">🤝</div>
+              <div class="team-info">
+                <div class="team-name">Housekeeping &amp; catering</div>
+                <div class="team-role">Safe, homely environment</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-gallery">
+        <div class="fade-up">
+          <h2 class="section-title" style="margin-bottom:0.5rem">Gallery</h2>
+          <p class="body-text" style="margin-bottom:2rem">Placeholder imagery — replace with Ty Pentwyn photography when available.</p>
+          <div class="gallery-grid" id="pentwyn-gallery-grid">
+            <div class="gallery-item"><img src="../assets/images/caregiver.png" alt="Care at Ty Pentwyn" loading="lazy" decoding="async"><div class="gallery-item-overlay">🔍</div></div>
+            <div class="gallery-item"><img src="../assets/images/interior.png" alt="Interior"><div class="gallery-item-overlay">🔍</div></div>
+            <div class="gallery-item"><img src="../assets/images/hero_bg.png" alt="Setting"><div class="gallery-item-overlay">🔍</div></div>
+            <div class="gallery-item"><img src="../assets/images/caregiver.png" alt="Team and residents"><div class="gallery-item-overlay">🔍</div></div>
+            <div class="gallery-item"><img src="../assets/images/interior.png" alt="Lounge"><div class="gallery-item-overlay">🔍</div></div>
+            <div class="gallery-item"><img src="../assets/images/hero_bg.png" alt="Grounds"><div class="gallery-item-overlay">🔍</div></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Feature Preview -->
-  <section class="section" style="background:var(--clr-cream)">
-    <div class="container">
-      <div class="text-center fade-up">
-        <span class="section-eyebrow">What to Expect</span>
-        <h2 class="section-title">A New Standard of <em>Care</em></h2>
-      </div>
-      <div class="feature-preview fade-up" style="margin-top:3.5rem">
-        ${[['🩺','Specialist Nursing','24/7 qualified nursing care for complex medical needs'],['🏠','Premium Accommodation','Private, beautifully furnished rooms with en-suite facilities'],['🎭','Activities Programme','Rich daily activities tailored to resident preferences'],['🍽️','Gourmet Dining','Fresh, nutritious meals crafted by our dedicated catering team'],['🧠','Dementia Support','Specialist memory care environments and trained staff'],['🌿','Garden Spaces','Tranquil outdoor spaces for relaxation and wellbeing'],['👨‍👩‍👧','Family Welcome','Open visiting policy and dedicated family lounges'],['🔒','Security & Safety','Advanced but discreet safety systems throughout'],['💻','Digital Connection','Video calling facilities to stay connected with family']].map(([icon,title,desc])=>`<div class="service-card" style="background:#fff"><div class="service-icon">${icon}</div><div class="service-title" style="color:var(--clr-midnight)">${title}</div><p class="service-desc" style="color:var(--clr-text-mid)">${desc}</p></div>`).join('')}
-      </div>
+  <section class="section" style="padding:0;background:var(--clr-slate)">
+    <div id="pentwyn-map-wrap" style="min-height:320px">
+      <iframe title="Map — Ty Pentwyn area" width="100%" height="320" style="border:0;display:block" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=-3.58%2C51.64%2C-3.42%2C51.70&amp;layer=mapnik"></iframe>
     </div>
   </section>
 
-  <!-- Register Interest -->
-  <section class="enquiry-section section" id="register">
+  <section class="enquiry-section section" id="enquiry">
     <div class="container">
       <div class="enquiry-inner">
         <div class="enquiry-info fade-up">
-          <span class="section-eyebrow" style="color:var(--clr-gold-light)">Priority Registration</span>
-          <h2 class="section-title" style="color:#fff">Be First Through <em style="color:var(--clr-gold-light)">Our Doors</em></h2>
-          <p class="section-subtitle" style="color:rgba(255,255,255,0.7)">Register your interest now and our team will ensure you're among the very first to be contacted when Pentwyn House Nursing Home opens. Priority placement guaranteed for early registrations.</p>
+          <span class="section-eyebrow" style="color:var(--clr-gold-light)">Enquire about Ty Pentwyn</span>
+          <h2 class="section-title" style="color:#fff">We’re here to <em style="color:var(--clr-gold-light)">help</em></h2>
+          <p class="section-subtitle" style="color:rgba(255,255,255,0.7)">Email the home directly, or use our carehome.co.uk profile for full contact options and to check availability.</p>
           <div style="margin-top:2rem;padding:1.5rem;background:rgba(255,255,255,0.07);border-radius:var(--radius-md);border:1px solid rgba(255,255,255,0.12)">
-            <div style="font-size:0.8rem;color:var(--clr-gold-light);font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem">📞 Want to speak to someone now?</div>
-            <div style="color:#fff">Call our team at <a href="tel:01633680217" style="color:var(--clr-gold-light);font-weight:700">01633 680217</a></div>
-            <div style="font-size:0.85rem;color:rgba(255,255,255,0.5);margin-top:0.25rem">Or email <a href="mailto:care@valleycare.wales" style="color:rgba(255,255,255,0.6)">care@valleycare.wales</a></div>
+            <div style="color:#fff;margin-bottom:0.5rem">Email</div>
+            <a href="mailto:managertypentwyn@outlook.com" class="pentwyn-email-inline" style="color:var(--clr-gold-light);font-weight:700;font-size:1.05rem;display:block;margin-bottom:1rem">managertypentwyn@outlook.com</a>
+            <a href="https://www.carehome.co.uk/carehome.cfm/searchazref/20005017TYPA" target="_blank" rel="noopener noreferrer" class="btn btn-gold" style="display:inline-block">carehome.co.uk profile →</a>
           </div>
         </div>
         <div class="enquiry-form-card fade-up fade-up-delay-2">
-          <div class="form-title">Register Your Interest</div>
-          <div class="form-subtitle">Pentwyn House Nursing Home · Cardiff · Opening Soon</div>
-          <form onsubmit="submitEnquiry(event)">
+          <div class="form-title">Enquire about a place</div>
+          <div class="form-subtitle">Ty Pentwyn Nursing Home · Treorchy</div>
+          <form onsubmit="submitEnquiry(event)" novalidate>
+            <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <input type="hidden" name="source" value="pentwyn-page">
+            <input type="hidden" name="homeSlug" value="pentwyn">
             <div class="form-row">
-              <div class="form-group"><label class="form-label">First Name</label><input class="form-input" type="text" placeholder="First name" required></div>
-              <div class="form-group"><label class="form-label">Last Name</label><input class="form-input" type="text" placeholder="Last name" required></div>
+              <div class="form-group"><label class="form-label" for="pent-enq-name">Your name</label><input class="form-input" id="pent-enq-name" name="name" type="text" placeholder="Full name" required autocomplete="name"></div>
+              <div class="form-group"><label class="form-label" for="pent-enq-phone">Phone</label><input class="form-input" id="pent-enq-phone" name="phone" type="tel" placeholder="Phone number" required autocomplete="tel"></div>
             </div>
-            <div class="form-row">
-              <div class="form-group"><label class="form-label">Phone</label><input class="form-input" type="tel" placeholder="Phone number" required></div>
-              <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="Email address" required></div>
-            </div>
+            <div class="form-group"><label class="form-label" for="pent-enq-email">Email</label><input class="form-input" id="pent-enq-email" name="email" type="email" placeholder="Email address" required autocomplete="email"></div>
             <div class="form-group">
-              <label class="form-label">Care Type Interested In</label>
-              <select class="form-select">
-                <option>Nursing Care</option><option>Residential Care</option><option>Dementia Support</option><option>Palliative Care</option><option>Respite Care</option><option>Not sure yet</option>
+              <label class="form-label" for="pent-enq-care">Care type</label>
+              <select class="form-select" id="pent-enq-care" name="careType">
+                <option>Nursing / residential</option>
+                <option>Dementia care</option>
+                <option>Respite</option>
+                <option>Learning disability / autism support</option>
+                <option>Physical disability support</option>
+                <option>Not sure</option>
               </select>
             </div>
-            <div class="form-group">
-              <label class="form-label">Estimated Timescale</label>
-              <select class="form-select">
-                <option>As soon as possible</option><option>Within 1–3 months</option><option>Within 3–6 months</option><option>6+ months</option><option>Just exploring options</option>
-              </select>
-            </div>
-            <div class="form-group"><label class="form-label">Additional Information</label><textarea class="form-textarea" placeholder="Tell us about your loved one's needs..."></textarea></div>
-            <button type="submit" class="form-submit">Register Priority Interest →</button>
-            <div class="form-privacy">🔒 Your information is kept strictly confidential · UK GDPR</div>
+            <div class="form-group"><label class="form-label" for="pent-enq-msg">Message</label><textarea class="form-textarea" id="pent-enq-msg" name="message" placeholder="Tell us what you’re looking for…"></textarea></div>
+            <label class="form-consent"><input type="checkbox" name="gdprConsent" value="yes" required> I agree to the <a href="../privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</label>
+            <button type="submit" class="form-submit">Send enquiry →</button>
+            <div class="form-privacy">🔒 Strictly confidential · UK GDPR compliant</div>
           </form>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Other homes -->
-  <section class="section" style="background:var(--clr-cream)">
-    <div class="container">
-      <div class="text-center fade-up">
-        <span class="section-eyebrow">Can't Wait?</span>
-        <h2 class="section-title">Visit One of Our <em>Open Homes</em></h2>
-        <p class="section-subtitle" style="margin:0 auto 2.5rem">While Pentwyn House is being prepared, our existing homes in Blackwood and Wales are welcoming new residents now.</p>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
-        <div style="background:#fff;border-radius:var(--radius-lg);padding:2rem;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow-xs)">
-          <h3 style="font-family:var(--font-serif);color:var(--clr-midnight);margin-bottom:0.5rem">Glan-yr-Afon Nursing Home</h3>
-          <p style="font-size:0.875rem;color:var(--clr-cobalt);font-weight:600;margin-bottom:0.75rem">Off Ford Road, Blackwood NP12 3WA</p>
-          <p style="font-size:0.875rem;color:var(--clr-text-mid);margin-bottom:1.5rem">Nursing home with a 9.9 rating and specialist dementia, palliative and respite care.</p>
-          <a href="glan-yr-afon.html" class="btn btn-primary btn-sm">Learn More →</a>
-        </div>
-        <div style="background:#fff;border-radius:var(--radius-lg);padding:2rem;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow-xs)">
-          <h3 style="font-family:var(--font-serif);color:var(--clr-midnight);margin-bottom:0.5rem">Llys Gwyn Residential Home</h3>
-          <p style="font-size:0.875rem;color:var(--clr-cobalt);font-weight:600;margin-bottom:0.75rem">Wales</p>
-          <p style="font-size:0.875rem;color:var(--clr-text-mid);margin-bottom:1.5rem">Warm and welcoming residential home with vibrant activities and excellent care.</p>
-          <a href="llys-gwyn.html" class="btn btn-primary btn-sm">Learn More →</a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <footer class="footer"><div class="container"><div class="footer-bottom" style="padding-top:0"><div class="footer-copy">© 2026 Valley Care Group · <a href="../index.html" style="color:var(--clr-gold)">Back to Homepage</a></div><div class="footer-bottom-links"><a href="../index.html">Home</a><a href="../homes.html">Our Homes</a><a href="../contact.html">Contact</a><a href="../privacy.html">Privacy</a></div></div></div></footer>
+  <div class="sticky-enquiry">
+    <button class="sticky-btn sticky-btn-primary" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">💬 Enquire</button>
+    <a href="mailto:managertypentwyn@outlook.com" class="sticky-btn sticky-btn-phone pentwyn-email-inline">✉️ Email</a>
+  </div>
+  <div class="toast" id="toast"><span class="toast-icon">✅</span><div><div class="toast-title">Enquiry sent!</div><div class="toast-msg">Thank you — our team will be in touch.</div></div></div>
 
-  <footer class="footer"><div class="container"><div class="footer-bottom" style="padding-top:0"><div class="footer-copy">© 2025 Valley Care Group · <a href="../index.html" style="color:var(--clr-gold)">Back to Homepage</a></div><div class="footer-bottom-links"><a href="../index.html">Home</a><a href="../homes.html">Our Homes</a><a href="../contact.html">Contact</a></div></div></div></footer>
-  <div class="sticky-enquiry"><button class="sticky-btn sticky-btn-primary" onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">📋 Register Interest</button><a href="tel:01633680217" class="sticky-btn sticky-btn-phone">📞 Call</a></div>
-  <div class="toast" id="toast"><span class="toast-icon">✅</span><div><div class="toast-title">Registration Received!</div><div class="toast-msg">Thank you — you'll be among the first contacted when Pentwyn House opens.</div></div></div>
-
+  <script src="../assets/js/runtime-config.js"></script>
+  <script src="../assets/js/config.js"></script>
   <script src="../assets/js/main.js"></script>
   <script src="../assets/js/live-edit.js"></script>
   <script>
-    // Countdown to opening date (set to 6 months from now)
-    const openDate = new Date('2025-12-01T00:00:00');
-    function updateCountdown() {
-      const now = new Date();
-      const diff = openDate - now;
-      if (diff <= 0) { document.getElementById('countdown-display').innerHTML = '<div style="color:var(--clr-gold-light);font-size:1.5rem;font-weight:700">🎉 We are Open!</div>'; return; }
-      const d = Math.floor(diff / 86400000);
-      const h = Math.floor((diff % 86400000) / 3600000);
-      const m = Math.floor((diff % 3600000) / 60000);
-      const s = Math.floor((diff % 60000) / 1000);
-      document.getElementById('cd-days').textContent = String(d).padStart(2,'0');
-      document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
-      document.getElementById('cd-mins').textContent = String(m).padStart(2,'0');
-      document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
+  (function () {
+    var PENT_FALLBACK = {
+      managerEmail: 'managertypentwyn@outlook.com',
+      carehomeListingUrl: 'https://www.carehome.co.uk/carehome.cfm/searchazref/20005017TYPA',
+      ciwServiceUrl: 'https://digital.careinspectorate.wales/',
+      phoneDisplay: '',
+      phoneTel: '',
+      news: [
+        { id: 'pent-n1', date: '2025-04-01', title: 'Welcome to our updated Ty Pentwyn page', excerpt: 'Accurate service details from our verified directory listing — contact us for vacancies and visits.', imageUrl: 'assets/images/caregiver.png' }
+      ],
+      events: [
+        { id: 'pent-e1', date: '2025-05-08', title: 'Open door for families', excerpt: 'We welcome enquiries and visits — please email the home or use our carehome.co.uk profile to get in touch.', imageUrl: '' }
+      ]
+    };
+    function mailto(m) { return 'mailto:' + (m || '').replace(/^mailto:/i, ''); }
+    function fmtDate(iso) {
+      try { return new Date(iso + 'T12:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }); }
+      catch (e) { return iso; }
     }
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    function feedAssetPath(url) {
+      if (!url || !String(url).trim()) return '';
+      var u = String(url).trim();
+      if (/^https?:\/\//i.test(u)) return u;
+      return '../' + u.replace(/^\//, '');
+    }
+    function escapeHtml(s) {
+      if (!s) return '';
+      var d = document.createElement('div');
+      d.textContent = s;
+      return d.innerHTML;
+    }
+    function applyLinks(g) {
+      var email = g.managerEmail || PENT_FALLBACK.managerEmail;
+      var listUrl = g.carehomeListingUrl || PENT_FALLBACK.carehomeListingUrl;
+      document.querySelectorAll('.pentwyn-email-inline').forEach(function (a) {
+        a.setAttribute('href', mailto(email));
+      });
+      ['pentwyn-hero-directory', 'pentwyn-cta-directory', 'pentwyn-fact-directory'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.setAttribute('href', listUrl);
+      });
+      var ciw = document.getElementById('pentwyn-ciw-link');
+      if (ciw) ciw.setAttribute('href', g.ciwServiceUrl || PENT_FALLBACK.ciwServiceUrl);
+    }
+    function renderFeed(ulId, items) {
+      var ul = document.getElementById(ulId);
+      if (!ul) return;
+      ul.innerHTML = '';
+      if (!items || !items.length) {
+        ul.innerHTML = '<li class="glan-feed-item"><p style="margin:0;color:var(--clr-text-mid)">No items to show yet.</p></li>';
+        return;
+      }
+      items.forEach(function (it) {
+        var li = document.createElement('li');
+        li.className = 'glan-feed-item';
+        var src = feedAssetPath(it.imageUrl);
+        var imgPart = src ? '<img class="glan-feed-thumb" src="' + escapeHtml(src) + '" alt="">' : '';
+        li.innerHTML = '<div class="glan-feed-item-inner">' + imgPart + '<div class="glan-feed-body"><span class="glan-feed-date">' + fmtDate(it.date) + '</span><h4>' + escapeHtml(it.title) + '</h4><p>' + escapeHtml(it.excerpt || '') + '</p></div></div>';
+        ul.appendChild(li);
+      });
+    }
+    function applyExtras(g) {
+      var av = document.getElementById('pentwyn-availability-text');
+      if (av && g.availabilityLine) av.textContent = g.availabilityLine;
+      var mw = document.getElementById('pentwyn-map-wrap');
+      if (mw && g.mapEmbedHtml) mw.innerHTML = g.mapEmbedHtml;
+      if (g.gallery && g.gallery.length) {
+        var grid = document.getElementById('pentwyn-gallery-grid');
+        if (grid) {
+          grid.innerHTML = g.gallery.map(function (item) {
+            var u = feedAssetPath(item.url);
+            return '<div class="gallery-item"><img src="' + escapeHtml(u) + '" alt="' + escapeHtml(item.alt || '') + '" loading="lazy" decoding="async"><div class="gallery-item-overlay">🔍</div></div>';
+          }).join('');
+        }
+      }
+    }
+    function run(g) {
+      applyLinks(g);
+      renderFeed('pentwyn-news-list', g.news || []);
+      renderFeed('pentwyn-events-list', g.events || []);
+      applyExtras(g);
+    }
+    var base = (window.API_BASE || '').replace(/\/$/, '');
+    if (!base && (location.hostname === 'localhost' || location.hostname === '127.0.0.1')) base = 'http://127.0.0.1:3500';
+    if (base) {
+      fetch(base + '/api/content')
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+        .then(function (d) {
+          var p = d.homePages && d.homePages.pentwyn;
+          if (!p) { run(PENT_FALLBACK); return; }
+          run({
+            managerEmail: p.managerEmail || PENT_FALLBACK.managerEmail,
+            carehomeListingUrl: p.carehomeListingUrl || PENT_FALLBACK.carehomeListingUrl,
+            ciwServiceUrl: p.ciwServiceUrl || PENT_FALLBACK.ciwServiceUrl,
+            phoneDisplay: p.phoneDisplay,
+            phoneTel: p.phoneTel,
+            news: Array.isArray(p.news) ? p.news : PENT_FALLBACK.news,
+            events: Array.isArray(p.events) ? p.events : PENT_FALLBACK.events,
+            availabilityLine: p.availabilityLine,
+            mapEmbedHtml: p.mapEmbedHtml,
+            gallery: p.gallery
+          });
+        })
+        .catch(function () { run(PENT_FALLBACK); });
+    } else {
+      run(PENT_FALLBACK);
+    }
+  })();
   </script>
 </body>
 </html>

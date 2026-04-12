@@ -158,7 +158,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-weight: 600 !important;
   border-radius: var(--radius-full) !important;
   transition: transform var(--transition-fast), box-shadow var(--transition-fast) !important;
-  background: none !important;
 }
 .nav-cta-btn {
   padding: 0.6rem 1.4rem;
@@ -1277,6 +1276,34 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .footer-bottom-links a:hover { color: rgba(255,255,255,0.7); }
 
 /* ============================================
+   HOMEPAGE: fixed header stack (announce + navbar)
+   ============================================ */
+.site-fixed-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.site-fixed-top .announce-bar {
+  position: relative;
+  z-index: 0;
+  flex: 0 0 auto;
+  width: 100%;
+}
+.site-fixed-top .navbar {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+/* ============================================
    ANNOUNCE BAR
    ============================================ */
 .announce-bar {
@@ -1290,7 +1317,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   color: rgba(255,255,255,0.9);
   font-weight: 500;
   position: relative;
-  z-index: 1001;
+  z-index: 1;
+  text-align: center;
+}
+.announce-bar a {
+  max-width: 100%;
+}
+.announce-bar #announce-text {
+  display: inline;
 }
 .announce-dot {
   width: 6px; height: 6px;
@@ -1464,6 +1498,17 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .nav-links, .nav-cta-btn { display: none; }
   .hamburger { display: flex; }
   .mobile-nav { display: flex; }
+  /* Keep compact legal-page nav links accessible when no hamburger menu is present. */
+  .navbar--static-links .nav-links {
+    display: flex;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .navbar--static-links .nav-links a {
+    padding: 0.42rem 0.7rem;
+    font-size: 0.78rem;
+  }
   .services-grid, .services-grid-row2 { grid-template-columns: 1fr; }
   .testimonials-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
@@ -1476,10 +1521,186 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .jobs-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 480px) {
-  :root { --space-2xl: 4rem; }
+  :root { --space-2xl: 3.5rem; }
   .homes-grid { grid-template-columns: 1fr; }
   .hero-actions { flex-direction: column; }
   .hero-actions .btn { width: 100%; justify-content: center; }
   .cta-actions { flex-direction: column; }
   .cta-actions .btn { width: 100%; justify-content: center; }
+}
+
+/* === Accessibility & forms (production) === */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 10000;
+  padding: 0.75rem 1.25rem;
+  background: var(--clr-cobalt);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 0 0 var(--radius-md, 8px) var(--radius-md, 8px);
+}
+.skip-link:focus {
+  left: 0.5rem;
+  top: 0.5rem;
+  outline: 3px solid var(--clr-gold-light);
+  outline-offset: 2px;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--clr-cobalt);
+  outline-offset: 2px;
+}
+
+.hp-field {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.form-consent,
+.glass-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.82rem;
+  color: var(--clr-text-mid);
+  margin: 0.75rem 0;
+  line-height: 1.45;
+}
+.form-consent input,
+.glass-consent input {
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+.glass-consent {
+  color: rgba(255, 255, 255, 0.75);
+}
+.glass-consent a {
+  color: var(--clr-gold-light);
+}
+
+.toast.toast--error .toast-title,
+.toast.toast--error .toast-msg {
+  color: #fff;
+}
+.toast.toast--error {
+  background: var(--clr-rose, #C0392B);
+}
+
+.team-grid .team-card {
+  background: #fff;
+  border-radius: var(--radius-lg, 12px);
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-xs, 0 2px 8px rgba(0, 0, 0, 0.06));
+}
+.team-grid .team-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+.team-ph-placeholder {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  background: var(--clr-cream);
+}
+.team-card-body {
+  padding: 1rem 1.15rem 1.25rem;
+}
+.team-name {
+  font-weight: 700;
+  color: var(--clr-midnight);
+}
+.team-role {
+  font-size: 0.85rem;
+  color: var(--clr-cobalt);
+  margin: 0.2rem 0 0.5rem;
+}
+.team-bio {
+  font-size: 0.85rem;
+  color: var(--clr-text-mid);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.faq-item {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-md, 8px);
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  background: #fff;
+}
+.faq-item summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--clr-midnight);
+}
+.faq-item p {
+  margin: 0.75rem 0 0;
+  font-size: 0.9rem;
+  color: var(--clr-text-mid);
+  line-height: 1.6;
+}
+
+html.reduce-motion .marquee-row,
+html.reduce-motion .hero-particle {
+  animation: none !important;
+}
+
+#vcg-cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: var(--clr-midnight);
+  color: #fff;
+  padding: 1rem 1.25rem;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.88rem;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.2);
+}
+#vcg-cookie-banner.vcg-show { display: flex; }
+#vcg-cookie-banner a { color: var(--clr-gold-light); }
+
+.lang-toggle-bar {
+  position: fixed;
+  bottom: 5.5rem;
+  right: 1rem;
+  z-index: 998;
+  display: flex;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+}
+.lang-toggle-bar button {
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(13, 27, 42, 0.85);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+.lang-toggle-bar button.active {
+  background: var(--clr-gold);
+  color: var(--clr-midnight);
+  border-color: var(--clr-gold);
 }
