@@ -195,6 +195,23 @@
         <p class="section-subtitle" style="margin:0 auto" data-edit-key="index.homes.sub">Each of our homes carries the same soul — warmth, dignity, and genuine care. Explore what makes each one special.</p>
       </div>
 
+      <!-- Nearest Home Locator -->
+      <div class="locator-widget fade-up" style="margin-bottom: 3.5rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+        <div class="locator-header" style="text-align: center; margin-bottom: 1.5rem;">
+          <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--clr-midnight); margin-bottom: 0.5rem;">Find the nearest home to you</h3>
+          <p style="color: var(--clr-text-mid); font-size: 0.95rem;">Enter your postcode or town to see which of our homes is closest.</p>
+        </div>
+        <div class="locator-search-bar" style="display: flex; gap: 0.5rem; background: #fff; padding: 0.5rem; border-radius: var(--radius-full); box-shadow: 0 8px 24px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.04);">
+          <div class="locator-icon" style="display: flex; align-items: center; justify-content: center; padding-left: 1.25rem; font-size: 1.2rem;">📍</div>
+          <input type="text" id="locator-input" class="locator-input" placeholder="e.g. CF42, Blackwood, or Pyle..." style="flex: 1; border: none; outline: none; background: transparent; font-family: var(--font-sans); font-size: 1rem; color: var(--clr-midnight); padding: 0.5rem;">
+          <button id="locator-btn" class="btn btn-gold mag-btn" style="border-radius: var(--radius-full); padding: 0.75rem 1.75rem;">Search</button>
+        </div>
+        <div id="locator-error" class="locator-error" style="display: none; text-align: center; color: #E74C3C; margin-top: 1rem; font-size: 0.9rem; font-weight: 500;"></div>
+        <div id="locator-results" class="locator-results" style="display: none; flex-direction: column; gap: 1rem; margin-top: 2rem;">
+          <!-- Results injected via JS -->
+        </div>
+      </div>
+
       <div class="bento-grid">
 
         <!-- Glan-yr-Afon — TALL card (left, spans both rows) -->
@@ -298,7 +315,7 @@
       <div class="text-center fade-up">
         <span class="section-eyebrow">Across our homes</span>
         <h2 class="section-title">News &amp; <em>Events</em></h2>
-        <p class="section-subtitle" style="margin:0 auto;max-width:560px">Highlights from all three homes when “Show on homepage” is ticked in the admin console. Scroll sideways to browse — open any story for the full reading view.</p>
+        <p class="section-subtitle" style="margin:0 auto;max-width:560px">Highlights and stories from across our homes. Scroll sideways to browse, or open any story for the full reading view.</p>
         <p class="section-subtitle" style="margin:0.75rem auto 0;font-size:0.88rem"><a href="news.html" style="color:var(--clr-cobalt);font-weight:600">Full news view — all stories →</a></p>
       </div>
     </div>
@@ -488,7 +505,7 @@
       <div class="text-center fade-up">
         <span class="section-eyebrow">Family Voices</span>
         <h2 class="section-title">What Families <em>Say About Us</em></h2>
-        <p class="section-subtitle" style="margin:0 auto;max-width:640px">Real words from real families — people who trusted us with their most precious loved ones. Quotes are added in the admin <strong>Content Manager → Testimonials</strong> (or published from submitted reviews). Verified star ratings live on <a href="https://www.carehome.co.uk" target="_blank" rel="noopener noreferrer" style="color:var(--clr-cobalt);font-weight:600">carehome.co.uk</a>.</p>
+        <p class="section-subtitle" style="margin:0 auto;max-width:640px">Real words from real families — people who entrusted us with their most precious loved ones. Read our verified reviews and see why families highly rate our care across South Wales.</p>
       </div>
 
       <div class="testimonials-sig-rail">
@@ -734,6 +751,14 @@
           <div class="footer-glow-tagline">Valley Care Group</div>
           <div class="nav-logo-tagline" style="margin-bottom:1rem;font-size:0.72rem">CARING WITH HEART · EST. 2005</div>
           <p class="footer-brand-desc">Providing compassionate, person-centred nursing and residential care across South Wales. CIW registered. Family values at the core of everything we do.</p>
+          
+          <form class="newsletter-form" onsubmit="window.submitNewsletter ? window.submitNewsletter(event) : null" style="margin-top:1.5rem">
+            <div style="font-size:0.85rem; font-weight:600; color:var(--clr-gold-light); margin-bottom:0.5rem">Join our Newsletter</div>
+            <div style="display:flex; gap:0.5rem">
+              <input type="email" placeholder="Your email address" required style="flex:1; padding:0.5rem 0.75rem; border:1px solid rgba(255,255,255,0.15); background:rgba(0,0,0,0.2); color:#fff; border-radius:4px; font-size:0.85rem; outline:none;">
+              <button type="submit" class="btn btn-gold btn-sm" style="padding:0.5rem 1rem">Subscribe &rarr;</button>
+            </div>
+          </form>
           <div class="footer-social" style="margin-top:1.5rem">
             <a href="#" class="footer-social-btn" title="Facebook">𝐟</a>
             <a href="#" class="footer-social-btn" title="Twitter">𝕏</a>
@@ -801,10 +826,7 @@
     </div>
   </footer>
 
-  <div class="lang-toggle-bar" aria-label="Language">
-    <button type="button" id="vcg-lang-en" class="active">EN</button>
-    <button type="button" id="vcg-lang-cy">CY</button>
-  </div>
+
 
   <!-- Sticky Buttons -->
   <div class="sticky-enquiry">
@@ -828,6 +850,7 @@
   <script src="assets/js/main.js"></script>
   <script src="assets/js/signature.js"></script>
   <script src="assets/js/live-edit.js"></script>
+  <script src="assets/js/locator.js"></script>
   <script>window.__vcgCarehomeFromIndex = true;</script>
   <script src="assets/js/carehome-ratings.js"></script>
   <script>
@@ -1013,7 +1036,7 @@
             </div>
           </div>`).join('');
         } else {
-          grid.innerHTML = '<p class="section-subtitle" style="text-align:center;max-width:520px;margin:1rem auto 0;line-height:1.65;color:var(--clr-text-mid)">Testimonials will appear here once they are added in the admin console (Content Manager → Testimonials), or when a submitted review is approved for the homepage.</p>';
+          grid.innerHTML = '<p class="section-subtitle" style="text-align:center;max-width:520px;margin:1rem auto 0;line-height:1.65;color:var(--clr-text-mid)">Testimonials from families will appear here shortly. We pride ourselves on the positive feedback we constantly receive from those we care for.</p>';
         }
         if (typeof window.initTestimonialsCarousel === 'function') window.initTestimonialsCarousel();
       }

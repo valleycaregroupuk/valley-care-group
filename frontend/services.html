@@ -30,9 +30,11 @@
 
   <!-- HERO -->
   <section class="page-hero">
-    <div class="page-hero-eyebrow" data-edit-key="srv.hero.eyebrow">Our Services</div>
-    <h1 class="page-hero-title" data-edit-key="srv.hero.title">Comprehensive Care,<br><em style="font-style:italic;color:var(--clr-gold-light)">Tailored to You</em></h1>
-    <p class="page-hero-subtitle" data-edit-key="srv.hero.sub">From specialist nursing to joyful daily activities, every service we provide is designed around the individual — flexible, compassionate, and clinically excellent.</p>
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow" data-edit-key="srv.hero.eyebrow">Our Services</div>
+      <h1 class="page-hero-title" data-edit-key="srv.hero.title">Comprehensive Care,<br><em style="font-style:italic;color:var(--clr-gold-light)">Tailored to You</em></h1>
+      <p class="page-hero-subtitle" data-edit-key="srv.hero.sub">From specialist nursing to joyful daily activities, every service we provide is designed around the individual — flexible, compassionate, and clinically excellent.</p>
+    </div>
   </section>
 
   <!-- CORE CARE TYPES -->
@@ -50,7 +52,7 @@
           <span class="service-detail-emoji" data-edit-key="srv.nursing.icon">🩺</span>
           <span class="section-eyebrow" data-edit-key="srv.nursing.eyebrow">Core Service</span>
           <h2 class="section-title" data-edit-key="srv.nursing.title">Nursing Care</h2>
-          <p class="body-text mb-med" data-edit-key="srv.nursing.p1">Our nursing care service is available 24 hours a day, 7 days a week, at Glan-yr-Afon. Each care team is led by a Registered General Nurse (RGN) who assesses, plans, and oversees the care of every resident with complex medical needs.</p>
+          <p class="body-text mb-med" data-edit-key="srv.nursing.p1">Led by highly qualified Registered General Nurses (RGNs), our comprehensive nursing service is available around the clock at Glan-yr-Afon. We meticulously assess, bespoke-plan, and oversee the complete wellbeing of every resident presenting with complex clinical requirements.</p>
           <ul class="service-list" data-edit-key="srv.nursing.list">
             <li><span class="list-bullet">✦</span> Complex nursing and medical needs</li>
             <li><span class="list-bullet">✦</span> Wound management requirements</li>
@@ -76,7 +78,7 @@
           <span class="service-detail-emoji" data-edit-key="srv.dementia.icon">🧠</span>
           <span class="section-eyebrow" data-edit-key="srv.dementia.eyebrow">Core Service</span>
           <h2 class="section-title" data-edit-key="srv.dementia.title">Dementia <em>Support</em></h2>
-          <p class="body-text mb-med" data-edit-key="srv.dementia.p1">Our staff receive specialist dementia care training to create a safe, reassuring environment where those living with dementia can maintain the highest possible quality of life. Our person-centred approach focuses on understanding the individual behind the condition.</p>
+          <p class="body-text mb-med" data-edit-key="srv.dementia.p1">Our dedicated teams receive advanced specialist dementia training to cultivate a profoundly safe, reassuring environment. Here, those living with dementia can sustain the highest possible quality of life. Our unequivocally person-centred approach focuses on truly understanding and celebrating the individual behind the condition.</p>
           <ul class="service-list" data-edit-key="srv.dementia.list">
             <li><span class="list-bullet">✦</span> Person-centred dementia care plans</li>
             <li><span class="list-bullet">✦</span> Safe and stimulating environments</li>
@@ -96,7 +98,7 @@
           <span class="service-detail-emoji" data-edit-key="srv.pall.icon">🌿</span>
           <span class="section-eyebrow" data-edit-key="srv.pall.eyebrow">Core Service</span>
           <h2 class="section-title" data-edit-key="srv.pall.title">Palliative &amp; <em>End-of-Life Care</em></h2>
-          <p class="body-text mb-med" data-edit-key="srv.pall.p1">We are deeply experienced in providing compassionate palliative and end-of-life care. We work closely with leading specialist services including the Marie Curie Centre (Holme Towers), St Davids Palliative Care Team, and local NHS services to ensure dignity, comfort, and peace for every resident and their family.</p>
+          <p class="body-text mb-med" data-edit-key="srv.pall.p1">We possess deep-rooted experience in delivering extraordinarily compassionate palliative and end-of-life care. Working in seamless partnership with leading specialist services—including the Marie Curie Centre (Holme Towers), the St Davids Palliative Care Team, and local NHS trusts—we unequivocally ensure dignity, comfort, and absolute peace for residents and their loved ones.</p>
           <ul class="service-list" data-edit-key="srv.pall.list">
             <li><span class="list-bullet">✦</span> Specialist palliative nursing care</li>
             <li><span class="list-bullet">✦</span> Pain and symptom management</li>
@@ -205,6 +207,14 @@
             <div class="nav-logo-text"><span class="nav-logo-name">Valley Care Group</span><span class="nav-logo-tagline">Caring with Heart · Since 2005</span></div>
           </div>
           <p class="footer-brand-desc">Providing compassionate, person-centred nursing and residential care across South Wales. CIW registered.</p>
+          
+          <form class="newsletter-form" onsubmit="window.submitNewsletter ? window.submitNewsletter(event) : null" style="margin-top:1.5rem">
+            <div style="font-size:0.85rem; font-weight:600; color:var(--clr-gold-light); margin-bottom:0.5rem">Join our Newsletter</div>
+            <div style="display:flex; gap:0.5rem">
+              <input type="email" placeholder="Your email address" required style="flex:1; padding:0.5rem 0.75rem; border:1px solid rgba(255,255,255,0.15); background:rgba(0,0,0,0.2); color:#fff; border-radius:4px; font-size:0.85rem; outline:none;">
+              <button type="submit" class="btn btn-gold btn-sm" style="padding:0.5rem 1rem">Subscribe &rarr;</button>
+            </div>
+          </form>
           <div class="footer-social">
             <a href="#" class="footer-social-btn" title="Facebook">𝐟</a>
             <a href="#" class="footer-social-btn" title="Twitter">𝕏</a>

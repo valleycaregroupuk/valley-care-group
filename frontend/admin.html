@@ -354,17 +354,29 @@
         <button class="sidebar-nav-item" data-section="content" onclick="showSection('content')">
           <span class="sidebar-nav-icon">✏️</span> Content Manager
         </button>
+        <button class="sidebar-nav-item" data-section="gallery" onclick="showSection('gallery')">
+          <span class="sidebar-nav-icon">🖼️</span> Gallery Manager
+        </button>
+        <button class="sidebar-nav-item" data-section="team" onclick="showSection('team')">
+          <span class="sidebar-nav-icon">👥</span> Team Manager
+        </button>
+        <button class="sidebar-nav-item" data-section="faqs" onclick="showSection('faqs')">
+          <span class="sidebar-nav-icon">❓</span> FAQ Manager
+        </button>
         <button class="sidebar-nav-item" data-section="homefeed" onclick="showSection('homefeed')">
           <span class="sidebar-nav-icon">📰</span> News &amp; Events
+        </button>
+        <button class="sidebar-nav-item" data-section="newsletter" onclick="showSection('newsletter')">
+          <span class="sidebar-nav-icon">📧</span> Newsletter
         </button>
         <button class="sidebar-nav-item" data-section="homesextra" onclick="showSection('homesextra')">
           <span class="sidebar-nav-icon">🗺️</span> Maps &amp; vacancies
         </button>
         <button class="sidebar-nav-item" data-section="enquiries" onclick="showSection('enquiries')">
-          <span class="sidebar-nav-icon">📬</span> Enquiries
+          <span class="sidebar-nav-icon">📬</span> Enquiries <span class="badge badge-care" id="nav-enq-badge" style="display:none;margin-left:auto">0</span>
         </button>
         <button class="sidebar-nav-item" data-section="applications" onclick="showSection('applications')">
-          <span class="sidebar-nav-icon">📎</span> Job applications
+          <span class="sidebar-nav-icon">📎</span> Job applications <span class="badge badge-pt" id="nav-app-badge" style="display:none;margin-left:auto">0</span>
         </button>
         <a href="jobs.html" target="_blank" class="sidebar-nav-item">
           <span class="sidebar-nav-icon">🔗</span> View Careers Page
@@ -389,19 +401,22 @@
         <div class="page-header">
           <div>
             <div class="page-header-title">Dashboard</div>
-            <div class="page-header-sub">Overview of your job listings</div>
+            <div class="page-header-sub">Overview of your platform</div>
           </div>
           <div style="display:flex;gap:0.75rem;align-items:center">
             <span class="api-status" id="api-status-badge">Connecting…</span>
-            <a href="jobs.html" target="_blank" class="btn btn-ghost">🔗 Careers Page</a>
+            <a href="homes/glan-yr-afon.html" target="_blank" class="btn btn-ghost btn-sm">Glan-yr-Afon ↗</a>
+            <a href="homes/llys-gwyn.html" target="_blank" class="btn btn-ghost btn-sm">Llys Gwyn ↗</a>
+            <a href="homes/pentwyn.html" target="_blank" class="btn btn-ghost btn-sm">Ty Pentwyn ↗</a>
+            <a href="jobs.html" target="_blank" class="btn btn-ghost btn-sm">🔗 Careers Page</a>
           </div>
         </div>
 
         <div class="stats-row" id="stats-row">
-          <div class="stat-card"><div class="stat-card-icon">💼</div><div class="stat-card-num" id="stat-total">—</div><div class="stat-card-label">Total Listings</div></div>
-          <div class="stat-card"><div class="stat-card-icon">🏡</div><div class="stat-card-num" id="stat-glan">—</div><div class="stat-card-label">Glan-yr-Afon</div></div>
-          <div class="stat-card"><div class="stat-card-icon">🏠</div><div class="stat-card-num" id="stat-llys">—</div><div class="stat-card-label">Llys Gwyn</div></div>
-          <div class="stat-card"><div class="stat-card-icon">🏡</div><div class="stat-card-num" id="stat-pentwyn">—</div><div class="stat-card-label">Ty Pentwyn</div></div>
+          <div class="stat-card"><div class="stat-card-icon">💼</div><div class="stat-card-num" id="stat-total">—</div><div class="stat-card-label">Active Jobs</div></div>
+          <div class="stat-card"><div class="stat-card-icon">📬</div><div class="stat-card-num" id="stat-enquiries">—</div><div class="stat-card-label">New Enquiries</div></div>
+          <div class="stat-card"><div class="stat-card-icon">📎</div><div class="stat-card-num" id="stat-applications">—</div><div class="stat-card-label">New Applications</div></div>
+          <div class="stat-card"><div class="stat-card-icon">🌟</div><div class="stat-card-num" id="stat-reviews">—</div><div class="stat-card-label">Verified Reviews</div></div>
         </div>
 
         <div class="table-card">
@@ -575,6 +590,108 @@
         </div>
       </div>
 
+      <!-- ── GALLERY MANAGER ── -->
+      <div class="page-section" id="section-gallery">
+        <div class="page-header">
+          <div>
+            <div class="page-header-title">Gallery Manager</div>
+            <div class="page-header-sub">Manage images displayed in the Gallery section of each home.</div>
+          </div>
+          <button class="btn btn-primary" onclick="openGalleryDrawer(null)">+ Add Image</button>
+        </div>
+        <div class="table-card" style="padding:1.25rem 1.5rem;margin-bottom:1.25rem;max-width:420px">
+          <label class="field-label" for="gal-home">Home</label>
+          <select class="field-select" id="gal-home" onchange="loadGalleryForHome(this.value)" style="width:100%">
+            <option value="glan">Glan-yr-Afon</option>
+            <option value="llys">Llys Gwyn</option>
+            <option value="pentwyn">Ty Pentwyn</option>
+          </select>
+        </div>
+        <div class="table-card">
+          <div class="table-card-header">
+            <span class="table-card-title">Gallery Items</span>
+          </div>
+          <div class="admin-table-scroll">
+            <table>
+              <thead><tr><th>Preview</th><th>URL / Path</th><th>Alt Text</th><th>Actions</th></tr></thead>
+              <tbody id="gallery-tbody"></tbody>
+            </table>
+          </div>
+          <div class="empty-state" id="gallery-empty" style="display:none">
+            <div class="empty-state-icon">🖼️</div>
+            <p>No gallery images found for this home.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TEAM MANAGER ── -->
+      <div class="page-section" id="section-team">
+        <div class="page-header">
+          <div>
+            <div class="page-header-title">Team Manager</div>
+            <div class="page-header-sub">Manage the staff profiles displayed on the home page.</div>
+          </div>
+          <button class="btn btn-primary" onclick="openTeamDrawer(null)">+ Add Member</button>
+        </div>
+        <div class="table-card" style="padding:1.25rem 1.5rem;margin-bottom:1.25rem;max-width:420px">
+          <label class="field-label" for="team-home">Home</label>
+          <select class="field-select" id="team-home" onchange="loadTeamForHome(this.value)" style="width:100%">
+            <option value="glan">Glan-yr-Afon</option>
+            <option value="llys">Llys Gwyn</option>
+            <option value="pentwyn">Ty Pentwyn</option>
+          </select>
+        </div>
+        <div class="table-card">
+          <div class="table-card-header">
+            <span class="table-card-title">Staff Members</span>
+          </div>
+          <div class="admin-table-scroll">
+            <table>
+              <thead><tr><th>Staff</th><th>Role</th><th>Bio (Excerpt)</th><th>Actions</th></tr></thead>
+              <tbody id="team-tbody"></tbody>
+            </table>
+          </div>
+          <div class="empty-state" id="team-empty" style="display:none">
+            <div class="empty-state-icon">👥</div>
+            <p>No team members found for this home.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── FAQ MANAGER ── -->
+      <div class="page-section" id="section-faqs">
+        <div class="page-header">
+          <div>
+            <div class="page-header-title">FAQ Manager</div>
+            <div class="page-header-sub">Manage the Frequently Asked Questions displayed on the home page.</div>
+          </div>
+          <button class="btn btn-primary" onclick="openFaqDrawer(null)">+ Add FAQ</button>
+        </div>
+        <div class="table-card" style="padding:1.25rem 1.5rem;margin-bottom:1.25rem;max-width:420px">
+          <label class="field-label" for="faq-home">Home</label>
+          <select class="field-select" id="faq-home" onchange="loadFaqForHome(this.value)" style="width:100%">
+            <option value="glan">Glan-yr-Afon</option>
+            <option value="llys">Llys Gwyn</option>
+            <option value="pentwyn">Ty Pentwyn</option>
+          </select>
+        </div>
+        <div class="table-card">
+          <div class="table-card-header">
+            <span class="table-card-title">Frequently Asked Questions</span>
+          </div>
+          <div class="admin-table-scroll">
+            <table>
+              <thead><tr><th>Question</th><th>Answer</th><th>Actions</th></tr></thead>
+              <tbody id="faq-tbody"></tbody>
+            </table>
+          </div>
+          <div class="empty-state" id="faq-empty" style="display:none">
+            <div class="empty-state-icon">❓</div>
+            <p>No FAQs found for this home.</p>
+          </div>
+        </div>
+      </div>
+
       <!-- ── NEWS & EVENTS (per home) ── -->
       <div class="page-section" id="section-homefeed">
         <div class="page-header">
@@ -697,6 +814,44 @@
             <tbody id="applications-tbody"></tbody>
           </table>
           <div class="empty-state" id="applications-empty" style="display:none"><div class="empty-state-icon">📭</div><p>No applications yet.</p></div>
+        </div>
+      </div>
+
+      <!-- ── NEWSLETTER SECTION ── -->
+      <div class="page-section" id="section-newsletter">
+        <div class="page-header">
+          <div>
+            <div class="page-header-title">Newsletter Broadcast</div>
+            <div class="page-header-sub">Send email updates to all subscribed public users</div>
+          </div>
+        </div>
+        <div class="table-card" style="max-width: 800px; padding: 2rem;">
+          <div class="alert alert-info" style="margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <strong id="nl-subscribers-count">0</strong> active subscribers
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="fetchNewsletterStats()">Refresh</button>
+          </div>
+          
+          <form id="newsletter-form" onsubmit="sendNewsletter(event)">
+            <div class="form-group">
+              <label for="nl-subject">Subject Line</label>
+              <input type="text" id="nl-subject" class="form-control" required placeholder="e.g., Summer Update across Valley Care Group">
+            </div>
+            <div class="form-group">
+              <label for="nl-preview">Preview Text (Optional)</label>
+              <input type="text" id="nl-preview" class="form-control" placeholder="Short text that appears in email clients next to the subject">
+            </div>
+            <div class="form-group">
+              <label for="nl-html">HTML Content</label>
+              <textarea id="nl-html" class="form-control" rows="12" required placeholder="<p>Dear families...</p>"></textarea>
+              <p style="font-size:0.8rem; color:var(--text-mid); margin-top:0.25rem">Use basic HTML tags (&lt;p&gt;, &lt;strong&gt;, &lt;br&gt;). An email template with the Valley Care Group header and footer will be automatically wrapped around this content.</p>
+            </div>
+            <div style="display:flex; gap:1rem; align-items:center; margin-top:2rem;">
+              <button type="submit" class="btn btn-primary" id="nl-send-btn">Send Broadcast</button>
+              <span id="nl-status" style="font-size:0.9rem; font-weight:500;"></span>
+            </div>
+          </form>
         </div>
       </div>
 
@@ -848,6 +1003,94 @@
       <div class="drawer-footer">
         <button type="button" class="btn btn-ghost" onclick="closeHrDrawer()">Cancel</button>
         <button type="submit" class="btn btn-primary" id="hr-save-btn">💾 Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Gallery Drawer -->
+<div class="drawer-overlay" id="gallery-overlay" onclick="closeGalleryDrawer()">
+  <div class="drawer-panel" onclick="event.stopPropagation()" style="max-width:480px">
+    <div class="drawer-header">
+      <span class="drawer-title" id="gallery-drawer-title">Add Image</span>
+      <button class="drawer-close" onclick="closeGalleryDrawer()">✕</button>
+    </div>
+    <div class="alert alert-error" id="gallery-error" style="display:none"></div>
+    <form id="gallery-form" onsubmit="saveGalleryItem(event)">
+      <input type="hidden" id="gallery-idx">
+      <div class="field-group">
+        <label class="field-label" for="gal-url">Image URL / Path <span>*</span></label>
+        <input class="field-input" type="text" id="gal-url" required placeholder="assets/images/gallery/room1.jpg">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="gal-alt">Alt Text</label>
+        <input class="field-input" type="text" id="gal-alt" placeholder="e.g. Elegant en-suite bedroom">
+      </div>
+      <div class="drawer-footer">
+        <button type="button" class="btn btn-ghost" onclick="closeGalleryDrawer()">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="gallery-save-btn">💾 Save Image</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Team Drawer -->
+<div class="drawer-overlay" id="team-overlay" onclick="closeTeamDrawer()">
+  <div class="drawer-panel" onclick="event.stopPropagation()">
+    <div class="drawer-header">
+      <span class="drawer-title" id="team-drawer-title">Add Staff Member</span>
+      <button class="drawer-close" onclick="closeTeamDrawer()">✕</button>
+    </div>
+    <div class="alert alert-error" id="team-error" style="display:none"></div>
+    <form id="team-form" onsubmit="saveTeamItem(event)">
+      <input type="hidden" id="team-idx">
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label" for="tm-name">Name <span>*</span></label>
+          <input class="field-input" type="text" id="tm-name" required placeholder="e.g. Susan Rosser">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="tm-role">Role <span>*</span></label>
+          <input class="field-input" type="text" id="tm-role" required placeholder="e.g. Home Manager">
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="tm-bio">Biography (Brief)</label>
+        <textarea class="field-textarea" id="tm-bio" placeholder="Bio description... (optional)" style="min-height:100px"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="tm-photo">Photo URL / Path</label>
+        <input class="field-input" type="text" id="tm-photo" placeholder="assets/images/team/member.jpg">
+      </div>
+      <div class="drawer-footer">
+        <button type="button" class="btn btn-ghost" onclick="closeTeamDrawer()">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="team-save-btn">💾 Save Member</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- FAQ Drawer -->
+<div class="drawer-overlay" id="faq-overlay" onclick="closeFaqDrawer()">
+  <div class="drawer-panel" onclick="event.stopPropagation()">
+    <div class="drawer-header">
+      <span class="drawer-title" id="faq-drawer-title">Add FAQ</span>
+      <button class="drawer-close" onclick="closeFaqDrawer()">✕</button>
+    </div>
+    <div class="alert alert-error" id="faq-error" style="display:none"></div>
+    <form id="faq-form" onsubmit="saveFaqItem(event)">
+      <input type="hidden" id="faq-idx">
+      <div class="field-group">
+        <label class="field-label" for="fq-q">Question <span>*</span></label>
+        <input class="field-input" type="text" id="fq-q" required placeholder="e.g. How can I arrange a visit?">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="fq-a">Answer <span>*</span></label>
+        <textarea class="field-textarea" id="fq-a" required placeholder="The detailed answer..." style="min-height:120px"></textarea>
+      </div>
+      <div class="drawer-footer">
+        <button type="button" class="btn btn-ghost" onclick="closeFaqDrawer()">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="faq-save-btn">💾 Save FAQ</button>
       </div>
     </form>
   </div>
@@ -1092,13 +1335,29 @@ function showSection(name) {
 let allJobs = [];
 let filterText = '';
 
+let allStats = {};
+
 async function loadAll() {
   try {
-    allJobs = await api('GET', '/api/admin/jobs');
+    const [jobs, enq, app, cont, stats] = await Promise.all([
+      api('GET', '/api/admin/jobs'),
+      api('GET', '/api/admin/enquiries'),
+      api('GET', '/api/admin/applications'),
+      api('GET', '/api/content'),
+      api('GET', '/api/admin/stats')
+    ]);
+    allJobs = jobs;
+    allEnquiries = enq;
+    allApplications = app;
+    cData = cont;
+    allStats = stats || {};
+    ensureHomePagesShape();
+    
     renderDashboard();
     renderJobsTable();
+    fetchNewsletterStats(); // Update side UI
   } catch (ex) {
-    showToast('Error loading jobs: ' + ex.message, true);
+    showToast('Error loading data: ' + ex.message, true);
   }
 }
 
@@ -1120,14 +1379,38 @@ async function checkApiStatus() {
 }
 
 // ── Dashboard ────────────────────────────────────────────────────────────────
-function renderDashboard() {
-  const active  = allJobs.filter(j => j.status === 'active');
-  document.getElementById('stat-total').textContent   = active.length;
-  document.getElementById('stat-glan').textContent    = active.filter(j=>j.home==='glan').length;
-  document.getElementById('stat-llys').textContent    = active.filter(j=>j.home==='llys').length;
-  document.getElementById('stat-pentwyn').textContent = active.filter(j=>j.home==='pentwyn').length;
+async function renderDashboard() {
+  const active  = (allJobs || []).filter(j => j.status === 'active');
+  const enqNew  = (allEnquiries || []).filter(j => j.status === 'new').length;
+  const appNew  = (allApplications || []).filter(j => j.status === 'new').length;
+  const reviewsCount = (cData && cData.testimonials) ? cData.testimonials.length : 0;
+  
+  if (document.getElementById('stat-total')) document.getElementById('stat-total').textContent = active.length;
+  if (document.getElementById('stat-enquiries')) document.getElementById('stat-enquiries').textContent = enqNew;
+  if (document.getElementById('stat-applications')) document.getElementById('stat-applications').textContent = appNew;
+  if (document.getElementById('stat-reviews')) document.getElementById('stat-reviews').textContent = reviewsCount;
+
+  const enqBadge = document.getElementById('nav-enq-badge');
+  if (enqBadge) {
+    if (enqNew > 0) {
+      enqBadge.style.display = 'inline-flex';
+      enqBadge.textContent = enqNew;
+    } else {
+      enqBadge.style.display = 'none';
+    }
+  }
+  const appBadge = document.getElementById('nav-app-badge');
+  if (appBadge) {
+    if (appNew > 0) {
+      appBadge.style.display = 'inline-flex';
+      appBadge.textContent = appNew;
+    } else {
+      appBadge.style.display = 'none';
+    }
+  }
 
   const tbody = document.getElementById('dash-tbody');
+  if (!tbody) return;
   if (allJobs.length === 0) {
     tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#aaa;padding:2rem">No listings yet.</td></tr>';
     return;
@@ -1651,11 +1934,211 @@ async function saveHomesExtra() {
   } catch (e) { showToast(e.message, true); }
 }
 
+// ── GALLERY MANAGER ──────────────────────────────────────────────────────────
+let currentGalleryHome = 'glan';
+async function loadGalleryForHome(slug) {
+  currentGalleryHome = slug;
+  await loadContent();
+  renderGalleryRows();
+}
+function renderGalleryRows() {
+  const hp = cData.homePages[currentGalleryHome] || {};
+  const list = hp.gallery || [];
+  const tbody = document.getElementById('gallery-tbody');
+  const empty = document.getElementById('gallery-empty');
+  tbody.innerHTML = list.map((item, idx) => `
+    <tr>
+      <td><img src="${item.url}" style="width:60px;height:40px;object-fit:cover;border-radius:4px" onerror="this.src='assets/images/interior.png'"></td>
+      <td style="font-size:0.8rem">${esc(item.url)}</td>
+      <td style="font-size:0.8rem">${esc(item.alt)}</td>
+      <td>
+        <div class="action-btns">
+          <button class="btn btn-ghost btn-sm" onclick="openGalleryDrawer(${idx})">✏️ Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteGalleryItem(${idx})">🗑️</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+  empty.style.display = list.length ? 'none' : 'block';
+}
+function openGalleryDrawer(idx) {
+  const form = document.getElementById('gallery-form');
+  form.reset();
+  document.getElementById('gallery-idx').value = idx !== null ? idx : '';
+  document.getElementById('gallery-drawer-title').textContent = idx !== null ? 'Edit Image' : 'Add Image';
+  if (idx !== null) {
+    const item = cData.homePages[currentGalleryHome].gallery[idx];
+    document.getElementById('gal-url').value = item.url;
+    document.getElementById('gal-alt').value = item.alt;
+  }
+  document.getElementById('gallery-overlay').classList.add('open');
+}
+function closeGalleryDrawer() { document.getElementById('gallery-overlay').classList.remove('open'); }
+async function saveGalleryItem(e) {
+  e.preventDefault();
+  const idx = document.getElementById('gallery-idx').value;
+  const item = { url: document.getElementById('gal-url').value.trim(), alt: document.getElementById('gal-alt').value.trim() };
+  const list = [...(cData.homePages[currentGalleryHome].gallery || [])];
+  if (idx !== '') list[idx] = item; else list.push(item);
+  try {
+    const res = await api('PUT', `/api/admin/home/${currentGalleryHome}/gallery`, list);
+    cData.homePages[currentGalleryHome].gallery = res.list;
+    renderGalleryRows(); closeGalleryDrawer(); showToast('✅ Gallery updated');
+  } catch (ex) { showToast(ex.message, true); }
+}
+async function deleteGalleryItem(idx) {
+  if (!confirm('Delete this image?')) return;
+  const list = [...cData.homePages[currentGalleryHome].gallery];
+  list.splice(idx, 1);
+  try {
+    const res = await api('PUT', `/api/admin/home/${currentGalleryHome}/gallery`, list);
+    cData.homePages[currentGalleryHome].gallery = res.list;
+    renderGalleryRows(); showToast('🗑️ Image removed');
+  } catch (ex) { showToast(ex.message, true); }
+}
+
+// ── TEAM MANAGER ───────────────────────────────────────────────────────────
+let currentTeamHome = 'glan';
+async function loadTeamForHome(slug) {
+  currentTeamHome = slug;
+  await loadContent();
+  renderTeamRows();
+}
+function renderTeamRows() {
+  const hp = cData.homePages[currentTeamHome] || {};
+  const list = hp.team || [];
+  const tbody = document.getElementById('team-tbody');
+  const empty = document.getElementById('team-empty');
+  tbody.innerHTML = list.map((m, idx) => `
+    <tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <img src="${m.photoUrl||'assets/images/caregiver.png'}" style="width:40px;height:40px;border-radius:50%;object-fit:cover" onerror="this.src='assets/images/caregiver.png'">
+          <div class="job-title-cell">${esc(m.name)}</div>
+        </div>
+      </td>
+      <td style="font-size:0.8rem;color:var(--text-mid)">${esc(m.role)}</td>
+      <td style="font-size:0.75rem;max-width:300px;color:var(--text-light)">${esc((m.bio||'').slice(0,120))}${m.bio && m.bio.length > 120 ? '...' : ''}</td>
+      <td>
+        <div class="action-btns">
+          <button class="btn btn-ghost btn-sm" onclick="openTeamDrawer(${idx})">✏️ Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteTeamItem(${idx})">🗑️</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+  empty.style.display = list.length ? 'none' : 'block';
+}
+function openTeamDrawer(idx) {
+  const form = document.getElementById('team-form');
+  form.reset();
+  document.getElementById('team-idx').value = idx !== null ? idx : '';
+  document.getElementById('team-drawer-title').textContent = idx !== null ? 'Edit Staff Member' : 'Add Staff Member';
+  if (idx !== null) {
+    const m = cData.homePages[currentTeamHome].team[idx];
+    document.getElementById('tm-name').value = m.name;
+    document.getElementById('tm-role').value = m.role;
+    document.getElementById('tm-bio').value = m.bio || '';
+    document.getElementById('tm-photo').value = m.photoUrl || '';
+  }
+  document.getElementById('team-overlay').classList.add('open');
+}
+function closeTeamDrawer() { document.getElementById('team-overlay').classList.remove('open'); }
+async function saveTeamItem(e) {
+  e.preventDefault();
+  const idx = document.getElementById('team-idx').value;
+  const item = {
+    name: document.getElementById('tm-name').value.trim(),
+    role: document.getElementById('tm-role').value.trim(),
+    bio: document.getElementById('tm-bio').value.trim(),
+    photoUrl: document.getElementById('tm-photo').value.trim()
+  };
+  const list = [...(cData.homePages[currentTeamHome].team || [])];
+  if (idx !== '') list[idx] = item; else list.push(item);
+  try {
+    const res = await api('PUT', `/api/admin/home/${currentTeamHome}/team`, list);
+    cData.homePages[currentTeamHome].team = res.list;
+    renderTeamRows(); closeTeamDrawer(); showToast('✅ Team updated');
+  } catch (ex) { showToast(ex.message, true); }
+}
+async function deleteTeamItem(idx) {
+  if (!confirm('Remove this staff member?')) return;
+  const list = [...cData.homePages[currentTeamHome].team];
+  list.splice(idx, 1);
+  try {
+    const res = await api('PUT', `/api/admin/home/${currentTeamHome}/team`, list);
+    cData.homePages[currentTeamHome].team = res.list;
+    renderTeamRows(); showToast('🗑️ Member removed');
+  } catch (ex) { showToast(ex.message, true); }
+}
+
+// ── FAQ MANAGER ────────────────────────────────────────────────────────────
+let currentFaqHome = 'glan';
+async function loadFaqForHome(slug) {
+  currentFaqHome = slug;
+  await loadContent();
+  renderFaqRows();
+}
+function renderFaqRows() {
+  const hp = cData.homePages[currentFaqHome] || {};
+  const list = hp.faqs || [];
+  const tbody = document.getElementById('faq-tbody');
+  const empty = document.getElementById('faq-empty');
+  tbody.innerHTML = list.map((f, idx) => `
+    <tr>
+      <td style="font-weight:600;font-size:0.85rem">${esc(f.q)}</td>
+      <td style="font-size:0.75rem;max-width:300px;color:var(--text-light)">${esc((f.a||'').slice(0,120))}${f.a && f.a.length > 120 ? '...' : ''}</td>
+      <td>
+        <div class="action-btns">
+          <button class="btn btn-ghost btn-sm" onclick="openFaqDrawer(${idx})">✏️ Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteFaqItem(${idx})">🗑️</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+  empty.style.display = list.length ? 'none' : 'block';
+}
+function openFaqDrawer(idx) {
+  const form = document.getElementById('faq-form');
+  form.reset();
+  document.getElementById('faq-idx').value = idx !== null ? idx : '';
+  document.getElementById('faq-drawer-title').textContent = idx !== null ? 'Edit FAQ' : 'Add FAQ';
+  if (idx !== null) {
+    const f = cData.homePages[currentFaqHome].faqs[idx];
+    document.getElementById('fq-q').value = f.q;
+    document.getElementById('fq-a').value = f.a;
+  }
+  document.getElementById('faq-overlay').classList.add('open');
+}
+function closeFaqDrawer() { document.getElementById('faq-overlay').classList.remove('open'); }
+async function saveFaqItem(e) {
+  e.preventDefault();
+  const idx = document.getElementById('faq-idx').value;
+  const item = { q: document.getElementById('fq-q').value.trim(), a: document.getElementById('fq-a').value.trim() };
+  const list = [...(cData.homePages[currentFaqHome].faqs || [])];
+  if (idx !== '') list[idx] = item; else list.push(item);
+  try {
+    const res = await api('PUT', `/api/admin/home/${currentFaqHome}/faqs`, list);
+    cData.homePages[currentFaqHome].faqs = res.list;
+    renderFaqRows(); closeFaqDrawer(); showToast('✅ FAQ updated');
+  } catch (ex) { showToast(ex.message, true); }
+}
+async function deleteFaqItem(idx) {
+  if (!confirm('Delete this FAQ?')) return;
+  const list = [...cData.homePages[currentFaqHome].faqs];
+  list.splice(idx, 1);
+  try {
+    const res = await api('PUT', `/api/admin/home/${currentFaqHome}/faqs`, list);
+    cData.homePages[currentFaqHome].faqs = res.list;
+    renderFaqRows(); showToast('🗑️ FAQ deleted');
+  } catch (ex) { showToast(ex.message, true); }
+}
+
 // Override showSection to load content when switching to it
 const _origShowSection = showSection;
 showSection = function(name) {
   _origShowSection(name);
-  if (name === 'content' || name === 'homefeed') {
+  if (name === 'content' || name === 'homefeed' || name === 'gallery' || name === 'team' || name === 'faqs') {
     loadContent().then(() => {
       if (name === 'homefeed') {
         const sel = document.getElementById('hf-home-select');
@@ -1665,6 +2148,9 @@ showSection = function(name) {
       if (name === 'content') {
         loadHomeReviews().catch((e) => showToast(e.message, true));
       }
+      if (name === 'gallery') loadGalleryForHome(document.getElementById('gal-home').value);
+      if (name === 'team') loadTeamForHome(document.getElementById('team-home').value);
+      if (name === 'faqs') loadFaqForHome(document.getElementById('faq-home').value);
     });
   }
   if (name === 'homesextra') {
@@ -1673,7 +2159,49 @@ showSection = function(name) {
   if (name === 'enquiries' || name === 'applications') {
     loadLeadData().catch((e) => showToast(e.message, true));
   }
+  if (name === 'newsletter') {
+    fetchNewsletterStats();
+  }
 };
+
+// ── NEWSLETTER MANAGER ───────────────────────────────────────────────────────
+async function fetchNewsletterStats() {
+  try {
+    const stats = await api('GET', '/api/admin/stats');
+    allStats = stats;
+    const countEl = document.getElementById('nl-subscribers-count');
+    if (countEl) countEl.textContent = stats.activeSubscribers || 0;
+  } catch (ex) { console.error('Failed to update newsletter stats', ex); }
+}
+
+async function sendNewsletter(e) {
+  e.preventDefault();
+  if (!confirm('Are you sure you want to send this broadcast to all subscribers?')) return;
+  
+  const btn = document.getElementById('nl-send-btn');
+  const status = document.getElementById('nl-status');
+  const subject = document.getElementById('nl-subject').value.trim();
+  const previewText = document.getElementById('nl-preview').value.trim();
+  const htmlContent = document.getElementById('nl-html').value.trim();
+  
+  btn.disabled = true;
+  status.textContent = 'Sending...';
+  status.style.color = 'var(--text-mid)';
+  
+  try {
+    const res = await api('POST', '/api/admin/newsletter/send', {
+      subject, previewText, htmlContent
+    });
+    status.textContent = `✅ Successfully sent to ${res.sentCount} subscribers.`;
+    status.style.color = 'green';
+    document.getElementById('newsletter-form').reset();
+  } catch (ex) {
+    status.textContent = `❌ Error: ${ex.message}`;
+    status.style.color = 'red';
+  } finally {
+    btn.disabled = false;
+  }
+}
 
 function switchCTab(tab) {
   document.querySelectorAll('.ctab').forEach(t => t.classList.remove('active'));

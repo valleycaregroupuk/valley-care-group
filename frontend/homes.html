@@ -30,9 +30,11 @@
 
   <!-- Hero -->
   <section class="page-hero" id="main-content">
-    <div class="page-hero-eyebrow" data-edit-key="homes.hero.eyebrow">Our Care Homes</div>
-    <h1 class="page-hero-title" data-edit-key="homes.hero.title">Three Homes, <em style="font-style:italic;color:var(--clr-gold-light)">One Family</em></h1>
-    <p class="page-hero-subtitle" data-edit-key="homes.hero.sub">Whether you need specialist nursing care, residential support, or are exploring your options for a loved one, we have a home that's right for you across South Wales.</p>
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow" data-edit-key="homes.hero.eyebrow">Our Care Homes</div>
+      <h1 class="page-hero-title" data-edit-key="homes.hero.title">Three Homes, <em style="font-style:italic;color:var(--clr-gold-light)">One Family</em></h1>
+      <p class="page-hero-subtitle" data-edit-key="homes.hero.sub">Whether you need specialist nursing care, residential support, or are exploring your options for a loved one, we have a home that's right for you across South Wales.</p>
+    </div>
   </section>
 
   <!-- Glan-yr-Afon feature -->
@@ -142,14 +144,14 @@
         <span class="section-eyebrow" data-edit-key="homes.comp.eyebrow">Compare Our Homes</span>
         <h2 class="section-title" data-edit-key="homes.comp.title">Finding the <em>Right Fit</em></h2>
       </div>
-      <div class="fade-up responsive-table-wrap">
-        <table style="width:100%;border-collapse:collapse;font-size:0.9rem">
+      <div class="fade-up responsive-table-wrap" style="border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid rgba(0,0,0,0.06); background: #fff;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.9rem;text-align:left;">
           <thead>
             <tr style="background:var(--clr-midnight);color:#fff">
-              <th style="padding:1rem 1.5rem;text-align:left;font-family:var(--font-serif);font-weight:600">Feature</th>
-              <th style="padding:1rem 1.5rem;text-align:center;font-weight:600">Glan-yr-Afon</th>
-              <th style="padding:1rem 1.5rem;text-align:center;font-weight:600">Llys Gwyn</th>
-              <th style="padding:1rem 1.5rem;text-align:center;font-weight:600">Ty Pentwyn</th>
+              <th style="padding:1.25rem 1.5rem;text-align:left;font-family:var(--font-serif);font-weight:600;font-size:1.05rem;">Feature</th>
+              <th style="padding:1.25rem 1.5rem;text-align:center;font-weight:600;color:var(--clr-gold-light)">Glan-yr-Afon</th>
+              <th style="padding:1.25rem 1.5rem;text-align:center;font-weight:600;color:var(--clr-gold-light)">Llys Gwyn</th>
+              <th style="padding:1.25rem 1.5rem;text-align:center;font-weight:600;color:var(--clr-gold-light)">Ty Pentwyn</th>
             </tr>
           </thead>
           <tbody>
@@ -197,13 +199,24 @@
     </div>
   </section>
 
+
+  <section class="section" style="background:var(--clr-midnight); color:white; text-align:center; padding: 4rem 1rem;">
+    <div class="container" style="max-width: 500px;">
+      <h2 style="font-family:var(--font-serif);font-size:2rem;margin-bottom:1rem;color:var(--clr-gold-light)">Stay Updated</h2>
+      <p style="color:var(--clr-cream);opacity:0.8;margin-bottom:2rem;">Join our newsletter to receive updates and news from Valley Care Group across all our homes.</p>
+      <form class="newsletter-form" onsubmit="window.submitNewsletter ? window.submitNewsletter(event) : null">
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center;">
+          <input type="email" placeholder="Your email address" required style="flex:1; min-width:200px; padding:0.75rem 1rem; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); color:#fff; border-radius:var(--radius-sm); font-size:1rem; outline:none;">
+          <button type="submit" class="btn btn-gold">Subscribe &rarr;</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
   <footer class="footer">
     <div class="container"><div class="footer-bottom" style="padding-top:0"><div class="footer-copy">© 2026 Valley Care Group</div><div class="footer-bottom-links"><a href="index.html">Home</a><a href="about.html">About Us</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a><a href="cookies.html">Cookies</a></div></div></div>
   </footer>
-  <div class="lang-toggle-bar" aria-label="Language">
-    <button type="button" id="vcg-lang-en" class="active">EN</button>
-    <button type="button" id="vcg-lang-cy">CY</button>
-  </div>
+
   <script src="assets/js/runtime-config.js"></script>
   <script src="assets/js/config.js"></script>
   <script src="assets/js/i18n.js"></script>

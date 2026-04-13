@@ -52,7 +52,7 @@
     <div class="container">
       <a href="index.html#home-feed-section" class="news-hub-back">← Back to home</a>
       <div id="news-hub-empty" class="news-hub-empty" style="display:none">
-        <p>No homepage stories are available right now. Items appear here when they are marked “Show on main homepage feed” in the admin console.</p>
+        <p>There are currently no featured stories to display. Please check back later for updates as we share our latest news, events, and community activities.</p>
         <p style="margin-top:1rem"><a href="index.html">Return to homepage</a></p>
       </div>
       <div id="news-hub-layout" class="news-hub-inner" style="display:none">
@@ -62,6 +62,20 @@
           <ul class="news-hub-aside-list" id="news-hub-list"></ul>
         </aside>
       </div>
+    </div>
+  </section>
+
+
+  <section class="section" style="background:var(--clr-midnight); color:white; text-align:center; padding: 4rem 1rem;">
+    <div class="container" style="max-width: 500px;">
+      <h2 style="font-family:var(--font-serif);font-size:2rem;margin-bottom:1rem;color:var(--clr-gold-light)">Stay Updated</h2>
+      <p style="color:var(--clr-cream);opacity:0.8;margin-bottom:2rem;">Join our newsletter to receive updates and news from Valley Care Group across all our homes.</p>
+      <form class="newsletter-form" onsubmit="window.submitNewsletter ? window.submitNewsletter(event) : null">
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center;">
+          <input type="email" placeholder="Your email address" required style="flex:1; min-width:200px; padding:0.75rem 1rem; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); color:#fff; border-radius:var(--radius-sm); font-size:1rem; outline:none;">
+          <button type="submit" class="btn btn-gold">Subscribe &rarr;</button>
+        </div>
+      </form>
     </div>
   </section>
 

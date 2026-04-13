@@ -99,6 +99,8 @@ const KEY_ADMINHASH   = 'vcg:admin_hash';
 const KEY_ENQUIRIES   = 'vcg:enquiries';
 const KEY_APPLICATIONS = 'vcg:applications';
 const KEY_HOME_REVIEWS = 'vcg:home_reviews';
+const KEY_SUBSCRIBERS  = 'vcg:subscribers';
+const KEY_NL_ARCHIVE   = 'vcg:nl_archive';
 
 // ---------------------------------------------------------------------------
 // Shared KV rate limit (works across serverless instances)
@@ -186,6 +188,24 @@ async function readHomeReviews() {
 
 async function writeHomeReviews(list) {
   await kv.set(KEY_HOME_REVIEWS, list);
+}
+
+async function readSubscribers() {
+  const list = await kv.get(KEY_SUBSCRIBERS);
+  return Array.isArray(list) ? list : [];
+}
+
+async function writeSubscribers(list) {
+  await kv.set(KEY_SUBSCRIBERS, list);
+}
+
+async function readNlArchive() {
+  const list = await kv.get(KEY_NL_ARCHIVE);
+  return Array.isArray(list) ? list : [];
+}
+
+async function writeNlArchive(list) {
+  await kv.set(KEY_NL_ARCHIVE, list);
 }
 
 function sanitiseLongText(val, maxLen) {
@@ -319,6 +339,14 @@ const apiLimiter = rateLimit({
   max: 120,
   standardHeaders: true,
   legacyHeaders: false,
+});
+
+const formLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests. Please try again later.' },
 });
 
 app.use('/api/', apiLimiter);
@@ -826,6 +854,38 @@ app.post('/api/home-reviews', async (req, res) => {
   }
 });
 
+// ---------------------------------------------------------------------------
+// Newsletter Subscribe (public)
+// ---------------------------------------------------------------------------
+app.post('/api/newsletter/subscribe', formLimiter, async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email || !String(email).includes('@')) {
+      return res.status(400).json({ error: 'Valid email is required.' });
+    }
+    
+    const cleanEmail = email.trim().toLowerCase();
+    const subs = await readSubscribers();
+    
+    if (subs.find(s => s.email === cleanEmail)) {
+      // Already subscribed, silently succeed
+      return res.json({ ok: true });
+    }
+    
+    subs.push({
+      id: eid('sub_'),
+      email: cleanEmail,
+      date: new Date().toISOString()
+    });
+    
+    await writeSubscribers(subs);
+    res.status(201).json({ ok: true });
+  } catch (err) {
+    console.error('POST /api/newsletter/subscribe error:', err.message);
+    res.status(500).json({ error: 'Failed to subscribe.' });
+  }
+});
+
 app.post('/api/applications', (req, res, next) => {
   uploadCv.single('cv')(req, res, (err) => {
     if (err) return res.status(400).json({ error: err.message || 'Invalid upload.' });
@@ -1309,6 +1369,184 @@ app.get('/api/admin/applications/export.csv', requireAuth, async (req, res) => {
     res.send('\ufeff' + lines.join('\n'));
   } catch {
     res.status(500).json({ error: 'Export failed.' });
+  }
+});
+
+// ---------------------------------------------------------------------------
+// Fine-grained admin endpoints (Team, FAQs, Gallery, Stats)
+// ---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
+// Newsletter Broadcast (Admin)
+// ---------------------------------------------------------------------------
+app.post('/api/admin/newsletter/send', requireAuth, async (req, res) => {
+  try {
+    const { subject, previewText, htmlContent } = req.body;
+    
+    if (!subject || !htmlContent) {
+      return res.status(400).json({ error: 'Subject and HTML content are required.' });
+    }
+    
+    const subs = await readSubscribers();
+    if (subs.length === 0) {
+      return res.status(400).json({ error: 'No subscribers to send to.' });
+    }
+
+    const bccList = subs.map(s => s.email).filter(Boolean);
+    
+    const fullHtml = `
+      <div style="font-family: Arial, sans-serif; color: #1C2E40; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
+        <div style="background-color: #1C2E40; padding: 24px; text-align: center;">
+          <h1 style="color: #DFC071; margin: 0; font-family: Georgia, serif; font-size: 24px;">Valley Care Group</h1>
+        </div>
+        <div style="padding: 32px 24px; background-color: #FAFAFA;">
+          ${htmlContent}
+        </div>
+        <div style="background-color: #eee; padding: 24px; text-align: center; font-size: 12px; color: #666;">
+          <p style="margin: 0;">You are receiving this email because you subscribed to Valley Care Group news.</p>
+          <p style="margin: 8px 0 0;">Valley Care Group, Off Ford Road, Fleur-de-Lys, Blackwood NP12 3WA</p>
+        </div>
+      </div>
+    `;
+
+    const success = await sendEmail({
+      to: process.env.ENQUIRY_NOTIFY_TO || 'care@valleycare.wales', // Resend needs a 'to', we use bcc for subscribers
+      bcc: bccList,
+      subject: subject,
+      html: fullHtml,
+      text: previewText || 'A new update from Valley Care Group'
+    });
+
+    if (!success && process.env.RESEND_API_KEY) {
+      return res.status(500).json({ error: 'Email service failed to deliver the broadcast.' });
+    }
+    
+    if (!process.env.RESEND_API_KEY) {
+       console.log('--- MOCK NEWSLETTER BROADCAST ---');
+       console.log(`BCC: ${bccList.join(', ')}`);
+       console.log(`Subject: ${subject}`);
+       console.log('---------------------------------');
+    }
+
+    // Save to public archive so users can browse past issues
+    const archive = await readNlArchive();
+    archive.unshift({
+      id: eid('nl_'),
+      subject,
+      previewText: previewText || '',
+      htmlContent: fullHtml,
+      sentAt: new Date().toISOString(),
+      recipientCount: bccList.length
+    });
+    // keep last 50 issues max
+    await writeNlArchive(archive.slice(0, 50));
+
+    res.json({ ok: true, sentCount: bccList.length });
+  } catch (err) {
+    console.error('POST /api/admin/newsletter/send error:', err.message);
+    res.status(500).json({ error: 'Failed to send broadcast.' });
+  }
+});
+
+// Public newsletter archive – list
+app.get('/api/newsletter/archive', async (req, res) => {
+  try {
+    const archive = await readNlArchive();
+    // Return metadata only (no full HTML) for listing
+    const meta = archive.map(({ id, subject, previewText, sentAt, recipientCount }) => ({
+      id, subject, previewText, sentAt, recipientCount
+    }));
+    res.json(meta);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to load archive.' });
+  }
+});
+
+// Public newsletter archive – single issue (full HTML)
+app.get('/api/newsletter/archive/:id', async (req, res) => {
+  try {
+    const archive = await readNlArchive();
+    const issue = archive.find(n => n.id === req.params.id);
+    if (!issue) return res.status(404).json({ error: 'Issue not found.' });
+    res.json(issue);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to load issue.' });
+  }
+});
+
+app.get('/api/admin/stats', requireAuth, async (req, res) => {
+  try {
+    const jobs = await readJobs();
+    const activeJobs = jobs.filter(j => j.status === 'active');
+    
+    const glanJobs = activeJobs.filter(j => j.home === 'glan').length;
+    const llysJobs = activeJobs.filter(j => j.home === 'llys').length;
+    const pentwynJobs = activeJobs.filter(j => j.home === 'pentwyn').length;
+    
+    const enquiries = await readEnquiries();
+    const newEnquiries = enquiries.length;
+    
+    const applications = await readApplications();
+    const newApplications = applications.length;
+    
+    const subs = await readSubscribers();
+    const activeSubscribers = subs.length;
+
+    res.json({
+      totalJobs: activeJobs.length,
+      glanJobs,
+      llysJobs,
+      pentwynJobs,
+      newEnquiries,
+      newApplications,
+      activeSubscribers
+    });
+  } catch (err) {
+    console.error('GET /api/admin/stats error:', err.message);
+    res.status(500).json({ error: 'Failed to retrieve stats.' });
+  }
+});
+
+app.put('/api/admin/home/:slug/:collection', requireAuth, async (req, res) => {
+  try {
+    const { slug, collection } = req.params;
+    const allowedHomes = ['glan', 'llys', 'pentwyn'];
+    const allowedCollections = ['team', 'faqs', 'gallery'];
+    
+    if (!allowedHomes.includes(slug)) return res.status(400).json({ error: 'Invalid home slug' });
+    if (!allowedCollections.includes(collection)) return res.status(400).json({ error: 'Invalid collection' });
+    
+    const content = await readContent();
+    if (!content.homePages[slug]) content.homePages[slug] = {};
+    
+    const incoming = Array.isArray(req.body) ? req.body : [];
+    
+    let list = [];
+    if (collection === 'team') {
+      list = incoming.map(i => ({
+        name: sanitise(i.name).slice(0, 120),
+        role: sanitise(i.role).slice(0, 120),
+        bio: sanitise(i.bio).slice(0, 1500),
+        photoUrl: sanitise(i.photoUrl).slice(0, 500)
+      })).filter(i => i.name);
+    } else if (collection === 'faqs') {
+      list = incoming.map(i => ({
+        q: sanitise(i.q).slice(0, 300),
+        a: sanitise(i.a).slice(0, 2000)
+      })).filter(i => i.q && i.a);
+    } else if (collection === 'gallery') {
+      list = incoming.map(i => ({
+        url: sanitise(i.url).slice(0, 500),
+        alt: sanitise(i.alt).slice(0, 200)
+      })).filter(i => i.url);
+    }
+    
+    content.homePages[slug][collection] = list;
+    await writeContent(content);
+    res.json({ ok: true, list });
+  } catch (err) {
+    console.error(`PUT /api/admin/home/${req.params.slug}/${req.params.collection} error:`, err.message);
+    res.status(500).json({ error: 'Failed to update content.' });
   }
 });
 

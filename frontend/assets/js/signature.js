@@ -130,6 +130,7 @@
   // 10. NAVBAR SCROLL BEHAVIOUR
   // ========================================================
   const navbar = document.getElementById('navbar');
+  const siteFixedTop = document.getElementById('site-fixed-top');
   if (navbar) {
     let lastScroll = 0;
     window.addEventListener('scroll', () => {
@@ -143,16 +144,7 @@
         navbar.classList.add('transparent');
       }
 
-      // Hide on scroll down, show on scroll up (after 400px)
-      if (scrollY > 400) {
-        if (scrollY > lastScroll) {
-          navbar.style.transform = 'translateY(-100%)';
-        } else {
-          navbar.style.transform = 'translateY(0)';
-        }
-      } else {
-        navbar.style.transform = 'translateY(0)';
-      }
+      // Header remains constant at the top
       lastScroll = scrollY;
     }, { passive: true });
   }
@@ -339,7 +331,9 @@
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         const midIdx = Math.floor(list.length / 2);
-        list[midIdx].scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'auto' });
+        const midItem = list[midIdx];
+        const targetLeft = midItem.offsetLeft - (scrollEl.clientWidth / 2) + (midItem.offsetWidth / 2);
+        scrollEl.scrollLeft = targetLeft;
         updateCenterCard();
         updateNav();
       });

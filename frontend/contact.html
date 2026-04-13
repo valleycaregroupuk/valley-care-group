@@ -30,9 +30,11 @@
 
   <!-- Hero -->
   <section class="page-hero" id="main-content">
-    <div class="page-hero-eyebrow" data-edit-key="contact.hero.eyebrow">Contact Us</div>
-    <h1 class="page-hero-title" data-edit-key="contact.hero.title">We're Here to <em style="font-style:italic;color:var(--clr-gold-light)">Help</em></h1>
-    <p class="page-hero-subtitle" data-edit-key="contact.hero.sub">Whether you're ready to take the next step or just starting to explore your options, we're ready to listen and help — with kindness and without pressure.</p>
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow" data-edit-key="contact.hero.eyebrow">Contact Us</div>
+      <h1 class="page-hero-title" data-edit-key="contact.hero.title">We're Here to <em style="font-style:italic;color:var(--clr-gold-light)">Help</em></h1>
+      <p class="page-hero-subtitle" data-edit-key="contact.hero.sub">Whether you're ready to take the next step or just starting to explore your options, we're ready to listen and help — with kindness and without pressure.</p>
+    </div>
   </section>
 
   <!-- Quick contact cards -->
@@ -124,15 +126,26 @@
     <iframe title="Glan-yr-Afon area map" width="100%" height="380" style="border:0;display:block" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.openstreetmap.org/export/embed.html?bbox=-3.28%2C51.62%2C-3.14%2C51.71&amp;layer=mapnik"></iframe>
   </div>
 
+
+  <section class="section" style="background:var(--clr-midnight); color:white; text-align:center; padding: 4rem 1rem;">
+    <div class="container" style="max-width: 500px;">
+      <h2 style="font-family:var(--font-serif);font-size:2rem;margin-bottom:1rem;color:var(--clr-gold-light)">Stay Updated</h2>
+      <p style="color:var(--clr-cream);opacity:0.8;margin-bottom:2rem;">Join our newsletter to receive updates and news from Valley Care Group across all our homes.</p>
+      <form class="newsletter-form" onsubmit="window.submitNewsletter ? window.submitNewsletter(event) : null">
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center;">
+          <input type="email" placeholder="Your email address" required style="flex:1; min-width:200px; padding:0.75rem 1rem; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); color:#fff; border-radius:var(--radius-sm); font-size:1rem; outline:none;">
+          <button type="submit" class="btn btn-gold">Subscribe &rarr;</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
   <footer class="footer">
     <div class="container"><div class="footer-bottom" style="padding-top:0"><div class="footer-copy">© 2026 Valley Care Group</div><div class="footer-bottom-links"><a href="index.html">Home</a><a href="homes.html">Our Homes</a><a href="jobs.html">Careers</a><a href="privacy.html">Privacy</a><a href="cookies.html">Cookies</a><a href="complaints.html">Complaints</a></div></div></div>
   </footer>
 
   <div class="toast" id="toast"><span class="toast-icon">✅</span><div><div class="toast-title">Message Sent!</div><div class="toast-msg">Thank you — we'll be in touch very soon.</div></div></div>
-  <div class="lang-toggle-bar" aria-label="Language">
-    <button type="button" id="vcg-lang-en" class="active">EN</button>
-    <button type="button" id="vcg-lang-cy">CY</button>
-  </div>
+
   <script src="assets/js/runtime-config.js"></script>
   <script src="assets/js/config.js"></script>
   <script src="assets/js/i18n.js"></script>

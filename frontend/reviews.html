@@ -57,7 +57,7 @@
       <div class="family-story-flow" style="margin-top:0">
         <div class="family-story-form-card">
           <h2 class="family-story-form-title" style="font-size:1.35rem">Your review</h2>
-          <p class="family-story-form-lead">Submissions are stored securely. They <strong>do not</strong> appear on the website automatically. After you submit, staff can review your message in the admin console and may add it to the homepage <strong>Family Voices</strong> section if appropriate.</p>
+          <p class="family-story-form-lead">Submissions are stored securely and reviewed by our care team before appearing on our verified <strong>Family Voices</strong> section. We value your feedback immensely.</p>
           <form id="home-review-form" class="family-story-form" onsubmit="submitHomeReview(event)" novalidate>
             <input type="text" name="hr_website" class="family-story-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="family-story-field-row">
@@ -117,6 +117,20 @@
           </form>
         </div>
       </div>
+    </div>
+  </section>
+
+
+  <section class="section" style="background:var(--clr-midnight); color:white; text-align:center; padding: 4rem 1rem;">
+    <div class="container" style="max-width: 500px;">
+      <h2 style="font-family:var(--font-serif);font-size:2rem;margin-bottom:1rem;color:var(--clr-gold-light)">Stay Updated</h2>
+      <p style="color:var(--clr-cream);opacity:0.8;margin-bottom:2rem;">Join our newsletter to receive updates and news from Valley Care Group across all our homes.</p>
+      <form class="newsletter-form" onsubmit="window.submitNewsletter ? window.submitNewsletter(event) : null">
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center;">
+          <input type="email" placeholder="Your email address" required style="flex:1; min-width:200px; padding:0.75rem 1rem; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); color:#fff; border-radius:var(--radius-sm); font-size:1rem; outline:none;">
+          <button type="submit" class="btn btn-gold">Subscribe &rarr;</button>
+        </div>
+      </form>
     </div>
   </section>
 

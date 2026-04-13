@@ -45,9 +45,11 @@
 
   <!-- HERO -->
   <section class="page-hero">
-    <div class="page-hero-eyebrow" data-edit-key="about.hero.eyebrow">About Valley Care Group</div>
-    <h1 class="page-hero-title" data-edit-key="about.hero.title">Over 20 Years of<br><em style="font-style:italic;color:var(--clr-gold-light)">Caring with Heart</em></h1>
-    <p class="page-hero-subtitle" data-edit-key="about.hero.sub">We believe every person deserves to age with dignity, comfort, and joy — surrounded by people who truly care.</p>
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow" data-edit-key="about.hero.eyebrow">About Valley Care Group</div>
+      <h1 class="page-hero-title" data-edit-key="about.hero.title">Over 20 Years of<br><em style="font-style:italic;color:var(--clr-gold-light)">Caring with Heart</em></h1>
+      <p class="page-hero-subtitle" data-edit-key="about.hero.sub">We believe every person deserves to age with dignity, comfort, and joy — surrounded by people who truly care.</p>
+    </div>
   </section>
 
   <!-- STATS STRIP -->
@@ -81,9 +83,9 @@
         <div class="fade-up">
           <span class="section-eyebrow" data-edit-key="about.story.eyebrow">Our Story</span>
           <h2 class="section-title" data-edit-key="about.story.title">Founded on <em>Family Values</em></h2>
-          <p class="body-text mb-med" data-edit-key="about.story.p1">Valley Care Group was founded with a simple but powerful belief: that every person, regardless of age or condition, deserves to live with dignity, warmth, and genuine connection. Our journey began over two decades ago in South Wales, rooted in a deep understanding of what families need when choosing care for someone they love.</p>
-          <p class="body-text mb-med" data-edit-key="about.story.p2">From our first home, we have grown carefully and deliberately — never sacrificing quality for quantity. Each new home we open is held to the same exacting standards. We are proud to be a family-values-led organisation, where every team member is considered part of the Valley Care family.</p>
-          <p class="body-text" data-edit-key="about.story.p3">Today, with three CIW-registered homes across South Wales — Glan-yr-Afon, Llys Gwyn, and Ty Pentwyn — we continue to live by the same principles that inspired our founding: compassion, dignity, excellence, and continuity of care.</p>
+          <p class="body-text mb-med" data-edit-key="about.story.p1">Valley Care Group was founded upon a simple yet powerful philosophy: that every individual, regardless of their age or clinical requirements, deserves to live with profound dignity, warmth, and genuine human connection. Our journey began over two decades ago in South Wales, rooted in an intricate understanding of what families truly need when seeking reassuring care for a loved one.</p>
+          <p class="body-text mb-med" data-edit-key="about.story.p2">From the opening of our first home, we have grown carefully and deliberately—never compromising our rigorous standards of quality. Each new residence within our group is held to the same exacting, premium benchmarks. We are exceptionally proud to remain a family-values-led organisation, where every team member is cherished as part of the extended Valley Care family.</p>
+          <p class="body-text" data-edit-key="about.story.p3">Today, encompassing three CIW-registered homes across South Wales—Glan-yr-Afon, Llys Gwyn, and Ty Pentwyn—we continue to embody the selfsame principles that inspired our inception: heartfelt compassion, absolute dignity, clinical excellence, and vital continuity of care.</p>
         </div>
         <div class="fade-up fade-up-delay-2">
           <img src="assets/images/interior.png" alt="Warm care home interior" class="about-story-img">
@@ -262,6 +264,14 @@
             </div>
           </div>
           <p class="footer-brand-desc">Providing compassionate, person-centred nursing and residential care across South Wales. CIW registered and family-values driven.</p>
+          
+          <form class="newsletter-form" onsubmit="window.submitNewsletter ? window.submitNewsletter(event) : null" style="margin-top:1.5rem">
+            <div style="font-size:0.85rem; font-weight:600; color:var(--clr-gold-light); margin-bottom:0.5rem">Join our Newsletter</div>
+            <div style="display:flex; gap:0.5rem">
+              <input type="email" placeholder="Your email address" required style="flex:1; padding:0.5rem 0.75rem; border:1px solid rgba(255,255,255,0.15); background:rgba(0,0,0,0.2); color:#fff; border-radius:4px; font-size:0.85rem; outline:none;">
+              <button type="submit" class="btn btn-gold btn-sm" style="padding:0.5rem 1rem">Subscribe &rarr;</button>
+            </div>
+          </form>
           <div class="footer-social">
             <a href="#" class="footer-social-btn" title="Facebook">𝐟</a>
             <a href="#" class="footer-social-btn" title="Twitter">𝕏</a>
