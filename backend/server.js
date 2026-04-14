@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════════
-// VALLEY CARE GROUP — API Server (Vercel KV Edition)
-// Node.js / Express · JWT Auth · Vercel KV (Redis) data store
+// VALLEY CARE GROUP — API Server
+// Node.js / Express · JWT Auth · PostgreSQL (JSONB KV) · GCS uploads
 // UK GDPR compliant structure · Helmet security headers
 // ═══════════════════════════════════════════════════════════════
 
@@ -30,32 +30,13 @@ const rateLimit = require('express-rate-limit');
 const multer    = require('multer');
 
 // ---------------------------------------------------------------------------
-// Vercel KV client — falls back to in-memory store for local dev
+// KV store: PostgreSQL (Cloud SQL) or in-memory when DATABASE_URL is unset
 // ---------------------------------------------------------------------------
+const { createKv } = require('./lib/kv-store');
 let kv;
-const skipKV = !process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN;
-
-if (skipKV) {
-  console.warn('⚠️  Vercel KV environment variables missing — using in-memory store');
-  const store = new Map();
-  kv = {
-    get: async (key) => store.get(key) ?? null,
-    set: async (key, val, _opts) => { store.set(key, val); return 'OK'; },
-    del: async (key) => { store.delete(key); return 1; },
-  };
-} else {
-  try {
-    kv = require('@vercel/kv').kv;
-  } catch (_) {
-    console.warn('⚠️  @vercel/kv module not found — using in-memory store');
-    const store = new Map();
-    kv = {
-      get: async (key) => store.get(key) ?? null,
-      set: async (key, val, _opts) => { store.set(key, val); return 'OK'; },
-      del: async (key) => { store.delete(key); return 1; },
-    };
-  }
-}
+const initKvPromise = (async () => {
+  kv = await createKv();
+})();
 
 // ---------------------------------------------------------------------------
 // Config & production safety
@@ -72,6 +53,8 @@ function validateProductionConfig() {
   if (admin.length < 12) errors.push('ADMIN_PASSWORD must be at least 12 characters.');
   const origins = (process.env.ALLOWED_ORIGIN || '').split(',').map(s => s.trim()).filter(Boolean);
   if (origins.length === 0) errors.push('ALLOWED_ORIGIN must list at least one frontend origin (comma-separated).');
+  const db = (process.env.DATABASE_URL || '').trim();
+  if (!db) errors.push('DATABASE_URL must be set to your Cloud SQL / Postgres connection string.');
   return { ok: errors.length === 0, errors };
 }
 
@@ -123,7 +106,7 @@ async function checkKvRateLimit(req, bucket, maxRequests, windowSec) {
     await kv.set(key, { count, resetAt }, { ex: ttl });
     return true;
   } catch (e) {
-    console.warn('KV rate limit error:', e.message);
+    console.warn('Rate limit store error:', e.message);
     return true;
   }
 }
@@ -134,24 +117,27 @@ function csvEscapeCell(val) {
   return s;
 }
 
-async function sendResendEmail({ to, subject, html, text }) {
+async function sendResendEmail({ to, bcc, subject, html, text }) {
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey || !to) return false;
-  const recipients = (Array.isArray(to) ? to : String(to).split(','))
+  if (!apiKey) return false;
+  const recipients = (Array.isArray(to) ? to : String(to || '').split(','))
     .map((x) => x.trim())
     .filter(Boolean);
-  if (!recipients.length) return false;
+  const bccList = bcc
+    ? (Array.isArray(bcc) ? bcc : String(bcc).split(',')).map((x) => x.trim()).filter(Boolean)
+    : [];
+  if (!recipients.length && !bccList.length) return false;
   try {
     const { Resend } = require('resend');
     const resend = new Resend(apiKey);
     const from = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
-    await resend.emails.send({
-      from,
-      to: recipients,
-      subject,
-      html: html || undefined,
-      text: text || undefined,
-    });
+    const payload = { from, subject, html: html || undefined, text: text || undefined };
+    if (recipients.length) payload.to = recipients;
+    if (bccList.length) payload.bcc = bccList;
+    if (!payload.to && bccList.length) {
+      payload.to = process.env.ENQUIRY_NOTIFY_TO || process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+    }
+    await resend.emails.send(payload);
     return true;
   } catch (e) {
     console.error('Resend error:', e.message);
@@ -295,6 +281,13 @@ const uploadCv = multer({
 // ---------------------------------------------------------------------------
 const app = express();
 
+app.use((req, res, next) => {
+  initKvPromise.then(() => next()).catch((err) => {
+    console.error('KV init failed:', err);
+    res.status(503).json({ error: 'Database unavailable.' });
+  });
+});
+
 app.use(helmet({ contentSecurityPolicy: false }));
 
 app.use(cors({
@@ -306,8 +299,8 @@ app.use(cors({
 
 app.use(express.json({ limit: '50kb' }));
 
-// Trust Vercel's proxy so rate-limiter uses real IP
-app.set('trust proxy', 1);
+// Trust reverse proxy (Cloud Run / Firebase Hosting rewrites) for real client IP
+app.set('trust proxy', true);
 
 if (PRODUCTION_MISCONFIGURED) {
   console.error('[VCG API] Production misconfiguration — all requests will return 503 until fixed:\n', prodConfig.errors.join('\n'));
@@ -917,24 +910,23 @@ app.post('/api/applications', (req, res, next) => {
       return res.status(400).json({ error: 'Please enter a valid email address.' });
     }
 
-    const hasBlob = !!process.env.BLOB_READ_WRITE_TOKEN;
+    const hasGcs = !!(process.env.GCS_BUCKET_NAME || '').trim();
     let cvUrl = null;
     let cvFilename = null;
     if (req.file && req.file.buffer && req.file.buffer.length) {
-      if (!hasBlob) {
+      if (!hasGcs) {
         return res.status(503).json({ error: 'File storage is not configured.' });
       }
-      const { put } = require('@vercel/blob');
+      const { uploadBuffer } = require('./lib/gcs-upload');
       const safeName = (req.file.originalname || 'cv.pdf').replace(/[^a-zA-Z0-9._-]/g, '_').slice(0, 120);
-      const path = `vcg-cv/${eid('cv')}_${safeName}`;
-      const blob = await put(path, req.file.buffer, {
-        access: 'public',
-        token: process.env.BLOB_READ_WRITE_TOKEN,
+      const objectPath = `vcg-cv/${eid('cv')}_${safeName}`;
+      cvUrl = await uploadBuffer({
+        buffer: req.file.buffer,
+        destPath: objectPath,
         contentType: req.file.mimetype || 'application/octet-stream',
       });
-      cvUrl = blob.url;
       cvFilename = safeName;
-    } else if (hasBlob && !speculative) {
+    } else if (hasGcs && !speculative) {
       return res.status(400).json({ error: 'Please attach your CV (PDF or Word, max 2MB).' });
     }
 
@@ -1409,8 +1401,8 @@ app.post('/api/admin/newsletter/send', requireAuth, async (req, res) => {
       </div>
     `;
 
-    const success = await sendEmail({
-      to: process.env.ENQUIRY_NOTIFY_TO || 'care@valleycare.wales', // Resend needs a 'to', we use bcc for subscribers
+    const success = await sendResendEmail({
+      to: process.env.ENQUIRY_NOTIFY_TO || 'care@valleycare.wales',
       bcc: bccList,
       subject: subject,
       html: fullHtml,
@@ -1584,10 +1576,11 @@ app.use((err, req, res, _next) => {
 });
 
 // ---------------------------------------------------------------------------
-// Start server (for local development — Vercel uses api/index.js instead)
+// Start server (Cloud Run / local)
 // ---------------------------------------------------------------------------
 if (require.main === module) {
   (async () => {
+    await initKvPromise;
     await maybeResetAdminHashForDev();
     app.listen(PORT, () => {
       console.log('');

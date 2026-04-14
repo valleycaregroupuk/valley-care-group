@@ -6,33 +6,44 @@ A premium care home website and content management system for Valley Care Group,
 
 ```
 carehomes-wales/
-├── frontend/          ← Static website (HTML, CSS, JS, images)
-│   ├── index.html
-│   ├── homes.html
-│   ├── services.html
-│   ├── about.html
-│   ├── contact.html
-│   ├── jobs.html
-│   ├── admin.html
-│   ├── homes/
-│   ├── assets/
-│   │   ├── css/
-│   │   ├── js/
-│   │   └── images/
-│   └── vercel.json
-│
-└── backend/           ← Node.js/Express API (Vercel KV)
-    ├── server.js
-    ├── api/
-    │   └── index.js   ← Vercel serverless entry point
-    ├── package.json
-    ├── .env.example
-    └── vercel.json
+├── frontend/          ← Static site (HTML, CSS, JS)
+├── backend/           ← Node.js/Express API (PostgreSQL + GCS)
+│   ├── server.js
+│   ├── db/schema.sql
+│   ├── lib/kv-store.js
+│   ├── Dockerfile
+│   └── .env.example
+├── firebase.json      ← Firebase Hosting (copy .firebaserc.example → .firebaserc)
+└── README.md
 ```
+
+**Production stack:** Firebase Hosting (frontend) · Cloud Run (API) · Cloud SQL (PostgreSQL) · Google Cloud Storage (CVs). Configure `DATABASE_URL`, `GCS_BUCKET_NAME`, `ALLOWED_ORIGIN`, `JWT_SECRET`, `ADMIN_PASSWORD`, and Resend keys on Cloud Run; set `PUBLIC_API_BASE` when building the frontend to your Cloud Run URL.
 
 ---
 
-## 🚀 Deploying to GitHub + Vercel
+## Deploying (overview)
+
+1. **Database:** Create a Cloud SQL Postgres instance (`europe-west2`), run `backend/db/schema.sql`, note the connection string (including Cloud SQL socket for Cloud Run).
+2. **Backend:** Build and deploy the container from `backend/` to Cloud Run; attach a service account with access to Cloud SQL and the GCS bucket; set environment variables from `.env.example`.
+3. **Storage:** Create a GCS bucket for CV uploads; grant the Cloud Run service account `roles/storage.objectAdmin` (or tighter custom role).
+4. **Frontend:** `cd frontend && npm install && PUBLIC_API_BASE=https://YOUR-RUN-URL npm run build`, then `firebase deploy --only hosting` (Firebase CLI; use `.firebaserc` with your GCP project).
+
+---
+
+## Local development
+
+```bash
+cd backend && npm install && npm run dev   # API on http://localhost:3500 (in-memory KV if no DATABASE_URL)
+cd frontend && npm install && npm run build && npx serve frontend
+```
+
+Set `frontend`’s `PUBLIC_API_BASE=http://localhost:3500` when running `npm run build` in `frontend/` so the site calls your local API.
+
+---
+
+## Legacy: Vercel (removed)
+
+Old instructions (GitHub + Vercel) are archived below for reference only.
 
 ### Step 1 — Create a GitHub Repository
 
@@ -231,7 +242,7 @@ npm run dev   # Starts on http://localhost:3500
 npx serve frontend
 ```
 
-> Without KV env vars set, the backend uses an **in-memory store** (data resets on restart). This is fine for local development.
+> Without `DATABASE_URL`, the backend uses an **in-memory store** (data resets on restart). Fine for quick local UI tests; use local Postgres for persistence.
 
 ---
 

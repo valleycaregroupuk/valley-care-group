@@ -1,7 +1,7 @@
 'use strict';
 /**
- * Writes assets/js/runtime-config.js from environment variables (Vercel build).
- * Set PUBLIC_API_BASE to your backend URL, e.g. https://vcg-backend.vercel.app
+ * Writes assets/js/runtime-config.js from environment variables (CI / local build).
+ * Set PUBLIC_API_BASE to your Cloud Run API URL (or http://localhost:3500 for dev).
  */
 const fs = require('fs');
 const path = require('path');
