@@ -84,6 +84,7 @@ const KEY_APPLICATIONS = 'vcg:applications';
 const KEY_HOME_REVIEWS = 'vcg:home_reviews';
 const KEY_SUBSCRIBERS  = 'vcg:subscribers';
 const KEY_NL_ARCHIVE   = 'vcg:nl_archive';
+const KEY_NEWSLETTERS  = 'vcg:newsletter_issues';
 
 // ---------------------------------------------------------------------------
 // Shared KV rate limit (works across serverless instances)
@@ -201,6 +202,15 @@ async function writeNlArchive(list) {
   await kv.set(KEY_NL_ARCHIVE, list);
 }
 
+async function readNewsletterIssues() {
+  const list = await kv.get(KEY_NEWSLETTERS);
+  return Array.isArray(list) ? list : [];
+}
+
+async function writeNewsletterIssues(list) {
+  await kv.set(KEY_NEWSLETTERS, list);
+}
+
 function sanitiseLongText(val, maxLen) {
   if (val === undefined || val === null) return '';
   return String(val).replace(/<[^>]*>/g, '').trim().slice(0, maxLen || 4000);
@@ -269,19 +279,27 @@ function sanitiseHomePageExtras(hp) {
 
 const uploadCv = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 2 * 1024 * 1024 },
+  limits: { fileSize: 5 * 1024 * 1024 }, // Allowed up to 5MB for PDFs
   fileFilter: (_req, file, cb) => {
     const okMime = [
       'application/pdf',
       'application/msword',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'image/jpeg',
+      'image/png',
+      'image/webp'
     ].includes(file.mimetype);
     const ext = (file.originalname || '').toLowerCase();
-    const okExt = /\.(pdf|doc|docx)$/i.test(ext);
+    const okExt = /\.(pdf|doc|docx|jpg|jpeg|png|webp)$/i.test(ext);
     if (okMime && okExt) cb(null, true);
-    else cb(new Error('CV must be a PDF or Word document (.pdf, .doc, .docx).'));
+    else cb(new Error('File type not supported. Allowed: PDF, Word, JPG, PNG, WebP.'));
   },
 });
+
+const uploadNewsletterAssets = uploadCv.fields([
+  { name: 'pdf', maxCount: 1 },
+  { name: 'image', maxCount: 1 }
+]);
 
 // ---------------------------------------------------------------------------
 // App setup
@@ -1400,6 +1418,177 @@ app.get('/api/admin/applications/export.csv', requireAuth, async (req, res) => {
 // ---------------------------------------------------------------------------
 // Newsletter Broadcast (Admin)
 // ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// Newsletter Management (Admin)
+// ---------------------------------------------------------------------------
+
+// List all newsletter issues
+app.get('/api/admin/newsletters', requireAuth, async (req, res) => {
+  try {
+    const list = await readNewsletterIssues();
+    res.json(list);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to load newsletters.' });
+  }
+});
+
+// Update or create a newsletter issue (with optional file uploads)
+app.post('/api/admin/newsletters', requireAuth, uploadNewsletterAssets, async (req, res) => {
+  try {
+    const { id, title, month, year, description, home, sendEmail: broadcast } = req.body;
+    
+    if (!title || !month || !year) {
+      return res.status(400).json({ error: 'Title, Month, and Year are required.' });
+    }
+
+    const list = await readNewsletterIssues();
+    let issue = id ? list.find(n => n.id === id) : null;
+    
+    if (!issue) {
+      issue = {
+        id: eid('iss_'),
+        createdAt: new Date().toISOString()
+      };
+      list.unshift(issue);
+    }
+
+    issue.title = sanitise(title).slice(0, 200);
+    issue.month = sanitise(month).slice(0, 50);
+    issue.year = sanitise(year).slice(0, 4);
+    issue.description = sanitise(description).slice(0, 2000);
+    issue.home = sanitise(home).slice(0, 50);
+    issue.updatedAt = new Date().toISOString();
+
+    const { uploadBuffer } = require('./lib/gcs-upload');
+
+    // Handle PDF upload
+    if (req.files && req.files.pdf && req.files.pdf[0]) {
+      const f = req.files.pdf[0];
+      const dest = `newsletters/${issue.id}_${Date.now()}.pdf`;
+      issue.pdfUrl = await uploadBuffer({
+        buffer: f.buffer,
+        destPath: dest,
+        contentType: f.mimetype
+      });
+    }
+
+    // Handle Cover Image upload
+    if (req.files && req.files.image && req.files.image[0]) {
+      const f = req.files.image[0];
+      const dest = `newsletters/covers/${issue.id}_${Date.now()}_cover${path.extname(f.originalname)}`;
+      issue.imageUrl = await uploadBuffer({
+        buffer: f.buffer,
+        destPath: dest,
+        contentType: f.mimetype
+      });
+    }
+
+    await writeNewsletterIssues(list);
+
+    // Optional email broadcast
+    let sentCount = 0;
+    if (broadcast === 'true' || broadcast === true) {
+      const subs = await readSubscribers();
+      if (subs.length > 0) {
+        const bccList = subs.map(s => s.email).filter(Boolean);
+        const subject = `Newsletter Update: ${issue.title} (${issue.month} ${issue.year})`;
+        const newsLink = `https://www.valleycare.wales/news.html?issue=${issue.id}`;
+        
+        const html = `
+          <div style="font-family: Arial, sans-serif; color: #1C2E40; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
+            <div style="background-color: #1C2E40; padding: 24px; text-align: center;">
+              <h1 style="color: #DFC071; margin: 0; font-family: Georgia, serif; font-size: 24px;">Valley Care Group</h1>
+            </div>
+            <div style="padding: 32px 24px; background-color: #FAFAFA;">
+              <h2 style="margin-top: 0;">${issue.title} is now available</h2>
+              <p>Our newsletter for ${issue.month} ${issue.year} has been published. You can view the full PDF version online below:</p>
+              <div style="margin: 24px 0; text-align: center;">
+                <a href="${issue.pdfUrl}" style="display: inline-block; background-color: #1C2E40; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold;">View Newsletter PDF</a>
+              </div>
+              <p>${issue.description}</p>
+            </div>
+            <div style="background-color: #eee; padding: 24px; text-align: center; font-size: 11px; color: #777;">
+              <p style="margin: 0;">Valley Care Group, South Wales. You are receiving this because you subscribed to our updates.</p>
+            </div>
+          </div>
+        `;
+
+        await sendResendEmail({
+          to: process.env.ENQUIRY_NOTIFY_TO || 'care@valleycare.wales',
+          bcc: bccList,
+          subject: subject,
+          html: html,
+          text: `A new newsletter is available: ${issue.title}. View it at: ${issue.pdfUrl}`
+        });
+        sentCount = bccList.length;
+      }
+    }
+
+    // Always send alert to admin
+    await sendResendEmail({
+      to: 'valleycaregroupuk@gmail.com',
+      subject: `[Admin Alert] Newsletter Uploaded: ${issue.title}`,
+      html: `
+        <h3>Newsletter Successfully Uploaded</h3>
+        <p><strong>Title:</strong> ${issue.title}</p>
+        <p><strong>Period:</strong> ${issue.month} ${issue.year}</p>
+        <p><strong>Broadcast Sent:</strong> ${broadcast ? 'Yes, to ' + sentCount + ' subscribers' : 'No'}</p>
+        <p><a href="${issue.pdfUrl}">View PDF</a></p>
+      `,
+      text: `Newsletter "${issue.title}" was successfully uploaded and processed.`
+    });
+
+    res.json({ ok: true, issue, sentCount });
+  } catch (err) {
+    console.error('POST /api/admin/newsletters error:', err.message);
+    res.status(500).json({ error: err.message || 'Failed to save newsletter.' });
+  }
+});
+
+// Delete a newsletter issue
+app.delete('/api/admin/newsletters/:id', requireAuth, async (req, res) => {
+  try {
+    const list = await readNewsletterIssues();
+    const filtered = list.filter(n => n.id !== req.params.id);
+    await writeNewsletterIssues(filtered);
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete newsletter.' });
+  }
+});
+
+// Get subscribers list
+app.get('/api/admin/subscribers', requireAuth, async (req, res) => {
+  try {
+    const subs = await readSubscribers();
+    if (req.query.format === 'csv') {
+      let csv = 'Email,Date Joined\n';
+      subs.forEach(s => {
+        csv += `${csvEscapeCell(s.email)},${csvEscapeCell(s.createdAt || '')}\n`;
+      });
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', 'attachment; filename=vcg-subscribers.csv');
+      return res.send(csv);
+    }
+    res.json(subs);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to load subscribers.' });
+  }
+});
+
+// Delete a subscriber
+app.delete('/api/admin/subscribers/:email', requireAuth, async (req, res) => {
+  try {
+    const email = req.params.email;
+    const subs = await readSubscribers();
+    const filtered = subs.filter(s => s.email !== email);
+    await writeSubscribers(filtered);
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to remove subscriber.' });
+  }
+});
+
 app.post('/api/admin/newsletter/send', requireAuth, async (req, res) => {
   try {
     const { subject, previewText, htmlContent } = req.body;

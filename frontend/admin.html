@@ -820,38 +820,65 @@
       <!-- ── NEWSLETTER SECTION ── -->
       <div class="page-section" id="section-newsletter">
         <div class="page-header">
-          <div>
-            <div class="page-header-title">Newsletter Broadcast</div>
-            <div class="page-header-sub">Send email updates to all subscribed public users</div>
+          <div style="display:flex; align-items:center; gap:1rem;">
+            <div class="page-header-title">Newsletter Management</div>
+          </div>
+          <div style="display:flex; gap:0.75rem;">
+            <button class="btn btn-ghost" id="nl-issues-btn" onclick="showNewsletterView('issues')">
+              <span class="sidebar-nav-icon">📖</span> NEWSLETTERS (<span id="nl-issues-count">0</span>)
+            </button>
+            <button class="btn btn-ghost" id="nl-subscribers-btn" onclick="showNewsletterView('subscribers')">
+              <span class="sidebar-nav-icon">👥</span> SUBSCRIBERS (<span id="nl-subscribers-count">0</span>)
+            </button>
           </div>
         </div>
-        <div class="table-card" style="max-width: 800px; padding: 2rem;">
-          <div class="alert alert-info" style="margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between;">
-            <div>
-              <strong id="nl-subscribers-count">0</strong> active subscribers
+
+        <!-- Issues List View -->
+        <div id="nl-view-issues">
+          <div class="table-card" style="margin-bottom: 2rem; padding: 1.5rem;">
+            <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+              <h3 style="font-size: 1.1rem; color: var(--cobalt);">Recent Issues</h3>
+              <button class="btn btn-primary btn-sm" onclick="openNewsletterForm()">+ Upload Newsletter</button>
             </div>
-            <button class="btn btn-outline btn-sm" onclick="fetchNewsletterStats()">Refresh</button>
+            <div class="admin-table-scroll">
+              <table style="min-width: 600px;">
+                <thead>
+                  <tr>
+                    <th>Cover</th>
+                    <th>Issue Details</th>
+                    <th>Home</th>
+                    <th>Sent At</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="nl-issues-tbody">
+                  <tr><td colspan="5" class="empty-state">Loading newsletters...</td></tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-          
-          <form id="newsletter-form" onsubmit="sendNewsletter(event)">
-            <div class="form-group">
-              <label for="nl-subject">Subject Line</label>
-              <input type="text" id="nl-subject" class="form-control" required placeholder="e.g., Summer Update across Valley Care Group">
+        </div>
+
+        <!-- Subscribers List View -->
+        <div id="nl-view-subscribers" style="display:none;">
+          <div class="table-card" style="margin-bottom: 2rem; padding: 1.5rem;">
+            <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+              <h3 style="font-size: 1.1rem; color: var(--cobalt);">Active Subscribers</h3>
+              <button class="btn btn-ghost btn-sm" onclick="exportSubscribers()">⬇ Export CSV</button>
             </div>
-            <div class="form-group">
-              <label for="nl-preview">Preview Text (Optional)</label>
-              <input type="text" id="nl-preview" class="form-control" placeholder="Short text that appears in email clients next to the subject">
+            <div class="admin-table-scroll">
+              <table style="min-width: 500px;">
+                <thead>
+                  <tr>
+                    <th>Email</th>
+                    <th>Date Joined</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="nl-subscribers-tbody"></tbody>
+              </table>
             </div>
-            <div class="form-group">
-              <label for="nl-html">HTML Content</label>
-              <textarea id="nl-html" class="form-control" rows="12" required placeholder="<p>Dear families...</p>"></textarea>
-              <p style="font-size:0.8rem; color:var(--text-mid); margin-top:0.25rem">Use basic HTML tags (&lt;p&gt;, &lt;strong&gt;, &lt;br&gt;). An email template with the Valley Care Group header and footer will be automatically wrapped around this content.</p>
-            </div>
-            <div style="display:flex; gap:1rem; align-items:center; margin-top:2rem;">
-              <button type="submit" class="btn btn-primary" id="nl-send-btn">Send Broadcast</button>
-              <span id="nl-status" style="font-size:0.9rem; font-weight:500;"></span>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
 
@@ -1003,6 +1030,90 @@
       <div class="drawer-footer">
         <button type="button" class="btn btn-ghost" onclick="closeHrDrawer()">Cancel</button>
         <button type="submit" class="btn btn-primary" id="hr-save-btn">💾 Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Newsletter Drawer -->
+<div class="drawer-overlay" id="nl-overlay" onclick="closeNewsletterDrawerIfOutside(event)">
+  <div class="drawer-panel" onclick="event.stopPropagation()">
+    <div class="drawer-header">
+      <span class="drawer-title" id="nl-drawer-title">Add Newsletter</span>
+      <button class="drawer-close" onclick="closeNewsletterDrawer()">✕</button>
+    </div>
+    <div class="alert alert-error" id="nl-error" style="display:none"></div>
+    <form id="nl-form" onsubmit="saveNewsletter(event)" enctype="multipart/form-data">
+      <input type="hidden" id="nl-id">
+      
+      <div class="field-group">
+        <label class="field-label" for="nl-title">Title <span>*</span></label>
+        <input class="field-input" type="text" id="nl-title" required placeholder="e.g. March Newsletter">
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label" for="nl-month">Month <span>*</span></label>
+          <select class="field-select" id="nl-month" required>
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="August">August</option>
+            <option value="September">September</option>
+            <option value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="nl-year">Year <span>*</span></label>
+          <input class="field-input" type="number" id="nl-year" required value="2026">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="nl-description">Description (optional)</label>
+        <textarea class="field-textarea" id="nl-description" placeholder="Short summary of what is inside..." style="min-height:100px"></textarea>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label" for="nl-pdf">Newsletter PDF</label>
+          <input type="file" id="nl-pdf" accept=".pdf" class="field-input">
+          <div class="field-help" id="nl-pdf-name"></div>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="nl-image">Cover Image</label>
+          <input type="file" id="nl-image" accept="image/*" class="field-input">
+          <div class="field-help" id="nl-image-name"></div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="nl-home">Home (optional - leave empty for global)</label>
+        <select class="field-select" id="nl-home">
+          <option value="">Global / All Homes</option>
+          <option value="glan">Glan-yr-Afon Nursing Home</option>
+          <option value="llys">Llys Gwyn Residential Home</option>
+          <option value="pentwyn">Ty Pentwyn Nursing Home</option>
+          <option value="waverley">Waverley Care Centre</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label style="display:flex; align-items:center; gap:0.5rem; font-size:0.875rem; cursor:pointer;">
+          <input type="checkbox" id="nl-broadcast" style="width:16px; height:16px;">
+          <span>📧 Email to all subscribers (<span id="nl-broadcast-count">0</span>)</span>
+        </label>
+      </div>
+
+      <div class="drawer-footer">
+        <button type="button" class="btn btn-ghost" onclick="closeNewsletterDrawer()">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="nl-save-btn">💾 UPDATE NEWSLETTER</button>
       </div>
     </form>
   </div>
@@ -1408,6 +1519,8 @@ async function renderDashboard() {
       appBadge.style.display = 'none';
     }
   }
+
+  fetchNewsletterStats();
 
   const tbody = document.getElementById('dash-tbody');
   if (!tbody) return;
@@ -2165,41 +2278,213 @@ showSection = function(name) {
 };
 
 // ── NEWSLETTER MANAGER ───────────────────────────────────────────────────────
+let allNewsletterIssues = [];
+let allNewsletterSubscribers = [];
+
 async function fetchNewsletterStats() {
   try {
     const stats = await api('GET', '/api/admin/stats');
     allStats = stats;
     const countEl = document.getElementById('nl-subscribers-count');
     if (countEl) countEl.textContent = stats.activeSubscribers || 0;
+    
+    // Also load issues
+    const issues = await api('GET', '/api/admin/newsletters');
+    allNewsletterIssues = issues;
+    const issueCountEl = document.getElementById('nl-issues-count');
+    if (issueCountEl) issueCountEl.textContent = issues.length;
+    
+    if (document.getElementById('section-newsletter').classList.contains('active')) {
+      renderNewsletterIssues();
+    }
   } catch (ex) { console.error('Failed to update newsletter stats', ex); }
 }
 
-async function sendNewsletter(e) {
-  e.preventDefault();
-  if (!confirm('Are you sure you want to send this broadcast to all subscribers?')) return;
+function showNewsletterView(view) {
+  document.getElementById('nl-view-issues').style.display = view === 'issues' ? 'block' : 'none';
+  document.getElementById('nl-view-subscribers').style.display = view === 'subscribers' ? 'block' : 'none';
   
-  const btn = document.getElementById('nl-send-btn');
-  const status = document.getElementById('nl-status');
-  const subject = document.getElementById('nl-subject').value.trim();
-  const previewText = document.getElementById('nl-preview').value.trim();
-  const htmlContent = document.getElementById('nl-html').value.trim();
+  document.getElementById('nl-issues-btn').classList.toggle('active', view === 'issues');
+  document.getElementById('nl-subscribers-btn').classList.toggle('active', view === 'subscribers');
+  
+  if (view === 'issues') renderNewsletterIssues();
+  if (view === 'subscribers') loadSubscribers();
+}
+
+async function loadSubscribers() {
+  try {
+    const subs = await api('GET', '/api/admin/subscribers');
+    allNewsletterSubscribers = subs;
+    renderSubscribers();
+  } catch (ex) { showToast('Failed to load subscribers: ' + ex.message, true); }
+}
+
+function renderSubscribers() {
+  const tbody = document.getElementById('nl-subscribers-tbody');
+  if (!tbody) return;
+  
+  if (allNewsletterSubscribers.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="3" class="empty-state">No subscribers found.</td></tr>';
+    return;
+  }
+  
+  tbody.innerHTML = allNewsletterSubscribers.map(s => `
+    <tr>
+      <td style="font-weight:600;">${esc(s.email)}</td>
+      <td>${new Date(s.createdAt || Date.now()).toLocaleDateString('en-GB')}</td>
+      <td>
+        <button class="btn btn-ghost btn-sm" onclick="deleteSubscriber('${esc(s.email)}')">🗑️ Remove</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+async function deleteSubscriber(email) {
+  if (!confirm(`Are you sure you want to remove ${email} from the mailing list?`)) return;
+  try {
+    await api('DELETE', `/api/admin/subscribers/${encodeURIComponent(email)}`);
+    showToast('Subscriber removed');
+    loadSubscribers();
+    fetchNewsletterStats();
+  } catch (ex) { showToast(ex.message, true); }
+}
+
+function renderNewsletterIssues() {
+  const tbody = document.getElementById('nl-issues-tbody');
+  if (!tbody) return;
+  
+  if (allNewsletterIssues.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No newsletters uploaded yet.</td></tr>';
+    return;
+  }
+  
+  tbody.innerHTML = allNewsletterIssues.map(n => `
+    <tr>
+      <td style="width:80px;">
+        ${n.imageUrl ? `<img src="${n.imageUrl}" style="width:60px; height:80px; object-fit:cover; border-radius:4px; border:1px solid #ddd;">` : `<div style="width:60px; height:80px; background:#f0f0f0; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:1.5rem;">📄</div>`}
+      </td>
+      <td>
+        <div style="font-weight:700; color:var(--midnight);">${esc(n.title)}</div>
+        <div style="font-size:0.8rem; color:var(--text-mid);">${esc(n.month)} ${esc(n.year)}</div>
+        ${n.pdfUrl ? `<a href="${n.pdfUrl}" target="_blank" style="font-size:0.75rem; color:var(--cobalt); text-decoration:underline; display:block; margin-top:0.25rem;">View PDF ↗</a>` : ''}
+      </td>
+      <td><span class="badge badge-admin2">${esc(n.home || 'Global')}</span></td>
+      <td style="font-size:0.85rem; color:var(--text-light);">${new Date(n.createdAt).toLocaleDateString('en-GB')}</td>
+      <td>
+        <div class="action-btns">
+          <button class="btn btn-ghost btn-sm" onclick="editNewsletter('${n.id}')">✏️ Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteNewsletter('${n.id}')">🗑️</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function openNewsletterForm() {
+  openNewsletterDrawer(null);
+}
+
+function deleteNewsletter(id) {
+  if (!confirm('Are you sure you want to delete this newsletter issue?')) return;
+  api('DELETE', `/api/admin/newsletters/${id}`)
+    .then(() => {
+      showToast('Newsletter deleted');
+      fetchNewsletterStats();
+    })
+    .catch(ex => showToast(ex.message, true));
+}
+
+function editNewsletter(id) {
+  const n = allNewsletterIssues.find(item => item.id === id);
+  if (n) openNewsletterDrawer(n);
+}
+
+function exportSubscribers() {
+  downloadCsv('/api/admin/subscribers?format=csv', 'vcg-subscribers.csv');
+}
+
+// ── Newsletter Drawer Logic ──────────────────────────────────────────────────
+function openNewsletterDrawer(item) {
+  document.getElementById('nl-form').reset();
+  document.getElementById('nl-error').style.display = 'none';
+  document.getElementById('nl-save-btn').disabled = false;
+  document.getElementById('nl-save-btn').innerHTML = '💾 UPDATE NEWSLETTER';
+  document.getElementById('nl-pdf-name').textContent = '';
+  document.getElementById('nl-image-name').textContent = '';
+  document.getElementById('nl-broadcast-count').textContent = allStats.activeSubscribers || 0;
+
+  if (item) {
+    document.getElementById('nl-drawer-title').textContent = 'Edit Newsletter';
+    document.getElementById('nl-id').value = item.id;
+    document.getElementById('nl-title').value = item.title;
+    document.getElementById('nl-month').value = item.month;
+    document.getElementById('nl-year').value = item.year;
+    document.getElementById('nl-description').value = item.description || '';
+    document.getElementById('nl-home').value = item.home || '';
+    if (item.pdfUrl) document.getElementById('nl-pdf-name').textContent = 'Existing PDF: ' + item.pdfUrl.split('/').pop();
+    if (item.imageUrl) document.getElementById('nl-image-name').textContent = 'Existing Image: ' + item.imageUrl.split('/').pop();
+  } else {
+    document.getElementById('nl-drawer-title').textContent = 'Upload Newsletter';
+    document.getElementById('nl-id').value = '';
+    const now = new Date();
+    document.getElementById('nl-month').value = now.toLocaleString('default', { month: 'long' });
+    document.getElementById('nl-year').value = now.getFullYear();
+  }
+  
+  document.getElementById('nl-overlay').classList.add('open');
+}
+
+function closeNewsletterDrawer() {
+  document.getElementById('nl-overlay').classList.remove('open');
+}
+
+function closeNewsletterDrawerIfOutside(e) {
+  if (e.target === document.getElementById('nl-overlay')) closeNewsletterDrawer();
+}
+
+async function saveNewsletter(e) {
+  e.preventDefault();
+  const btn = document.getElementById('nl-save-btn');
+  const errEl = document.getElementById('nl-error');
+  const id = document.getElementById('nl-id').value;
   
   btn.disabled = true;
-  status.textContent = 'Sending...';
-  status.style.color = 'var(--text-mid)';
+  btn.innerHTML = '<span class="spinner"></span> Saving...';
+  errEl.style.display = 'none';
+  
+  const formData = new FormData();
+  formData.append('id', id);
+  formData.append('title', document.getElementById('nl-title').value);
+  formData.append('month', document.getElementById('nl-month').value);
+  formData.append('year', document.getElementById('nl-year').value);
+  formData.append('description', document.getElementById('nl-description').value);
+  formData.append('home', document.getElementById('nl-home').value);
+  formData.append('sendEmail', document.getElementById('nl-broadcast').checked);
+  
+  const pdfFile = document.getElementById('nl-pdf').files[0];
+  if (pdfFile) formData.append('pdf', pdfFile);
+  
+  const imageFile = document.getElementById('nl-image').files[0];
+  if (imageFile) formData.append('image', imageFile);
   
   try {
-    const res = await api('POST', '/api/admin/newsletter/send', {
-      subject, previewText, htmlContent
+    const res = await fetch(API + '/api/admin/newsletters', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + getToken() },
+      body: formData
     });
-    status.textContent = `✅ Successfully sent to ${res.sentCount} subscribers.`;
-    status.style.color = 'green';
-    document.getElementById('newsletter-form').reset();
+    
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to save newsletter');
+    
+    showToast(data.sentCount > 0 ? `✅ Saved & sent to ${data.sentCount} subscribers` : '✅ Newsletter saved');
+    closeNewsletterDrawer();
+    fetchNewsletterStats();
   } catch (ex) {
-    status.textContent = `❌ Error: ${ex.message}`;
-    status.style.color = 'red';
-  } finally {
+    errEl.textContent = ex.message;
+    errEl.style.display = 'block';
     btn.disabled = false;
+    btn.innerHTML = '💾 UPDATE NEWSLETTER';
   }
 }
 
