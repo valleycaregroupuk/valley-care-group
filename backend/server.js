@@ -752,11 +752,33 @@ app.post('/api/enquiries', async (req, res) => {
       record.message ? `<p>Message:<br>${record.message.replace(/\n/g, '<br>')}</p>` : '',
       record.postedPackRequested ? '<p><strong>Requested posted information pack</strong></p>' : '',
     ].join('');
+
+    // 1. Send internal notification
     await sendResendEmail({
       to: notify,
-      subject: `Care enquiry — ${record.name}`,
+      subject: `New Care Enquiry — ${record.name}`,
       html: lines,
       text: `New enquiry ${record.id}\n${record.name}\n${record.email}\n${record.phone}\n${record.message}`,
+    });
+
+    // 2. Send "Thank You" confirmation to the sender
+    await sendResendEmail({
+      to: record.email,
+      subject: `Thank you for your enquiry — Valley Care Group`,
+      html: `
+        <div style="font-family: sans-serif; max-width: 600px; line-height: 1.6;">
+          <h2 style="color: #1B4F72;">Thank you for getting in touch</h2>
+          <p>Dear ${record.name},</p>
+          <p>We have received your care enquiry regarding <strong>${record.preferredHome || 'our homes'}</strong>. One of our care advisors will review your message and get back to you shortly (usually within 24 hours).</p>
+          <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+          <p style="font-size: 0.9em; color: #666;">
+            <strong>Valley Care Group</strong><br>
+            Caring with Heart · Since 2005<br>
+            <a href="https://www.valleycare.wales">www.valleycare.wales</a>
+          </p>
+        </div>
+      `,
+      text: `Dear ${record.name}, thank you for your enquiry. We have received your message regarding ${record.preferredHome || 'our homes'} and will get back to you shortly.`,
     });
 
     res.status(201).json({ ok: true, id: record.id });
@@ -1550,7 +1572,7 @@ app.use('/api/', (req, res) => {
 });
 
 // ---------------------------------------------------------------------------
-// Root health check (Vercel expects a response at /)
+// Root health check
 // ---------------------------------------------------------------------------
 app.get('/', (req, res) => {
   res.json({ status: 'ok', service: 'Valley Care Group API', version: '2.0.0' });

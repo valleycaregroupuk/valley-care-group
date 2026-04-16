@@ -3,13 +3,10 @@
  *
  * window.API_BASE is set here and used by all pages for fetch() calls.
  *
- * - In development (same-origin, served by Express): leave as ''
- * - In production (separate Vercel deployments): set to your backend URL
- *   e.g. 'https://vcg-backend.vercel.app'
+ * - In development: typically 'http://127.0.0.1:3500'
+ * - In production: the URL of your live API (e.g. Cloud Run)
  *
- * This file is replaced at build/deploy time — the frontend Vercel project
- * must have the environment variable VITE_API_BASE (or similar) baked in,
- * OR this file is updated with the correct URL before pushing to GitHub.
+ * This file may be updated or replaced during the build/deploy process.
  */
 (function () {
   var meta = document.head && document.head.querySelector('meta[name="api-base"]');

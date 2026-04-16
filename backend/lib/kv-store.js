@@ -1,8 +1,9 @@
 'use strict';
 
 /**
- * KV adapter: PostgreSQL (Cloud SQL) or in-memory Map when DATABASE_URL is unset.
- * Mirrors @vercel/kv get/set/del for JSON-serialisable values.
+ * KV adapter: PostgreSQL (Cloud SQL) or in-memory Map.
+ * Simple key-value store for JSON-serialisable values.
+ * Uses PostgreSQL for persistence in production and an in-memory map for development.
  */
 
 let pool;
