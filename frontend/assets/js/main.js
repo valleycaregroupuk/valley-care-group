@@ -605,7 +605,46 @@ window.initDistanceTracker = function(targetLat, targetLng, btnId, readOutId) {
     return d.toFixed(1);
   }
 
+  // Show the successful distance result
+  function showDistance(position) {
+    const userLat = position.coords.latitude;
+    const userLng = position.coords.longitude;
+    const dist = calculateDistance(userLat, userLng, targetLat, targetLng);
+    
+    readOut.style.display = 'block';
+    readOut.className = 'premium-loc-readout';
+    readOut.innerHTML = `
+      <div class="premium-loc-readout-val">${dist}</div>
+      <div class="premium-loc-readout-label">Miles Away</div>
+      <div style="margin-top:1.25rem;">
+        <a href="https://www.google.com/maps/dir/?api=1&destination=${targetLat},${targetLng}" target="_blank" class="btn btn-primary" style="width:100%;font-size:0.95rem;padding:0.75rem">🗺️ Navigate in Google Maps &rarr;</a>
+      </div>
+    `;
+    
+    btn.style.display = 'none';
+  }
+
+  // Show a graceful fallback with directions link when location is unavailable
+  function showLocationUnavailable(msg) {
+    readOut.style.display = 'block';
+    readOut.className = 'premium-loc-readout';
+    readOut.innerHTML =
+      '<span style="color:var(--clr-gold-light);display:block;margin-bottom:1rem">' + msg + '</span>' +
+      '<a href="https://www.google.com/maps/dir/?api=1&destination=' + targetLat + ',' + targetLng + '" ' +
+      'target="_blank" class="btn btn-primary" style="width:100%;font-size:0.95rem;padding:0.75rem">' +
+      '🗺️ Get Directions in Google Maps &rarr;</a>';
+    btn.disabled = false;
+    btn.classList.remove('scanning');
+    btn.querySelector('span').textContent = '📍 Try again';
+  }
+
   btn.addEventListener('click', () => {
+    // Guard: no geolocation API at all
+    if (!navigator.geolocation) {
+      showLocationUnavailable('Geolocation is not supported by your browser.');
+      return;
+    }
+
     btn.disabled = true;
     btn.classList.add('scanning');
     
@@ -615,52 +654,57 @@ window.initDistanceTracker = function(targetLat, targetLng, btnId, readOutId) {
       dots = (dots + 1) % 4;
       btn.querySelector('span').textContent = 'Scanning' + '.'.repeat(dots);
     }, 300);
-    
-    if (!navigator.geolocation) {
+
+    let hasResolved = false;
+
+    function onSuccess(position) {
+      if (hasResolved) return;
+      hasResolved = true;
       clearInterval(scanInt);
-      readOut.style.display = 'block';
-      readOut.className = 'premium-loc-readout';
-      readOut.innerHTML = '<span style="color:#fff">Geolocation is not supported by your browser</span>';
-      btn.disabled = false;
-      btn.classList.remove('scanning');
-      btn.querySelector('span').textContent = '📍 Try again';
-      return;
+      showDistance(position);
     }
 
-    navigator.geolocation.getCurrentPosition((position) => {
+    function onError(err) {
+      if (hasResolved) return;
+
+      // On kCLErrorLocationUnknown (code 2), retry once with high accuracy
+      // before giving up — this resolves transient CoreLocation failures on macOS
+      if (err.code === 2 && !onError._retried) {
+        onError._retried = true;
+        navigator.geolocation.getCurrentPosition(onSuccess, onFinalError, {
+          enableHighAccuracy: true,
+          timeout: 12000,
+          maximumAge: 600000 // accept a 10-minute-old cached fix
+        });
+        return;
+      }
+
+      onFinalError(err);
+    }
+
+    function onFinalError(err) {
+      if (hasResolved) return;
+      hasResolved = true;
       clearInterval(scanInt);
-      const userLat = position.coords.latitude;
-      const userLng = position.coords.longitude;
-      const dist = calculateDistance(userLat, userLng, targetLat, targetLng);
       
-      readOut.style.display = 'block';
-      readOut.className = 'premium-loc-readout';
-      readOut.innerHTML = `
-        <div class="premium-loc-readout-val">${dist}</div>
-        <div class="premium-loc-readout-label">Miles Away</div>
-        <div style="margin-top:1.25rem;">
-          <a href="https://www.google.com/maps/dir/?api=1&destination=${targetLat},${targetLng}" target="_blank" class="btn btn-primary" style="width:100%;font-size:0.95rem;padding:0.75rem">🗺️ Navigate in Google Maps &rarr;</a>
-        </div>
-      `;
+      let msg = 'Unable to retrieve your location.';
+      if (err.code === 1) msg = 'Location access was denied. Please enable location permissions in your browser settings.';
+      else if (err.code === 2) msg = 'Your device could not determine its position. This can happen on desktop computers without GPS.';
+      else if (err.code === 3) msg = 'Location request timed out. Please try again.';
       
-      btn.style.display = 'none';
-      
-    }, (err) => {
-      clearInterval(scanInt);
-      readOut.style.display = 'block';
-      readOut.className = 'premium-loc-readout';
-      
-      let msg = 'Unable to retrieve your location. Please check browser permissions.';
-      if (err.code === 1) msg = 'Location access denied. Please enable it in browser settings.';
-      if (err.code === 2) msg = 'Location unavailable. Your device cannot determine its position.';
-      if (err.code === 3) msg = 'Location request timed out. Please try again.';
-      
-      readOut.innerHTML = '<span style="color:var(--clr-gold-light)">' + msg + '</span>';
-      
-      btn.disabled = false;
-      btn.classList.remove('scanning');
-      btn.querySelector('span').textContent = '📍 Try again';
-    }, { enableHighAccuracy: false, timeout: 8000, maximumAge: 0 });
+      showLocationUnavailable(msg);
+    }
+
+    // Reset retry flag for each new click
+    onError._retried = false;
+
+    // First attempt: accept a cached position up to 5 minutes old to avoid
+    // triggering a fresh CoreLocation lookup that causes kCLErrorLocationUnknown
+    navigator.geolocation.getCurrentPosition(onSuccess, onError, {
+      enableHighAccuracy: false,
+      timeout: 15000,
+      maximumAge: 300000 // 5-minute cached position is fine
+    });
   });
 };
 
