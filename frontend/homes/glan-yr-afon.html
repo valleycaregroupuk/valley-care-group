@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Permissions-Policy" content="geolocation=(self)">
   <title>Glan-yr-Afon Nursing Home — Valley Care Group</title>
   <meta name="description" content="Glan-yr-Afon Nursing Home in Blackwood provides expert nursing and residential care for 39 residents. Offering respite, palliative, and day care services with a 9.9 rating.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏡</text></svg>">
@@ -564,7 +565,10 @@
       var av = document.getElementById('glan-availability-text');
       if (av && g.availabilityLine) av.textContent = g.availabilityLine;
       var mw = document.getElementById('glan-map-wrap');
-      if (mw && g.mapEmbedHtml) mw.innerHTML = g.mapEmbedHtml;
+      if (mw && g.mapEmbedHtml) {
+        var safeHtml = g.mapEmbedHtml.replace(/<iframe/gi, '<iframe allow="" referrerpolicy="no-referrer"');
+        mw.innerHTML = safeHtml;
+      }
       if (g.gallery && g.gallery.length) {
         var grid = document.getElementById('glan-gallery-grid');
         if (grid) {

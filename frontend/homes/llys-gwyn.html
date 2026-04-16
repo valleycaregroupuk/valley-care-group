@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Permissions-Policy" content="geolocation=(self)">
   <title>Llys Gwyn Residential Home — Valley Care Group</title>
   <meta name="description" content="Llys Gwyn Residential Home, Pyle — 31 places, Grayson Enterprises Ltd. CIW ratings to Oct 2025, 9.7 on carehome.co.uk. Care with passion.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏡</text></svg>">
@@ -488,7 +489,11 @@
       var av = document.getElementById('llys-availability-text');
       if (av && g.availabilityLine) av.textContent = g.availabilityLine;
       var mw = document.getElementById('llys-map-wrap');
-      if (mw && g.mapEmbedHtml) mw.innerHTML = g.mapEmbedHtml;
+      if (mw && g.mapEmbedHtml) {
+        // Strip geolocation from embedded iframes to prevent kCLErrorLocationUnknown
+        var safeHtml = g.mapEmbedHtml.replace(/<iframe/gi, '<iframe allow="" referrerpolicy="no-referrer"');
+        mw.innerHTML = safeHtml;
+      }
       
       if (g.gallery && g.gallery.length) {
         var grid = document.getElementById('llys-gallery-grid');

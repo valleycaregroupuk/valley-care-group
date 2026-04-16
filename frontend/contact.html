@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Permissions-Policy" content="geolocation=(self)">
   <title>Contact Us — Valley Care Group</title>
   <meta name="description" content="Get in touch with Valley Care Group. Make a care enquiry, book a visit, or speak to our team about finding the right care for your loved one.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏡</text></svg>">
@@ -123,7 +124,7 @@
 
   <!-- Map (embed from admin / content API, or OSM fallback) -->
   <div id="contact-map-wrap" style="width:100%;min-height:380px;background:var(--clr-slate)">
-    <iframe title="Glan-yr-Afon area map" width="100%" height="380" style="border:0;display:block" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.openstreetmap.org/export/embed.html?bbox=-3.28%2C51.62%2C-3.14%2C51.71&amp;layer=mapnik"></iframe>
+    <iframe title="Glan-yr-Afon area map" width="100%" height="380" style="border:0;display:block" loading="lazy" allow="" referrerpolicy="no-referrer" src="https://www.openstreetmap.org/export/embed.html?bbox=-3.28%2C51.62%2C-3.14%2C51.71&amp;layer=mapnik"></iframe>
   </div>
 
 
@@ -162,7 +163,10 @@
       if (!c || !c.homePages || !c.homePages.glan) return;
       var html = c.homePages.glan.mapEmbedHtml;
       var el = document.getElementById('contact-map-wrap');
-      if (html && el) el.innerHTML = html;
+      if (html && el) {
+        var safeHtml = html.replace(/<iframe/gi, '<iframe allow="" referrerpolicy="no-referrer"');
+        el.innerHTML = safeHtml;
+      }
     }).catch(function () {});
   })();
   </script>
