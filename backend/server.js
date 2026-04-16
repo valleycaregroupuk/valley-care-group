@@ -28,6 +28,7 @@ const cors      = require('cors');
 const helmet    = require('helmet');
 const rateLimit = require('express-rate-limit');
 const multer    = require('multer');
+const path      = require('path');
 
 // ---------------------------------------------------------------------------
 // KV store: PostgreSQL (Cloud SQL) or in-memory when DATABASE_URL is unset
@@ -1426,8 +1427,9 @@ app.get('/api/admin/applications/export.csv', requireAuth, async (req, res) => {
 app.get('/api/admin/newsletters', requireAuth, async (req, res) => {
   try {
     const list = await readNewsletterIssues();
-    res.json(list);
+    res.json(list || []);
   } catch (err) {
+    console.error('GET /api/admin/newsletters error:', err.message);
     res.status(500).json({ error: 'Failed to load newsletters.' });
   }
 });
