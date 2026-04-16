@@ -119,7 +119,7 @@ function csvEscapeCell(val) {
   return s;
 }
 
-async function sendEmail({ to, subject, html, text }) {
+async function sendEmail({ to, bcc, subject, html, text }) {
   const user = process.env.SMTP_USER || process.env.RESEND_FROM_EMAIL;
   const pass = process.env.SMTP_PASS || process.env.RESEND_API_KEY;
 
@@ -138,6 +138,7 @@ async function sendEmail({ to, subject, html, text }) {
     const mailOptions = {
       from: `"Valley Care Group" <${user}>`,
       to: Array.isArray(to) ? to.join(',') : to,
+      bcc: Array.isArray(bcc) ? bcc.join(',') : bcc,
       subject,
       html,
       text,
