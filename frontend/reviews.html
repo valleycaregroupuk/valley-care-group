@@ -106,11 +106,11 @@
               <textarea id="hr_review" name="hr_review" required maxlength="3500" rows="6" placeholder="Describe your experience with the home, care team, or services (at least 20 characters)."></textarea>
             </div>
             <label class="family-story-check">
-              <input type="checkbox" name="hr_publish" id="hr_publish">
-              <span>I understand my feedback may be edited for length and, only if the home agrees, used on our website or materials — usually with first name and surname initial only.</span>
+              <input type="checkbox" name="hr_publish" id="hr_publish" required>
+              <span>I understand my feedback may be edited for length and, only if the home agrees, used on our website or materials — usually with first name and surname initial only. <span class="family-story-req">*</span></span>
             </label>
             <label class="family-story-check">
-              <input type="checkbox" name="hr_gdpr" id="hr_gdpr">
+              <input type="checkbox" name="hr_gdpr" id="hr_gdpr" required>
               <span>I agree to the <a href="privacy.html" target="_blank" rel="noopener noreferrer">privacy policy</a> and to you using these details to respond to this review. <span class="family-story-req">*</span></span>
             </label>
             <button type="submit" class="btn btn-primary family-story-submit">Submit review</button>
@@ -171,6 +171,7 @@
   </div>
 
   <script src="assets/js/runtime-config.js"></script>
+  <script src="assets/js/config.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>
