@@ -767,6 +767,15 @@
             <label class="field-label" for="hx-pdf">CIW PDF or document URL</label>
             <input class="field-input" id="hx-pdf" type="url" placeholder="https://...">
           </div>
+          <div class="field-group">
+            <label class="field-label" for="hx-vt">Virtual Tour Video (MP4 / WebM URL)</label>
+            <div style="display:flex;gap:0.5rem">
+              <input class="field-input" id="hx-vt" type="url" placeholder="https://...">
+              <label class="btn btn-ghost" style="cursor:pointer;white-space:nowrap;padding:0.75rem 1rem;">
+                ↑ Upload <input type="file" style="display:none" accept="video/*" onchange="uploadAdminMedia(this, 'hx-vt')">
+              </label>
+            </div>
+          </div>
           <div class="field-row">
             <div class="field-group">
               <label class="field-label" for="hx-insp">Last inspection note</label>
@@ -1130,8 +1139,13 @@
     <form id="gallery-form" onsubmit="saveGalleryItem(event)">
       <input type="hidden" id="gallery-idx">
       <div class="field-group">
-        <label class="field-label" for="gal-url">Image URL / Path <span>*</span></label>
-        <input class="field-input" type="text" id="gal-url" required placeholder="assets/images/gallery/room1.jpg">
+        <label class="field-label" for="gal-url">Image/Video URL / Path <span>*</span></label>
+        <div style="display:flex;gap:0.5rem">
+          <input class="field-input" type="text" id="gal-url" required placeholder="assets/images/gallery/room1.jpg">
+          <label class="btn btn-ghost" style="cursor:pointer;white-space:nowrap;padding:0.75rem 1rem;">
+            ↑ Upload <input type="file" style="display:none" accept="image/*,video/*" onchange="uploadAdminMedia(this, 'gal-url')">
+          </label>
+        </div>
       </div>
       <div class="field-group">
         <label class="field-label" for="gal-alt">Alt Text</label>
@@ -1171,7 +1185,12 @@
       </div>
       <div class="field-group">
         <label class="field-label" for="tm-photo">Photo URL / Path</label>
-        <input class="field-input" type="text" id="tm-photo" placeholder="assets/images/team/member.jpg">
+        <div style="display:flex;gap:0.5rem">
+          <input class="field-input" type="text" id="tm-photo" placeholder="assets/images/team/member.jpg">
+          <label class="btn btn-ghost" style="cursor:pointer;white-space:nowrap;padding:0.75rem 1rem;">
+            ↑ Upload <input type="file" style="display:none" accept="image/*" onchange="uploadAdminMedia(this, 'tm-photo')">
+          </label>
+        </div>
       </div>
       <div class="drawer-footer">
         <button type="button" class="btn btn-ghost" onclick="closeTeamDrawer()">Cancel</button>
@@ -2021,6 +2040,7 @@ function loadHomesExtraForm(slug) {
   const h = (cData.homePages || {})[slug] || {};
   document.getElementById('hx-avail').value = h.availabilityLine || '';
   document.getElementById('hx-map').value = h.mapEmbedHtml || '';
+  document.getElementById('hx-vt').value = h.virtualTourUrl || '';
   document.getElementById('hx-pdf').value = h.ciwPdfUrl || '';
   document.getElementById('hx-insp').value = h.lastInspectionDate || '';
   document.getElementById('hx-award').value = h.awardsNote || '';
@@ -2035,6 +2055,7 @@ async function saveHomesExtra() {
       ...prev,
       availabilityLine: document.getElementById('hx-avail').value.trim(),
       mapEmbedHtml: document.getElementById('hx-map').value.trim(),
+      virtualTourUrl: document.getElementById('hx-vt').value.trim(),
       ciwPdfUrl: document.getElementById('hx-pdf').value.trim(),
       lastInspectionDate: document.getElementById('hx-insp').value.trim(),
       awardsNote: document.getElementById('hx-award').value.trim(),
@@ -2495,6 +2516,38 @@ function switchCTab(tab) {
   document.getElementById('ctab-' + tab).style.display = '';
   if (tab === 'testimonials') {
     loadHomeReviews().catch((e) => showToast(e.message, true));
+  }
+}
+
+// ── GENERIC MEDIA UPLOADER ───────────────────────────────────────────────────
+async function uploadAdminMedia(fileInput, targetInputId) {
+  if (!fileInput.files.length) return;
+  const file = fileInput.files[0];
+  const target = document.getElementById(targetInputId);
+  const oldVal = target.value;
+  
+  target.value = 'Uploading...';
+  target.disabled = true;
+  
+  const formData = new FormData();
+  formData.append('file', file);
+  
+  try {
+    const res = await fetch(API + '/api/admin/upload', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + getToken() },
+      body: formData
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Upload failed');
+    target.value = data.url;
+    showToast('✅ Upload complete');
+  } catch (err) {
+    target.value = oldVal;
+    showToast(err.message, true);
+  } finally {
+    target.disabled = false;
+    fileInput.value = ''; // Reset input
   }
 }
 

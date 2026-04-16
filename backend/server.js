@@ -270,7 +270,7 @@ function sanitiseHomePageExtras(hp) {
       a: sanitise(f.a).slice(0, 2000),
     })).filter((f) => f.q && f.a);
   }
-  ['availabilityLine', 'lastInspectionDate', 'awardsNote', 'ciwPdfUrl'].forEach((k) => {
+  ['availabilityLine', 'lastInspectionDate', 'awardsNote', 'ciwPdfUrl', 'virtualTourUrl'].forEach((k) => {
     if (out[k] !== undefined) out[k] = sanitise(out[k]).slice(0, 500);
   });
   if (out.structuredAddress !== undefined) out.structuredAddress = sanitise(out.structuredAddress).slice(0, 300);
@@ -302,6 +302,18 @@ const uploadNewsletterAssets = uploadCv.fields([
   { name: 'pdf', maxCount: 1 },
   { name: 'image', maxCount: 1 }
 ]);
+
+const uploadMedia = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 50 * 1024 * 1024 }, // Allowed up to 50MB for videos/images
+  fileFilter: (_req, file, cb) => {
+    const okMime = /^image\/(jpeg|png|webp|gif|svg\+xml)$/i.test(file.mimetype) || /^video\/(mp4|webm|ogg)$/i.test(file.mimetype);
+    const ext = (file.originalname || '').toLowerCase();
+    const okExt = /\.(jpg|jpeg|png|webp|gif|svg|mp4|webm|ogg)$/i.test(ext);
+    if (okMime && okExt) cb(null, true);
+    else cb(new Error('File type not supported. Allowed: JPG, PNG, WebP, GIF, SVG, MP4, WebM, OGG.'));
+  },
+});
 
 // ---------------------------------------------------------------------------
 // App setup
@@ -504,6 +516,7 @@ function defaultContent() {
         ciwPdfUrl: '',
         lastInspectionDate: '',
         awardsNote: '',
+        virtualTourUrl: '',
         structuredAddress: 'Off Ford Road, Fleur-de-Lys, Blackwood NP12 3WA, UK',
         structuredLat: '51.665',
         structuredLng: '-3.208',
@@ -531,6 +544,7 @@ function defaultContent() {
         ciwPdfUrl: '',
         lastInspectionDate: '',
         awardsNote: '',
+        virtualTourUrl: '',
         structuredAddress: 'Heol Broom, Maudlum, Pyle, Bridgend CF33 4PN, UK',
         structuredLat: '51.53',
         structuredLng: '-3.69',
@@ -558,6 +572,7 @@ function defaultContent() {
         ciwPdfUrl: '',
         lastInspectionDate: '',
         awardsNote: '',
+        virtualTourUrl: '',
         structuredAddress: 'Pentwyn Road, Treorchy CF42 6HD, UK',
         structuredLat: '51.66',
         structuredLng: '-3.50',
@@ -1760,6 +1775,28 @@ app.put('/api/admin/home/:slug/:collection', requireAuth, async (req, res) => {
   } catch (err) {
     console.error(`PUT /api/admin/home/${req.params.slug}/${req.params.collection} error:`, err.message);
     res.status(500).json({ error: 'Failed to update content.' });
+  }
+});
+
+// Generic media upload endpoint for admin dashboard (images/videos)
+app.post('/api/admin/upload', requireAuth, uploadMedia.single('file'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: 'No file uploaded.' });
+    
+    const { uploadBuffer } = require('./lib/gcs-upload');
+    const ext = path.extname(req.file.originalname) || '';
+    const dest = `uploads/${Date.now()}_${crypto.randomBytes(4).toString('hex')}${ext}`;
+    
+    const url = await uploadBuffer({
+      buffer: req.file.buffer,
+      destPath: dest,
+      contentType: req.file.mimetype
+    });
+    
+    res.json({ ok: true, url });
+  } catch (err) {
+    console.error('POST /api/admin/upload error:', err.message);
+    res.status(500).json({ error: err.message || 'Failed to upload file.' });
   }
 });
 
