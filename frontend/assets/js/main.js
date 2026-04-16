@@ -645,16 +645,22 @@ window.initDistanceTracker = function(targetLat, targetLng, btnId, readOutId) {
       
       btn.style.display = 'none';
       
-    }, () => {
+    }, (err) => {
       clearInterval(scanInt);
       readOut.style.display = 'block';
       readOut.className = 'premium-loc-readout';
-      readOut.innerHTML = '<span style="color:var(--clr-gold-light)">Unable to retrieve your location. Please check browser permissions.</span>';
+      
+      let msg = 'Unable to retrieve your location. Please check browser permissions.';
+      if (err.code === 1) msg = 'Location access denied. Please enable it in browser settings.';
+      if (err.code === 2) msg = 'Location unavailable. Your device cannot determine its position.';
+      if (err.code === 3) msg = 'Location request timed out. Please try again.';
+      
+      readOut.innerHTML = '<span style="color:var(--clr-gold-light)">' + msg + '</span>';
       
       btn.disabled = false;
       btn.classList.remove('scanning');
       btn.querySelector('span').textContent = '📍 Try again';
-    });
+    }, { enableHighAccuracy: false, timeout: 8000, maximumAge: 0 });
   });
 };
 
