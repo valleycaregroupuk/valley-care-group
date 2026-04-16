@@ -146,6 +146,30 @@
               <button class="btn btn-gold" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">💬 Speak with Sharanjit</button>
             </div>
           </div>
+
+          <div class="premium-location-wrap fade-up" id="llys-map-wrap" style="margin-top:2.5rem; border-radius:var(--radius-xl); min-height:360px; padding:2rem 1.5rem">
+            <!-- Grid BG -->
+            <div class="premium-location-bg"></div>
+            
+            <!-- Radar blip -->
+            <div class="premium-location-radar">
+              <div class="radar-ring"></div>
+              <div class="radar-ring"></div>
+              <div class="radar-ring"></div>
+            </div>
+
+            <!-- Glassmorphism Card -->
+            <div class="premium-location-card">
+              <h2 class="premium-loc-title">Locate Llys Gwyn</h2>
+              <p class="premium-loc-sub">Heol Broom, Maudlum, Pyle, Bridgend CF33 4PN</p>
+              
+              <div id="llys-distance-readout" style="display:none"></div>
+              
+              <button id="llys-distance-btn" class="btn btn-gold premium-btn-scan" style="width:100%" aria-label="Find distance from my location">
+                <span style="position:relative;z-index:2">📍 Check Your Distance</span>
+              </button>
+            </div>
+          </div>
         </div>
           <div class="fade-up fade-up-delay-2">
             <div class="home-facts">
@@ -319,29 +343,6 @@
     </div>
   </section>
 
-  <section class="premium-location-wrap" id="llys-map-wrap">
-    <!-- Grid BG -->
-    <div class="premium-location-bg"></div>
-    
-    <!-- Radar blip -->
-    <div class="premium-location-radar">
-      <div class="radar-ring"></div>
-      <div class="radar-ring"></div>
-      <div class="radar-ring"></div>
-    </div>
-
-    <!-- Glassmorphism Card -->
-    <div class="premium-location-card">
-      <h2 class="premium-loc-title">Locate Llys Gwyn</h2>
-      <p class="premium-loc-sub">Heol Broom, Maudlum, Pyle, Bridgend CF33 4PN</p>
-      
-      <div id="llys-distance-readout" style="display:none"></div>
-      
-      <button id="llys-distance-btn" class="btn btn-gold premium-btn-scan" style="width:100%" aria-label="Find distance from my location">
-        <span style="position:relative;z-index:2">📍 Check Your Distance</span>
-      </button>
-    </div>
-  </section>
 
   <section class="enquiry-section section" id="enquiry">
     <div class="container">

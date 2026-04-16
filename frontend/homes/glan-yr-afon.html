@@ -151,6 +151,30 @@
               <button class="btn btn-gold" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">💬 Speak with the Manager</button>
             </div>
           </div>
+
+          <div class="premium-location-wrap fade-up" id="glan-map-wrap" style="margin-top:2.5rem; border-radius:var(--radius-xl); min-height:360px; padding:2rem 1.5rem">
+            <!-- Grid BG -->
+            <div class="premium-location-bg"></div>
+            
+            <!-- Radar blip -->
+            <div class="premium-location-radar">
+              <div class="radar-ring"></div>
+              <div class="radar-ring"></div>
+              <div class="radar-ring"></div>
+            </div>
+
+            <!-- Glassmorphism Card -->
+            <div class="premium-location-card">
+              <h2 class="premium-loc-title">Locate Glan-yr-Afon</h2>
+              <p class="premium-loc-sub">Off Ford Road, Fleur-de-Lys, Blackwood NP12 3WA</p>
+              
+              <div id="glan-distance-readout" style="display:none"></div>
+              
+              <button id="glan-distance-btn" class="btn btn-gold premium-btn-scan" style="width:100%" aria-label="Find distance from my location">
+                <span style="position:relative;z-index:2">📍 Check Your Distance</span>
+              </button>
+            </div>
+          </div>
         </div>
           <div class="fade-up fade-up-delay-2">
             <div class="home-facts">
@@ -374,29 +398,7 @@
     </div>
   </section>
 
-  <section class="premium-location-wrap" id="glan-map-wrap">
-    <!-- Grid BG -->
-    <div class="premium-location-bg"></div>
-    
-    <!-- Radar blip -->
-    <div class="premium-location-radar">
-      <div class="radar-ring"></div>
-      <div class="radar-ring"></div>
-      <div class="radar-ring"></div>
-    </div>
 
-    <!-- Glassmorphism Card -->
-    <div class="premium-location-card">
-      <h2 class="premium-loc-title">Locate Glan-yr-Afon</h2>
-      <p class="premium-loc-sub">Off Ford Road, Fleur-de-Lys, Blackwood NP12 3WA</p>
-      
-      <div id="glan-distance-readout" style="display:none"></div>
-      
-      <button id="glan-distance-btn" class="btn btn-gold premium-btn-scan" style="width:100%" aria-label="Find distance from my location">
-        <span style="position:relative;z-index:2">📍 Check Your Distance</span>
-      </button>
-    </div>
-  </section>
 
   <!-- ENQUIRY -->
   <section class="enquiry-section section" id="enquiry">
