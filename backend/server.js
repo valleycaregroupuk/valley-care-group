@@ -117,33 +117,40 @@ function csvEscapeCell(val) {
   return s;
 }
 
-async function sendResendEmail({ to, bcc, subject, html, text }) {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) return false;
-  const recipients = (Array.isArray(to) ? to : String(to || '').split(','))
-    .map((x) => x.trim())
-    .filter(Boolean);
-  const bccList = bcc
-    ? (Array.isArray(bcc) ? bcc : String(bcc).split(',')).map((x) => x.trim()).filter(Boolean)
-    : [];
-  if (!recipients.length && !bccList.length) return false;
+async function sendEmail({ to, subject, html, text }) {
+  const user = process.env.SMTP_USER || process.env.RESEND_FROM_EMAIL;
+  const pass = process.env.SMTP_PASS || process.env.RESEND_API_KEY;
+
+  if (!user || !pass) {
+    console.warn('⚠️  Email skipped: SMTP_USER or SMTP_PASS not set.');
+    return false;
+  }
+
   try {
-    const { Resend } = require('resend');
-    const resend = new Resend(apiKey);
-    const from = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
-    const payload = { from, subject, html: html || undefined, text: text || undefined };
-    if (recipients.length) payload.to = recipients;
-    if (bccList.length) payload.bcc = bccList;
-    if (!payload.to && bccList.length) {
-      payload.to = process.env.ENQUIRY_NOTIFY_TO || process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
-    }
-    await resend.emails.send(payload);
+    const nodemailer = require('nodemailer');
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: { user, pass },
+    });
+
+    const mailOptions = {
+      from: `"Valley Care Group" <${user}>`,
+      to: Array.isArray(to) ? to.join(',') : to,
+      subject,
+      html,
+      text,
+    };
+
+    await transporter.sendMail(mailOptions);
     return true;
   } catch (e) {
-    console.error('Resend error:', e.message);
+    console.error('📧 Email error:', e.message);
     return false;
   }
 }
+
+// Map the old function name to the new one to avoid breaking existing code
+const sendResendEmail = sendEmail;
 
 function eid(prefix) {
   return prefix + Date.now() + '_' + crypto.randomBytes(4).toString('hex');
