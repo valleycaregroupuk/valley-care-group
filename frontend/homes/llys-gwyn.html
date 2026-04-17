@@ -9,7 +9,7 @@
   <meta name="description" content="Llys Gwyn Residential Home, Pyle — 31 places, Grayson Enterprises Ltd. CIW ratings to Oct 2025, 9.7 on carehome.co.uk. Care with passion.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏡</text></svg>">
   <link rel="stylesheet" href="../assets/css/style.css">
-  <link rel="stylesheet" href="../assets/css/pages.css?v=2">
+  <link rel="stylesheet" href="../assets/css/pages.css?v=3">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -28,6 +28,7 @@
   </script>
 </head>
 <body>
+  <!-- NAVIGATION -->
   <nav class="navbar scrolled" id="navbar">
     <div class="nav-container">
       <a href="../index.html" class="nav-logo">
@@ -43,8 +44,10 @@
   </nav>
   <div class="mobile-nav" id="mobile-nav">
     <a href="../index.html" onclick="toggleMobileNav()">Home</a><a href="../about.html" onclick="toggleMobileNav()">About Us</a><a href="../homes.html" onclick="toggleMobileNav()">Our Homes</a><a href="../services.html" onclick="toggleMobileNav()">Services</a><a href="../jobs.html" onclick="toggleMobileNav()">Careers</a><a href="../contact.html" onclick="toggleMobileNav()">Contact</a>
+    <a href="#enquiry" onclick="toggleMobileNav()" style="color:var(--clr-gold)">Care Enquiry</a>
   </div>
 
+  <!-- HERO -->
   <section class="home-detail-hero" style="background-image:url('../assets/images/interior.png')">
     <div class="home-detail-content">
       <div class="breadcrumbs">
@@ -52,14 +55,15 @@
       </div>
       <div class="hero-badge" style="margin-bottom:1rem"><span class="hero-badge-dot"></span>Currently Open · CIW Registered</div>
       <h1 style="font-family:var(--font-serif);font-size:clamp(2.2rem,5vw,4rem);font-weight:700;color:#fff;line-height:1.1;max-width:700px;margin-bottom:0.75rem" data-edit-key="llys.hero.title">Llys Gwyn<br><em style="font-style:italic;color:var(--clr-gold-light)">Residential Home</em></h1>
-      <p style="color:rgba(255,255,255,0.75);font-size:1.05rem;margin-bottom:1.5rem" data-edit-key="llys.hero.sub">Heol Broom, Maudlum, Pyle, Bridgend CF33 4PN</p>
-      <div style="display:flex;gap:1rem;flex-wrap:wrap">
+      <p style="color:rgba(255,255,255,0.75);font-size:1.05rem;margin-bottom:1.5rem" data-edit-key="llys.hero.sub">📍 Heol Broom, Maudlum, Pyle, Bridgend CF33 4PN</p>
+      <div class="hero-actions">
         <button class="btn btn-gold" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">💬 Make an Enquiry</button>
         <a href="tel:+441633680217" class="btn btn-outline" id="llys-hero-phone-link">📞 <span id="llys-hero-phone-text">01633 680217</span></a>
       </div>
     </div>
   </section>
 
+  <!-- RATING STRIP -->
   <div class="rating-strip">
     <div class="container">
       <div class="rating-strip-inner">
@@ -98,11 +102,12 @@
     </div>
   </div>
 
+  <!-- DIRECTORY CTA -->
   <div class="carehome-directory-cta">
     <div class="container carehome-directory-cta-inner">
       <div class="carehome-directory-cta-text">
         <div class="carehome-directory-cta-title">Verified profile on carehome.co.uk</div>
-        <p class="carehome-directory-cta-sub">Read family reviews and full details for Llys Gwyn Residential Home on the UK’s leading care home directory.</p>
+        <p class="carehome-directory-cta-sub">Read family reviews and full details for Llys Gwyn Residential Home on the UK's leading care home directory.</p>
       </div>
       <a class="carehome-directory-cta-btn" href="https://www.carehome.co.uk/carehome.cfm/searchazref/10005015LLYA" target="_blank" rel="noopener noreferrer">View listing →</a>
     </div>
@@ -124,7 +129,9 @@
     </div>
   </div>
 
-  <!-- CONTENT SECTIONS -->
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- CONTENT SECTIONS                              -->
+  <!-- ══════════════════════════════════════════════ -->
 
   <!-- Overview -->
   <section id="overview" class="home-section home-section--white">
@@ -139,33 +146,27 @@
           
           <!-- MANAGER HIGHLIGHT -->
           <div class="manager-section fade-up">
-            <img src="../assets/images/caregiver.png" alt="Home Manager" class="manager-image">
-            <div class="manager-info">
-              <span class="manager-role">Home Manager</span>
-              <h3>Meet Sharanjit Kaur</h3>
-              <p class="manager-bio">Sharanjit leads our team with a philosophy of "care with passion." With extensive experience in residential management, she ensures Llys Gwyn remains a warm, family-oriented environment for all residents.</p>
-              <button class="btn btn-gold" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">💬 Speak with Sharanjit</button>
-            </div>
-          </div>
+<img id="dyn-mgr-img" src="../assets/images/caregiver.png" alt="Home Manager" class="manager-image">
+<div class="manager-info">
+<span class="manager-role" id="dyn-mgr-title">Home Manager</span>
+<h3>Meet <span id="dyn-mgr-name">...</span></h3>
+<p class="manager-bio" id="dyn-mgr-bio"></p>
+<button class="btn btn-gold" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">💬 Speak with the manager</button>
+</div>
+</div>
 
+          <!-- LOCATION RADAR WIDGET -->
           <div class="premium-location-wrap fade-up" id="llys-map-wrap" style="margin-top:2.5rem; border-radius:var(--radius-xl); min-height:360px; padding:2rem 1.5rem">
-            <!-- Grid BG -->
             <div class="premium-location-bg"></div>
-            
-            <!-- Radar blip -->
             <div class="premium-location-radar">
               <div class="radar-ring"></div>
               <div class="radar-ring"></div>
               <div class="radar-ring"></div>
             </div>
-
-            <!-- Glassmorphism Card -->
             <div class="premium-location-card">
               <h2 class="premium-loc-title">Locate Llys Gwyn</h2>
               <p class="premium-loc-sub">Heol Broom, Maudlum, Pyle, Bridgend CF33 4PN</p>
-              
               <div id="llys-distance-readout" style="display:none"></div>
-              
               <button id="llys-distance-btn" class="btn btn-gold premium-btn-scan" style="width:100%" aria-label="Find distance from my location">
                 <span style="position:relative;z-index:2">📍 Check Your Distance</span>
               </button>
@@ -183,42 +184,34 @@
             </div>
           </div>
         </div>
-          <div class="fade-up fade-up-delay-2">
-            <div class="home-facts">
-              <h3 class="home-facts-title">Key Information</h3>
-              <div class="home-fact"><span class="home-fact-label">Capacity</span><span class="home-fact-value">31 residents (max)</span></div>
-              <div class="home-fact"><span class="home-fact-label">Operator</span><span class="home-fact-value">Grayson Enterprises Ltd</span></div>
-              <div class="home-fact"><span class="home-fact-label">Owner</span><span class="home-fact-value">Privately owned</span></div>
-              <div class="home-fact"><span class="home-fact-label">Manager</span><span class="home-fact-value">Sharanjit Kaur</span></div>
-              <div class="home-fact"><span class="home-fact-label">Local authority</span><span class="home-fact-value">Bridgend County Borough Council</span></div>
-              <div class="home-fact"><span class="home-fact-label">Ages</span><span class="home-fact-value">50+</span></div>
-              <div class="home-fact"><span class="home-fact-label">Admission</span><span class="home-fact-value">Mixed (no single-gender units)</span></div>
-              <div class="home-fact"><span class="home-fact-label">Rooms</span><span class="home-fact-value">27 single · 2 couples/companion</span></div>
-              <div class="home-fact"><span class="home-fact-label">Building</span><span class="home-fact-value">Not purpose-built · 2 floors · Refurbished 2024</span></div>
-              <div class="home-fact"><span class="home-fact-label">Visiting</span><span class="home-fact-value">Open door policy</span></div>
-              <div class="home-fact"><span class="home-fact-label">Parking</span><span class="home-fact-value">Plenty of car park space</span></div>
-              <div class="home-fact"><span class="home-fact-label">carehome.co.uk</span><span class="home-fact-value" id="llys-fact-carehome" style="color:var(--clr-gold)">9.7 / 10 ⭐ · 23 reviews</span></div>
-              <div class="home-fact"><span class="home-fact-label">Phone</span><a href="tel:+441633680217" class="home-fact-value llys-phone-link" style="color:var(--clr-cobalt)" id="llys-fact-phone">01633 680217</a></div>
-            </div>
+
+        <!-- RIGHT COLUMN: KEY INFO -->
+        <div class="fade-up fade-up-delay-2">
+          <div class="home-facts">
+            <h3 class="home-facts-title">Key Information</h3>
+            <div id="dyn-key-info"></div>
             <div class="availability-banner" style="margin-top:1rem">
               <div class="availability-label">Bed vacancies</div>
               <div class="availability-text" id="llys-availability-text">Please contact us for the latest vacancies.</div>
               <a href="tel:+441633680217" class="availability-phone llys-phone-link" id="llys-availability-phone">📞 01633 680217</a>
             </div>
-            <div class="home-facts" style="margin-top:1.25rem">
-              <h3 class="home-facts-title">CIW inspection themes (8 Oct 2025)</h3>
+          </div>
+
+          <div class="home-facts" style="margin-top:2rem">
+            <h3 class="home-facts-title" style="margin-bottom:1rem">Care Inspectorate Wales (CIW)</h3>
+            <div id="dyn-ciw-themes" style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem">
               <div class="home-fact"><span class="home-fact-label">Well-being</span><span class="home-fact-value" style="color:#117A65">Excellent</span></div>
               <div class="home-fact"><span class="home-fact-label">Care &amp; Support</span><span class="home-fact-value" style="color:#117A65">Excellent</span></div>
               <div class="home-fact"><span class="home-fact-label">Environment</span><span class="home-fact-value">Good</span></div>
               <div class="home-fact"><span class="home-fact-label">Leadership &amp; Management</span><span class="home-fact-value" style="color:#117A65">Excellent</span></div>
-              <p class="body-text" style="font-size:0.82rem;margin-top:1rem;margin-bottom:0.75rem">Care Inspectorate Wales registers and inspects social care in Wales.</p>
-              <a href="https://digital.careinspectorate.wales/" class="btn btn-primary" id="llys-ciw-link" style="display:inline-block;padding:0.5rem 1rem;font-size:0.85rem;border-radius:var(--radius-full)" target="_blank" rel="noopener noreferrer">CIW digital directory →</a>
             </div>
-            <div class="home-facts" style="margin-top:1.25rem">
-              <h3 class="home-facts-title">News &amp; events</h3>
-              <p class="body-text" style="font-size:0.875rem;margin:0;line-height:1.65;color:var(--clr-text-mid)">See the <strong>News &amp; Events</strong> tab for the latest updates, activities, and important announcements from our home.</p>
-              <button type="button" class="btn btn-primary" style="margin-top:1rem;padding:0.45rem 1.1rem;font-size:0.85rem;border-radius:var(--radius-full)" onclick="document.getElementById('news').scrollIntoView({behavior:'smooth'})">Open News &amp; Events →</button>
-            </div>
+            <a href="https://digital.careinspectorate.wales/" class="btn btn-primary" id="llys-ciw-link" style="display:inline-block;padding:0.55rem 1.25rem;font-size:0.85rem;border-radius:var(--radius-full)" target="_blank" rel="noopener noreferrer">CIW digital directory →</a>
+          </div>
+
+          <div class="home-facts" style="margin-top:2rem">
+            <h3 class="home-facts-title">News &amp; events</h3>
+            <p class="body-text" style="font-size:0.875rem;margin:0;line-height:1.65;color:var(--clr-text-mid)">See the <strong>News &amp; Events</strong> tab for the latest updates, activities, and important announcements from our home.</p>
+            <button type="button" class="btn btn-primary" style="margin-top:1rem;padding:0.45rem 1.1rem;font-size:0.85rem;border-radius:var(--radius-full)" onclick="document.getElementById('news').scrollIntoView({behavior:'smooth'})">Open News &amp; Events →</button>
           </div>
         </div>
       </div>
@@ -230,11 +223,8 @@
     <div class="container">
       <div class="fade-up">
         <h2 class="section-title" style="margin-bottom:0.75rem">Care <em>Provided</em></h2>
-        <div class="services-list-grid" style="grid-template-columns:1fr;gap:0.75rem">
-          <div class="service-list-item">Residential Care</div>
-          <div class="service-list-item">Dementia Residential</div>
-          <div class="service-list-item">Respite Care</div>
-        </div>
+        <p class="body-text" id="dyn-care-intro" style="margin-bottom:2.5rem;max-width:680px"></p>
+        <div class="responsive-grid-2" style="gap:2.5rem"><div id="dyn-care-container" style="grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));gap:1.5rem"></div></div>
       </div>
     </div>
   </section>
@@ -245,29 +235,34 @@
       <div class="fade-up">
         <div class="responsive-grid-2-wide">
           <div>
-            <h2 class="section-title" style="margin-bottom:1rem">Facilities</h2>
+            <h2 class="section-title" style="margin-bottom:1.5rem">Home <em>Facilities</em></h2>
             <p class="body-text" style="margin-bottom:2rem">Facilities and services as listed for Llys Gwyn Residential Home.</p>
-            <div style="display:grid;grid-template-columns:1fr;gap:0.75rem">
-              <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:var(--clr-cream);border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">🏠 Own Furniture if required</div>
-              <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:var(--clr-cream);border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">🐾 Pet Friendly (or by arrangement)</div>
-              <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:var(--clr-cream);border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">🚭 Smoking not permitted</div>
-              <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:var(--clr-cream);border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">🛍️ Close to Local shops</div>
-              <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:var(--clr-cream);border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">🚌 Near Public Transport</div>
-              <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:var(--clr-cream);border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">🪜 Stairlift</div>
-              <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:var(--clr-cream);border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">♿ Wheelchair Access</div>
-              <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:var(--clr-cream);border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">🌿 Gardens</div>
-              <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:var(--clr-cream);border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">☕ Bar/Café</div>
-            </div>
+            <div id="dyn-facilities-container" style="display:grid;grid-template-columns:1fr;gap:0.75rem"></div>
           </div>
           <div>
-            <h2 class="section-title" style="margin-bottom:1rem">Activities</h2>
-            <div style="display:grid;grid-template-columns:1fr;gap:0.75rem">
-              <div style="padding:0.85rem;background:var(--clr-cream);border-radius:var(--radius-md);border:1px solid rgba(0,0,0,0.06);font-size:0.875rem;color:var(--clr-text-mid)">🏋️ Keep Fit Sessions</div>
-              <div style="padding:0.85rem;background:var(--clr-cream);border-radius:var(--radius-md);border:1px solid rgba(0,0,0,0.06);font-size:0.875rem;color:var(--clr-text-mid)">🎵 Music &amp; Movement</div>
-              <div style="padding:0.85rem;background:var(--clr-cream);border-radius:var(--radius-md);border:1px solid rgba(0,0,0,0.06);font-size:0.875rem;color:var(--clr-text-mid)">🃏 Card Games &amp; Puzzles</div>
-              <div style="padding:0.85rem;background:var(--clr-cream);border-radius:var(--radius-md);border:1px solid rgba(0,0,0,0.06);font-size:0.875rem;color:var(--clr-text-mid)">❓ Quizzes &amp; Trivia</div>
-              <div style="padding:0.85rem;background:var(--clr-cream);border-radius:var(--radius-md);border:1px solid rgba(0,0,0,0.06);font-size:0.875rem;color:var(--clr-text-mid)">🎰 Bingo</div>
-              <div style="padding:0.85rem;background:var(--clr-cream);border-radius:var(--radius-md);border:1px solid rgba(0,0,0,0.06);font-size:0.875rem;color:var(--clr-text-mid)">🚌 Community Outings</div>
+            <h2 class="section-title" style="margin-bottom:1.5rem">Life &amp; <em>Activities</em></h2>
+            <div class="life-grid" style="grid-template-columns:1fr;gap:1.5rem">
+              <div class="life-card" style="padding:1.5rem">
+                <span class="life-icon">🏋️</span>
+                <div>
+                  <h3 class="life-title">Keep Fit Sessions</h3>
+                  <p class="life-desc">Regular gentle exercise sessions to promote mobility, strength, and overall wellbeing.</p>
+                </div>
+              </div>
+              <div class="life-card" style="padding:1.5rem">
+                <span class="life-icon">🎵</span>
+                <div>
+                  <h3 class="life-title">Music &amp; Movement</h3>
+                  <p class="life-desc">Live music sessions, sing-alongs, and movement activities that bring joy and connection.</p>
+                </div>
+              </div>
+              <div class="life-card" style="padding:1.5rem">
+                <span class="life-icon">🚌</span>
+                <div>
+                  <h3 class="life-title">Community Outings</h3>
+                  <p class="life-desc">Regular trips to local attractions, shops, and scenic South Wales locations.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -279,8 +274,8 @@
   <section id="team" class="home-section home-section--cream">
     <div class="container">
       <div class="fade-up">
-        <h2 class="section-title" style="margin-bottom:0.75rem">Meet Our <em>Team</em></h2>
-        <p class="body-text" style="margin-bottom:2rem;max-width:650px">Our dedicated care team relies on a wealth of experience, compassion, and professional training.</p>
+        <h2 class="section-title" style="margin-bottom:1.5rem">Meet Our <em>Team</em></h2>
+        <p class="body-text" style="margin-bottom:2.5rem;max-width:650px">Our dedicated care team relies on a wealth of experience, compassion, and professional training.</p>
         <div class="team-grid" id="llys-team-host">
           <!-- Populated by JS -->
         </div>
@@ -293,7 +288,7 @@
     <div class="container">
       <div class="fade-up">
         <h2 class="section-title" style="margin-bottom:0.5rem">Gallery</h2>
-        <p class="body-text" style="margin-bottom:2rem">A peek inside Llys Gwyn’s warm spaces.</p>
+        <p class="body-text" style="margin-bottom:2rem">A peek inside Llys Gwyn's warm spaces. Click an image to expand.</p>
         <div class="gallery-grid" id="llys-gallery-grid">
           <!-- Populated by JS -->
         </div>
@@ -307,6 +302,7 @@
       <div class="fade-up">
         <span class="section-eyebrow">Stay in touch</span>
         <h2 class="section-title" style="margin-bottom:0.5rem">News &amp; <em>Events</em></h2>
+        <p class="body-text" style="margin-bottom:2.5rem;max-width:640px">Updates from Llys Gwyn — loaded from the Valley Care Group content service.</p>
         <div class="glan-news-events-grid">
           <div>
             <h3 class="glan-feed-title">Latest news</h3>
@@ -341,28 +337,35 @@
   <section id="awards" class="home-section home-section--cream">
     <div class="container">
       <div class="fade-up">
-        <h2 class="section-title" style="margin-bottom:0.75rem">Awards &amp; <em>Recognitions</em></h2>
-        <div class="glan-awards-grid" style="grid-template-columns:1fr;max-width:480px">
-          <div style="background:#fff;border-radius:var(--radius-lg);padding:2rem;text-align:center;border:1px solid rgba(201,168,76,0.3);box-shadow:var(--shadow-sm);position:relative;overflow:hidden">
-            <div style="position:absolute;top:0;left:0;width:100%;height:4px;background:var(--clr-gold)"></div>
-            <div style="font-size:2.5rem;margin-bottom:1rem">🏆</div>
-            <h3 style="font-family:var(--font-serif);color:var(--clr-midnight);margin-bottom:0.35rem;font-size:1.05rem">Top 20 Care Homes Wales 2024</h3>
-            <div style="color:var(--clr-text-mid);font-size:0.8rem;margin-bottom:0.75rem">Recipient: Llys Gwyn Residential Home</div>
-            <p style="font-size:0.8rem;color:var(--clr-text-light);margin-bottom:0">Based on verified reviews and recommendations on carehome.co.uk.</p>
-          </div>
+        <h2 class="section-title" style="margin-bottom:2.5rem">Awards &amp; <em>Recognitions</em></h2>
+        <div class="glan-awards-grid" id="dyn-awards-container" style="grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:1.5rem"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BROCHURE & TOUR CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-banner fade-up">
+        <h2 class="cta-banner-title">Experience Llys Gwyn</h2>
+        <p class="cta-banner-sub">Download our brochure to learn more, or book a personalised tour of our home. Plenty of parking and an open-door visiting policy.</p>
+        <div class="cta-banner-actions">
+          <a href="#enquiry" id="dyn-brochure-btn" class="btn btn-gold">📄 Download Brochure</a>
+          <button class="btn btn-outline" style="border-color:#fff;color:#fff" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">📅 Book a Tour</button>
+          <a href="#enquiry" id="dyn-tour-btn" class="btn btn-gold" style="background:#2E86C1;border-color:#2E86C1;">🎥 Virtual Tour</a>
         </div>
       </div>
     </div>
   </section>
 
-
+  <!-- ENQUIRY -->
   <section class="enquiry-section section" id="enquiry">
     <div class="container">
       <div class="enquiry-inner">
         <div class="enquiry-info fade-up">
           <span class="section-eyebrow" style="color:var(--clr-gold-light)">Enquire About a Place</span>
           <h2 class="section-title" style="color:#fff">Come and See <em style="color:var(--clr-gold-light)">Llys Gwyn</em></h2>
-          <p class="section-subtitle" style="color:rgba(255,255,255,0.7)">We’d love to welcome you. Plenty of parking — open door visiting policy.</p>
+          <p class="section-subtitle" style="color:rgba(255,255,255,0.7)">We'd love to welcome you. Plenty of parking — open door visiting policy.</p>
           <div style="margin-top:2rem">
             <a href="tel:+441633680217" class="contact-inline-link llys-phone-link" id="llys-enquiry-phone">📞 <span id="llys-enquiry-phone-text">01633 680217</span></a>
             <a href="mailto:care@valleycare.wales" class="contact-inline-link">✉️ care@valleycare.wales</a>
@@ -391,7 +394,7 @@
     </div>
   </section>
 
-
+  <!-- NEWSLETTER SIGNUP -->
   <section class="section" style="background:var(--clr-midnight); color:white; text-align:center; padding: 4rem 1rem;">
     <div class="container" style="max-width: 500px;">
       <h2 style="font-family:var(--font-serif);font-size:2rem;margin-bottom:1rem;color:var(--clr-gold-light)">Stay Updated</h2>
@@ -405,9 +408,26 @@
     </div>
   </section>
 
-  <footer class="footer"><div class="container"><div class="footer-bottom" style="padding-top:0"><div class="footer-copy">© 2026 Valley Care Group · <a href="../index.html" style="color:var(--clr-gold)">Back to Homepage</a></div><div class="footer-bottom-links"><a href="../index.html">Home</a><a href="../homes.html">Our Homes</a><a href="../contact.html">Contact</a><a href="../privacy.html">Privacy</a></div></div></div></footer>
-  <div class="sticky-enquiry"><button class="sticky-btn sticky-btn-primary" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">💬 Enquire</button><a href="tel:+441633680217" class="sticky-btn sticky-btn-phone llys-phone-link" id="llys-sticky-phone">📞 Call</a></div>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="padding-top:0">
+        <div class="footer-copy">© 2026 Valley Care Group · <a href="../index.html" style="color:var(--clr-gold)">Back to Homepage</a></div>
+        <div class="footer-bottom-links"><a href="../homes.html">Our Homes</a><a href="../contact.html">Contact</a><a href="../jobs.html">Careers</a><a href="../privacy.html">Privacy</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- STICKY BAR -->
+  <div class="sticky-enquiry">
+    <button class="sticky-btn sticky-btn-primary" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">💬 Enquire</button>
+    <a href="tel:+441633680217" class="sticky-btn sticky-btn-phone llys-phone-link" id="llys-sticky-phone">📞 Call</a>
+  </div>
+
+  <!-- TOAST -->
   <div class="toast" id="toast"><span class="toast-icon">✅</span><div><div class="toast-title">Enquiry Sent!</div><div class="toast-msg">Thank you — we'll be in touch within 24 hours.</div></div></div>
+
+  <!-- SCRIPTS -->
   <script src="../assets/js/runtime-config.js"></script>
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/main.js"></script>
@@ -420,7 +440,7 @@
       phoneTel: '01633680217',
       ciwServiceUrl: 'https://digital.careinspectorate.wales/',
       news: [
-        { id: 'llys-n1', date: '2025-03-05', title: 'Top 20 Care Homes Wales 2024', excerpt: 'Llys Gwyn is honoured to appear among Wales’s most recommended homes on carehome.co.uk.', imageUrl: 'assets/images/interior.png' },
+        { id: 'llys-n1', date: '2025-03-05', title: 'Top 20 Care Homes Wales 2024', excerpt: 'Llys Gwyn is honoured to appear among Wales\'s most recommended homes on carehome.co.uk.', imageUrl: 'assets/images/interior.png' },
         { id: 'llys-n2', date: '2025-02-14', title: 'Philosophy: care with passion', excerpt: 'Personalised support, freshly cooked meals, and a full activities programme in a homely environment.', imageUrl: 'assets/images/caregiver.png' }
       ],
       events: [
@@ -481,7 +501,7 @@
         li.className = 'glan-feed-item';
         var src = feedAssetPath(it.imageUrl);
         var imgPart = src ? '<img class="glan-feed-thumb" src="' + escapeHtml(src) + '" alt="">' : '';
-        li.innerHTML = '<div class="glan-feed-item-inner">' + imgPart + '<div class="glan-feed-body"><span class="glan-feed-date">' + fmtDate(it.date) + '</span><h4>' + escapeHtml(it.title) + '</h4><p>' + escapeHtml(it.excerpt || '') + '</p></div></div>';
+        li.innerHTML = '<div class="glan-feed-item-inner">' + imgPart + '<div class="glan-feed-body"><span class="glan-feed-date">' + fmtDate(it.date) + '</span><h4><a style="text-decoration:none;color:inherit" href="../news.html?id=' + encodeURIComponent(it.id) + '">' + escapeHtml(it.title) + '</a></h4><p>' + escapeHtml(it.excerpt || '') + '</p></div></div>';
         ul.appendChild(li);
       });
     }
@@ -490,7 +510,6 @@
       if (av && g.availabilityLine) av.textContent = g.availabilityLine;
       var mw = document.getElementById('llys-map-wrap');
       if (mw && g.mapEmbedHtml) {
-        // Strip geolocation from embedded iframes to prevent kCLErrorLocationUnknown
         var safeHtml = g.mapEmbedHtml.replace(/<iframe/gi, '<iframe allow="" referrerpolicy="no-referrer"');
         mw.innerHTML = safeHtml;
       }
@@ -527,7 +546,65 @@
       }
       
       // Initialize Lightbox for this gallery
-      if (window.initGalleryLightbox) window.initGalleryLightbox('llys-gallery-grid');
+      
+      // JS dynamic injections generated by tool
+      if (g.keyInfo && g.keyInfo.length) {
+        var kEl = document.getElementById('dyn-key-info');
+        if(kEl) kEl.innerHTML = g.keyInfo.map(function(k) {
+          return '<div class="home-fact"><span class="home-fact-label">' + escapeHtml(k.label) + '</span><span class="home-fact-value">' + escapeHtml(k.value) + '</span></div>';
+        }).join('');
+      }
+      
+      if (g.managerProfile) {
+        var mname = document.getElementById('dyn-mgr-name'); if(mname) mname.textContent = g.managerProfile.name || 'Manager';
+        var mtitle = document.getElementById('dyn-mgr-title'); if(mtitle) mtitle.textContent = g.managerProfile.title || 'Home Manager';
+        var mbio = document.getElementById('dyn-mgr-bio'); if(mbio) mbio.textContent = g.managerProfile.bio || '';
+        var mimg = document.getElementById('dyn-mgr-img'); if(mimg && g.managerProfile.photoUrl && g.managerProfile.photoUrl !== '') {
+            mimg.src = feedAssetPath(g.managerProfile.photoUrl);
+        }
+      }
+
+      var cIntro = document.getElementById('dyn-care-intro'); if(cIntro) cIntro.textContent = g.careIntro || '';
+      if (g.careProvided && g.careProvided.length) {
+        var cEl = document.getElementById('dyn-care-container');
+        if(cEl) cEl.innerHTML = '<div><h3 style="font-family:var(--font-serif);font-size:1.25rem;color:var(--clr-midnight);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem">🩺 Care Provided</h3><div class="services-list-grid" style="grid-template-columns:1fr;gap:0.75rem">' + g.careProvided.map(function(c) {
+          return '<div class="service-list-item">' + escapeHtml(c) + '</div>';
+        }).join('') + '</div></div>';
+      }
+
+      if (g.facilities && g.facilities.length) {
+        var fEl = document.getElementById('dyn-facilities-container');
+        if(fEl) fEl.innerHTML = g.facilities.map(function(f) {
+           return '<div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:var(--clr-cream);border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">🔹 ' + escapeHtml(f) + '</div>';
+        }).join('');
+      }
+
+      if (g.awardsList && g.awardsList.length) {
+        var aEl = document.getElementById('dyn-awards-container');
+        if(aEl) aEl.innerHTML = g.awardsList.map(function(a) {
+           return '<div style="background:#fff;border-radius:var(--radius-lg);padding:1.5rem;text-align:center;border:1px solid rgba(201,168,76,0.3);box-shadow:var(--shadow-sm);position:relative;overflow:hidden"><div style="position:absolute;top:0;left:0;width:100%;height:4px;background:var(--clr-gold)"></div><div style="font-size:2rem;margin-bottom:0.75rem">🏆</div><h3 style="font-family:var(--font-serif);color:var(--clr-midnight);margin-bottom:0.35rem;font-size:1.05rem">' + escapeHtml(a.title) + '</h3><p style="font-size:0.8rem;color:var(--clr-text-light);margin-bottom:0">' + escapeHtml(a.description || '') + '</p></div>';
+        }).join('');
+      }
+
+      if (g.ciwThemes && g.ciwThemes.length) {
+        var ciwEl = document.getElementById('dyn-ciw-themes');
+        if(ciwEl) ciwEl.innerHTML = g.ciwThemes.map(function(c) {
+          return '<div style="display:flex;justify-content:space-between;padding:0.5rem;background:var(--clr-cream);border-radius:4px;font-size:0.8rem"><span style="font-weight:600">' + escapeHtml(c.theme) + '</span><span style="color:var(--clr-gold);font-weight:700">' + escapeHtml(c.rating) + '</span></div>';
+        }).join('');
+      }
+
+      var bBtn = document.getElementById('dyn-brochure-btn');
+      if(bBtn && g.brochureUrl) {
+         bBtn.href = g.brochureUrl;
+         bBtn.target = "_blank";
+      }
+
+      var tBtn = document.getElementById('dyn-tour-btn');
+      if(tBtn && g.virtualTourUrl) {
+         tBtn.href = g.virtualTourUrl;
+         tBtn.target = "_blank";
+      }
+if (window.initGalleryLightbox) window.initGalleryLightbox('llys-gallery-grid');
     }
     function run(g) {
       applyPhone(g);
@@ -544,18 +621,10 @@
         .then(function (d) {
           var g = d.homePages && d.homePages.llys;
           if (!g) { run(LLYS_FALLBACK); return; }
-          run({
-            phoneDisplay: g.phoneDisplay || LLYS_FALLBACK.phoneDisplay,
-            phoneTel: g.phoneTel || LLYS_FALLBACK.phoneTel,
-            ciwServiceUrl: g.ciwServiceUrl || LLYS_FALLBACK.ciwServiceUrl,
-            news: Array.isArray(g.news) ? g.news : LLYS_FALLBACK.news,
-            events: Array.isArray(g.events) ? g.events : LLYS_FALLBACK.events,
-            availabilityLine: g.availabilityLine,
-            mapEmbedHtml: g.mapEmbedHtml,
-            gallery: g.gallery,
-            team: g.team,
-            faqs: g.faqs
-          });
+          var merged = Object.assign({}, LLYS_FALLBACK, g);
+          if (!merged.news || !merged.news.length) merged.news = LLYS_FALLBACK.news;
+          if (!merged.events || !merged.events.length) merged.events = LLYS_FALLBACK.events;
+          run(merged);
         })
         .catch(function () { run(LLYS_FALLBACK); });
     } else {

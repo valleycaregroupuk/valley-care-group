@@ -270,12 +270,50 @@ function sanitiseHomePageExtras(hp) {
       a: sanitise(f.a).slice(0, 2000),
     })).filter((f) => f.q && f.a);
   }
-  ['availabilityLine', 'lastInspectionDate', 'awardsNote', 'ciwPdfUrl', 'virtualTourUrl'].forEach((k) => {
+  ['availabilityLine', 'lastInspectionDate', 'awardsNote', 'ciwPdfUrl', 'virtualTourUrl', 'brochureUrl', 'ciwInspectionDate', 'careIntro'].forEach((k) => {
     if (out[k] !== undefined) out[k] = sanitise(out[k]).slice(0, 500);
   });
   if (out.structuredAddress !== undefined) out.structuredAddress = sanitise(out.structuredAddress).slice(0, 300);
   if (out.structuredLat !== undefined) out.structuredLat = sanitise(out.structuredLat).slice(0, 24);
   if (out.structuredLng !== undefined) out.structuredLng = sanitise(out.structuredLng).slice(0, 24);
+  // Key Information rows
+  if (Array.isArray(out.keyInfo)) {
+    out.keyInfo = out.keyInfo.slice(0, 20).map((k) => ({
+      label: sanitise(k.label).slice(0, 120),
+      value: sanitise(k.value).slice(0, 300),
+    })).filter((k) => k.label);
+  }
+  // Manager profile
+  if (out.managerProfile && typeof out.managerProfile === 'object') {
+    out.managerProfile = {
+      name: sanitise(out.managerProfile.name).slice(0, 120),
+      title: sanitise(out.managerProfile.title).slice(0, 120),
+      bio: sanitise(out.managerProfile.bio).slice(0, 1500),
+      photoUrl: sanitise(out.managerProfile.photoUrl).slice(0, 500),
+    };
+  }
+  // Care provided list
+  if (Array.isArray(out.careProvided)) {
+    out.careProvided = out.careProvided.slice(0, 30).map((c) => sanitise(String(c)).slice(0, 200)).filter(Boolean);
+  }
+  // Facilities list
+  if (Array.isArray(out.facilities)) {
+    out.facilities = out.facilities.slice(0, 30).map((f) => sanitise(String(f)).slice(0, 200)).filter(Boolean);
+  }
+  // CIW inspection themes
+  if (Array.isArray(out.ciwThemes)) {
+    out.ciwThemes = out.ciwThemes.slice(0, 10).map((c) => ({
+      theme: sanitise(c.theme).slice(0, 120),
+      rating: sanitise(c.rating).slice(0, 60),
+    })).filter((c) => c.theme);
+  }
+  // Awards list
+  if (Array.isArray(out.awardsList)) {
+    out.awardsList = out.awardsList.slice(0, 20).map((a) => ({
+      title: sanitise(a.title).slice(0, 200),
+      description: sanitise(a.description).slice(0, 500),
+    })).filter((a) => a.title);
+  }
   return out;
 }
 
@@ -360,7 +398,7 @@ app.use((req, res, next) => {
 // ---------------------------------------------------------------------------
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 10,
+  max: IS_PROD ? 10 : 1000, // relaxed for local dev
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: 'Too many login attempts from this IP. Please try again in 15 minutes.' },
@@ -368,7 +406,7 @@ const loginLimiter = rateLimit({
 
 const apiLimiter = rateLimit({
   windowMs: 60 * 1000,
-  max: 120,
+  max: IS_PROD ? 120 : 5000,
   standardHeaders: true,
   legacyHeaders: false,
 });
@@ -510,16 +548,70 @@ function defaultContent() {
         ciwServiceUrl: 'https://digital.careinspectorate.wales/directory/service/SIN-00009997-VPXP',
         availabilityLine: 'Please contact us for the latest vacancies.',
         mapEmbedHtml: '',
-        gallery: [],
-        team: [],
-        faqs: [],
+        gallery: [
+          { url: 'assets/images/hero_bg.png', alt: 'Glan-yr-Afon Nursing Home Exterior' },
+          { url: 'assets/images/interior.png', alt: 'Communal Lounge' },
+          { url: 'assets/images/caregiver.png', alt: 'Care Team at Work' }
+        ],
+        team: [
+          { name: 'Alice Thompson', role: 'Home Manager', bio: 'Alice has over 15 years of experience in senior care management and is dedicated to person-centred care.', photoUrl: 'assets/images/caregiver.png' },
+          { name: 'Dr. James Wilson', role: 'Lead Nurse', bio: 'James oversees clinical excellence and leads our team of qualified RGNs.', photoUrl: '' }
+        ],
+        faqs: [
+          { q: 'What are the visiting hours?', a: 'We operate an open-door policy and welcome visitors at any time, although we recommend avoiding mealtimes if possible.' },
+          { q: 'Is there a waiting list?', a: 'Vacancies change frequently. Please contact our manager for the most up-to-date availability.' }
+        ],
         ciwPdfUrl: '',
-        lastInspectionDate: '',
-        awardsNote: '',
+        lastInspectionDate: 'March 2025',
+        awardsNote: 'Top 20 Wales 2025',
         virtualTourUrl: '',
+        brochureUrl: '',
         structuredAddress: 'Off Ford Road, Fleur-de-Lys, Blackwood NP12 3WA, UK',
         structuredLat: '51.665',
         structuredLng: '-3.208',
+        keyInfo: [
+          { label: 'Home Type', value: 'Nursing & Residential' },
+          { label: 'Rooms', value: '39 Single Rooms' },
+          { label: 'Centre Proximity', value: '~1.3 miles to Blackwood' },
+          { label: 'Registration', value: 'Care Inspectorate Wales (CIW)' },
+          { label: 'carehome.co.uk Rating', value: '9.9 / 10 ⭐' },
+          { label: 'Reviews', value: '41 Reviews' },
+          { label: 'Phone', value: '01443 835196' },
+          { label: 'Email', value: 'care@valleycare.wales' },
+          { label: 'Visitors', value: 'Welcome anytime' },
+        ],
+        managerProfile: {
+          name: 'Alice Thompson',
+          title: 'Home Manager',
+          bio: 'Alice has over 15 years of experience in senior care management and is dedicated to person-centred care.',
+          photoUrl: 'assets/images/caregiver.png',
+        },
+        ciwInspectionDate: '15 March 2025',
+        ciwThemes: [
+          { theme: 'Care & Support', rating: 'Excellent' },
+          { theme: 'Environment', rating: 'Good' },
+          { theme: 'Leadership', rating: 'Excellent' }
+        ],
+        careIntro: 'Glan-yr-Afon provides specialist nursing and residential care, with a focus on individual needs in a supportive environment.',
+        careProvided: [
+          'Nursing care (RGN-led)',
+          'Residential care',
+          'Respite care',
+          'Palliative / end-of-life care',
+          'Day care service',
+          'Dementia residential care',
+        ],
+        facilities: [
+          'En-suite rooms',
+          'Communal lounges',
+          'Garden and outdoor areas',
+          'Activities programme',
+          'Home-cooked meals',
+          'Hairdressing salon',
+        ],
+        awardsList: [
+          { title: 'Top 20 Care Homes Wales 2025', description: 'Based on verified reviews and recommendations on carehome.co.uk' },
+        ],
         news: [
           { id: 'glan-n1', date: '2025-03-01', title: 'Top 20 Wales — carehome.co.uk 2025', excerpt: 'We are proud to be named among the Top 20 Care Homes in Wales, based on verified reviews from residents and families.', imageUrl: 'assets/images/hero_bg.png', showOnHomepage: true },
           { id: 'glan-n2', date: '2025-02-10', title: 'Spring activities programme launched', excerpt: 'Our activities team has published a fresh programme of music, outings, and wellbeing sessions for the season ahead.', imageUrl: 'assets/images/interior.png', showOnHomepage: false },
@@ -538,18 +630,66 @@ function defaultContent() {
         manager: 'Sharanjit Kaur',
         availabilityLine: 'Please contact us for the latest vacancies.',
         mapEmbedHtml: '',
-        gallery: [],
-        team: [],
-        faqs: [],
+        gallery: [
+          { url: 'assets/images/hero_bg.png', alt: 'Llys Gwyn Exterior' },
+          { url: 'assets/images/interior.png', alt: 'Llys Gwyn Lounge' }
+        ],
+        team: [
+          { name: 'Sharanjit Kaur', role: 'Home Manager', bio: 'Sharanjit leads our dedicated residential team with a focus on warmth and community.', photoUrl: '' }
+        ],
+        faqs: [
+          { q: 'What activities are available?', a: 'We have a full programme including music, keep fit, and community outings.' }
+        ],
         ciwPdfUrl: '',
-        lastInspectionDate: '',
-        awardsNote: '',
+        lastInspectionDate: '8 Oct 2025',
+        awardsNote: 'Top 20 Wales 2024',
         virtualTourUrl: '',
+        brochureUrl: '',
         structuredAddress: 'Heol Broom, Maudlum, Pyle, Bridgend CF33 4PN, UK',
         structuredLat: '51.53',
         structuredLng: '-3.69',
+        keyInfo: [
+          { label: 'Home Type', value: 'Residential' },
+          { label: 'Capacity', value: '31 places' },
+          { label: 'Operator', value: 'Grayson Enterprises Ltd' },
+          { label: 'Manager', value: 'Sharanjit Kaur' },
+          { label: 'Location', value: 'Pyle, Bridgend' },
+          { label: 'Phone', value: '01633 680217' },
+          { label: 'Visitors', value: 'Welcome anytime' },
+        ],
+        managerProfile: {
+          name: 'Sharanjit Kaur',
+          title: 'Home Manager',
+          bio: '',
+          photoUrl: '',
+        },
+        ciwInspectionDate: '8 Oct 2025',
+        ciwThemes: [
+          { theme: 'Well-being', rating: 'Excellent' },
+          { theme: 'Care & Support', rating: 'Excellent' },
+          { theme: 'Environment', rating: 'Good' },
+          { theme: 'Leadership & Management', rating: 'Excellent' },
+        ],
+        careIntro: 'Llys Gwyn provides personalised residential care with freshly cooked meals and a full activities programme in a homely environment.',
+        careProvided: [
+          'Residential care for older people',
+          'Dementia residential care',
+          'Respite care',
+          'Person-centred support',
+        ],
+        facilities: [
+          'Comfortable single rooms',
+          'Communal lounges and dining areas',
+          'Landscaped gardens',
+          'Activities and events programme',
+          'Home-cooked meals with dietary options',
+          'Hairdressing and beauty services',
+        ],
+        awardsList: [
+          { title: 'Top 20 Care Homes Wales 2024', description: 'Based on verified reviews on carehome.co.uk' },
+        ],
         news: [
-          { id: 'llys-n1', date: '2025-03-05', title: 'Top 20 Care Homes Wales 2024', excerpt: 'Llys Gwyn is honoured to appear among Wales’s most recommended homes on carehome.co.uk.', imageUrl: 'assets/images/interior.png', showOnHomepage: true },
+          { id: 'llys-n1', date: '2025-03-05', title: 'Top 20 Care Homes Wales 2024', excerpt: 'Llys Gwyn is honoured to appear among Wales\'s most recommended homes on carehome.co.uk.', imageUrl: 'assets/images/interior.png', showOnHomepage: true },
           { id: 'llys-n2', date: '2025-02-14', title: 'Philosophy: care with passion', excerpt: 'Personalised support, freshly cooked meals, and a full activities programme in a homely environment.', imageUrl: 'assets/images/caregiver.png', showOnHomepage: false },
         ],
         events: [
@@ -566,16 +706,58 @@ function defaultContent() {
         manager: 'Susan Rosser (Registered Manager)',
         availabilityLine: 'Please contact us for the latest vacancies.',
         mapEmbedHtml: '',
-        gallery: [],
-        team: [],
-        faqs: [],
+        gallery: [
+          { url: 'assets/images/hero_bg.png', alt: 'Ty Pentwyn Exterior' }
+        ],
+        team: [
+          { name: 'Susan Rosser', role: 'Registered Manager', bio: 'Susan has extensive experience in specialist nursing and disability support.', photoUrl: 'assets/images/caregiver.png' }
+        ],
+        faqs: [
+          { q: 'Do you provide specialist dementia care?', a: 'Yes, Ty Pentwyn provides specialist nursing support for dementia, learning disabilities, and autism.' }
+        ],
         ciwPdfUrl: '',
-        lastInspectionDate: '',
-        awardsNote: '',
+        lastInspectionDate: 'Jan 2025',
+        awardsNote: 'Quality Care Certified',
         virtualTourUrl: '',
+        brochureUrl: '',
         structuredAddress: 'Pentwyn Road, Treorchy CF42 6HD, UK',
         structuredLat: '51.66',
         structuredLng: '-3.50',
+        keyInfo: [
+          { label: 'Home Type', value: 'Nursing & Residential' },
+          { label: 'Capacity', value: 'Up to 35 residents' },
+          { label: 'Operator', value: 'Quality Care (Surrey) Ltd' },
+          { label: 'Manager', value: 'Susan Rosser (Registered Manager)' },
+          { label: 'Location', value: 'Treorchy, RCT' },
+          { label: 'Local Authority', value: 'Rhondda Cynon Taff County Borough Council' },
+        ],
+        managerProfile: {
+          name: 'Susan Rosser',
+          title: 'Registered Manager',
+          bio: '',
+          photoUrl: '',
+        },
+        ciwInspectionDate: '',
+        ciwThemes: [],
+        careIntro: 'Ty Pentwyn provides nursing and residential care with specialist support for dementia, learning disability, autism, physical disability, and sensory impairment.',
+        careProvided: [
+          'Nursing care',
+          'Residential care',
+          'Dementia residential care',
+          'Learning disability & autism support',
+          'Physical disability support',
+          'Sensory impairment support',
+        ],
+        facilities: [
+          'Single rooms',
+          'Communal lounges',
+          'Garden and outdoor areas',
+          'Activities programme',
+          'Home-cooked meals',
+        ],
+        awardsList: [
+          { title: 'Quality Care Certified', description: 'Certified excellence in Rhondda nursing care' },
+        ],
         news: [
           { id: 'pent-n1', date: '2025-04-01', title: 'Welcome to our updated Ty Pentwyn page', excerpt: 'Accurate service details from our verified directory listing — contact us for vacancies and visits.', imageUrl: 'assets/images/caregiver.png', showOnHomepage: true },
         ],

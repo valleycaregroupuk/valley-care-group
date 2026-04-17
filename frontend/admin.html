@@ -354,6 +354,9 @@
         <button class="sidebar-nav-item" data-section="content" onclick="showSection('content')">
           <span class="sidebar-nav-icon">✏️</span> Content Manager
         </button>
+        <button class="sidebar-nav-item" data-section="homeprofile" onclick="showSection('homeprofile')">
+          <span class="sidebar-nav-icon">🏠</span> Home Profile
+        </button>
         <button class="sidebar-nav-item" data-section="gallery" onclick="showSection('gallery')">
           <span class="sidebar-nav-icon">🖼️</span> Gallery Manager
         </button>
@@ -737,6 +740,179 @@
         </div>
 
         <p style="font-size:0.8rem;color:var(--text-light);margin-top:1.5rem;max-width:640px">Image paths are relative to the site root (e.g. <code>assets/images/interior.png</code>) or a full <code>https://</code> URL.</p>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════════════════════
+           HOME PROFILE MANAGER (unified per-home admin)
+      ══════════════════════════════════════════════════════════════════════ -->
+      <div class="page-section" id="section-homeprofile">
+        <div class="page-header">
+          <div>
+            <div class="page-header-title">🏠 Home Profile Manager</div>
+            <div class="page-header-sub">Manage all aspects of each care home from one place — key info, manager, CIW themes, care, facilities, awards, and brochure/tour.</div>
+          </div>
+          <button type="button" class="btn btn-primary" onclick="saveHomeProfile()" id="hp-save-top-btn">💾 Save All Changes</button>
+        </div>
+
+        <!-- Home Selector -->
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:2rem;flex-wrap:wrap">
+          <label class="field-label" style="margin:0;font-weight:700;font-size:1rem" for="hp-home-select">Select Home:</label>
+          <select class="field-select" id="hp-home-select" onchange="loadHomeProfile(this.value)" style="max-width:320px;font-size:1rem;padding:0.65rem 1rem;font-weight:600;border:2px solid var(--cobalt);border-radius:var(--radius-sm)">
+            <option value="glan">🏡 Glan-yr-Afon Nursing Home</option>
+            <option value="llys">🏡 Llys Gwyn Residential Home</option>
+            <option value="pentwyn">🏡 Ty Pentwyn Nursing Home</option>
+          </select>
+          <span class="badge badge-active" id="hp-home-status">● Loaded</span>
+        </div>
+
+        <!-- ────────────────── 1. KEY INFORMATION ────────────────── -->
+        <div class="table-card" style="margin-bottom:1.5rem">
+          <div class="table-card-header">
+            <div class="table-card-title">📋 Key Information</div>
+            <button type="button" class="btn btn-primary btn-sm" onclick="hpAddKeyRow()">+ Add Row</button>
+          </div>
+          <table>
+            <thead><tr><th style="width:35%">Label</th><th>Value</th><th style="width:90px">Actions</th></tr></thead>
+            <tbody id="hp-key-tbody"></tbody>
+          </table>
+          <div class="empty-state" id="hp-key-empty" style="display:none;padding:1.5rem"><p>No key information rows. Click "+ Add Row" to get started.</p></div>
+        </div>
+
+        <!-- ────────────────── 2. HOME MANAGER ────────────────── -->
+        <div class="table-card" style="margin-bottom:1.5rem;padding:1.5rem">
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem">
+            <span style="font-size:1.25rem">👤</span>
+            <h3 style="margin:0;font-size:1rem;font-weight:700;color:var(--midnight)">Home Manager</h3>
+          </div>
+          <div class="field-row">
+            <div class="field-group">
+              <label class="field-label" for="hp-mgr-name">Manager Name *</label>
+              <input class="field-input" type="text" id="hp-mgr-name" placeholder="e.g. Susan Rosser" maxlength="120">
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="hp-mgr-title">Title / Role</label>
+              <input class="field-input" type="text" id="hp-mgr-title" placeholder="e.g. Registered Manager" maxlength="120" value="Home Manager">
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="hp-mgr-bio">Bio / Introduction</label>
+            <textarea class="field-textarea" id="hp-mgr-bio" placeholder="Brief introduction about the manager..." style="min-height:80px" maxlength="1500"></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="hp-mgr-photo">Photo URL</label>
+            <div style="display:flex;gap:0.5rem;align-items:center">
+              <input class="field-input" type="text" id="hp-mgr-photo" placeholder="https://... or assets/images/..." maxlength="500" style="flex:1">
+              <label class="btn btn-ghost" style="cursor:pointer;white-space:nowrap;padding:0.6rem 1rem;">
+                📤 Upload <input type="file" style="display:none" accept="image/*" onchange="uploadAdminMedia(this, 'hp-mgr-photo')">
+              </label>
+            </div>
+            <div id="hp-mgr-photo-preview" style="margin-top:0.75rem"></div>
+          </div>
+        </div>
+
+        <!-- ────────────────── 3. CIW INSPECTION THEMES ────────────────── -->
+        <div class="table-card" style="margin-bottom:1.5rem">
+          <div class="table-card-header">
+            <div>
+              <div class="table-card-title">🏛️ CIW Inspection Themes</div>
+              <div style="font-size:0.78rem;color:var(--text-light);margin-top:0.15rem">Care Inspectorate Wales registers and inspects social care in Wales.</div>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm" onclick="hpAddCiwRow()">+ Add Theme</button>
+          </div>
+          <div style="padding:0.75rem 1.25rem;border-bottom:1px solid var(--border)">
+            <label class="field-label" for="hp-ciw-date" style="margin-bottom:0.35rem">Inspection Date</label>
+            <input class="field-input" type="text" id="hp-ciw-date" placeholder="e.g. 8 Oct 2025" maxlength="60" style="max-width:220px">
+          </div>
+          <table>
+            <thead><tr><th style="width:50%">Theme</th><th>Rating</th><th style="width:90px">Actions</th></tr></thead>
+            <tbody id="hp-ciw-tbody"></tbody>
+          </table>
+          <div class="empty-state" id="hp-ciw-empty" style="display:none;padding:1.5rem"><p>No CIW themes. Click "+ Add Theme" to add one.</p></div>
+        </div>
+
+        <!-- ────────────────── 4. CARE PROVIDED ────────────────── -->
+        <div class="table-card" style="margin-bottom:1.5rem">
+          <div class="table-card-header">
+            <div class="table-card-title">🩺 Care Provided</div>
+            <button type="button" class="btn btn-primary btn-sm" onclick="hpAddCareItem()">+ Add Care Type</button>
+          </div>
+          <div style="padding:0.75rem 1.25rem;border-bottom:1px solid var(--border)">
+            <label class="field-label" for="hp-care-intro" style="margin-bottom:0.35rem">Care Introduction Text</label>
+            <textarea class="field-textarea" id="hp-care-intro" placeholder="Brief paragraph about the care provided at this home..." style="min-height:60px" maxlength="500"></textarea>
+          </div>
+          <div id="hp-care-list" style="padding:1rem 1.25rem"></div>
+          <div class="empty-state" id="hp-care-empty" style="display:none;padding:1.5rem"><p>No care types listed. Click "+ Add Care Type" to add one.</p></div>
+        </div>
+
+        <!-- ────────────────── 5. HOME FACILITIES ────────────────── -->
+        <div class="table-card" style="margin-bottom:1.5rem">
+          <div class="table-card-header">
+            <div class="table-card-title">🏗️ Home Facilities</div>
+            <button type="button" class="btn btn-primary btn-sm" onclick="hpAddFacilityItem()">+ Add Facility</button>
+          </div>
+          <div id="hp-facilities-list" style="padding:1rem 1.25rem"></div>
+          <div class="empty-state" id="hp-facilities-empty" style="display:none;padding:1.5rem"><p>No facilities listed. Click "+ Add Facility" to add one.</p></div>
+        </div>
+
+        <!-- ────────────────── 6. AWARDS & RECOGNITION ────────────────── -->
+        <div class="table-card" style="margin-bottom:1.5rem">
+          <div class="table-card-header">
+            <div class="table-card-title">🏆 Awards & Recognition</div>
+            <button type="button" class="btn btn-primary btn-sm" onclick="hpAddAwardRow()">+ Add Award</button>
+          </div>
+          <table>
+            <thead><tr><th style="width:40%">Award Title</th><th>Description</th><th style="width:90px">Actions</th></tr></thead>
+            <tbody id="hp-awards-tbody"></tbody>
+          </table>
+          <div class="empty-state" id="hp-awards-empty" style="display:none;padding:1.5rem"><p>No awards listed. Click "+ Add Award" to add one.</p></div>
+        </div>
+
+        <!-- ────────────────── 7. BROCHURE & VIRTUAL TOUR ────────────────── -->
+        <div class="table-card" style="margin-bottom:1.5rem;padding:1.5rem">
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem">
+            <span style="font-size:1.25rem">📄</span>
+            <h3 style="margin:0;font-size:1rem;font-weight:700;color:var(--midnight)">Brochure & Virtual Tour</h3>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="hp-brochure-url">Brochure PDF URL</label>
+            <div style="display:flex;gap:0.5rem;align-items:center">
+              <input class="field-input" type="text" id="hp-brochure-url" placeholder="https://... (PDF link)" maxlength="500" style="flex:1">
+              <label class="btn btn-ghost" style="cursor:pointer;white-space:nowrap;padding:0.6rem 1rem;">
+                📤 Upload <input type="file" style="display:none" accept=".pdf" onchange="uploadAdminMedia(this, 'hp-brochure-url')">
+              </label>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="hp-tour-url">Virtual Tour URL (video or link)</label>
+            <div style="display:flex;gap:0.5rem;align-items:center">
+              <input class="field-input" type="text" id="hp-tour-url" placeholder="https://... (video URL)" maxlength="500" style="flex:1">
+              <label class="btn btn-ghost" style="cursor:pointer;white-space:nowrap;padding:0.6rem 1rem;">
+                📤 Upload <input type="file" style="display:none" accept="video/*" onchange="uploadAdminMedia(this, 'hp-tour-url')">
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ────────────────── 8. QUICK LINKS ────────────────── -->
+        <div class="table-card" style="margin-bottom:1.5rem;padding:1.5rem">
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
+            <span style="font-size:1.25rem">🔗</span>
+            <h3 style="margin:0;font-size:1rem;font-weight:700;color:var(--midnight)">Related Managers</h3>
+          </div>
+          <p style="font-size:0.85rem;color:var(--text-mid);margin-bottom:1rem">Team, Gallery, FAQs, and News & Events are managed in their own dedicated sections (pre-filtered to this home).</p>
+          <div style="display:flex;flex-wrap:wrap;gap:0.75rem">
+            <button type="button" class="btn btn-ghost" onclick="jumpToSection('team')">👥 Manage Team →</button>
+            <button type="button" class="btn btn-ghost" onclick="jumpToSection('gallery')">🖼️ Manage Gallery →</button>
+            <button type="button" class="btn btn-ghost" onclick="jumpToSection('faqs')">❓ Manage FAQs →</button>
+            <button type="button" class="btn btn-ghost" onclick="jumpToSection('homefeed')">📰 Manage News & Events →</button>
+            <button type="button" class="btn btn-ghost" onclick="jumpToSection('homesextra')">🗺️ Maps & Vacancies →</button>
+          </div>
+        </div>
+
+        <!-- BOTTOM SAVE -->
+        <div style="display:flex;justify-content:flex-end;gap:1rem;padding:1rem 0">
+          <button type="button" class="btn btn-primary" onclick="saveHomeProfile()" style="font-size:1rem;padding:0.75rem 2rem">💾 Save All Changes</button>
+        </div>
       </div>
 
       <!-- ── MAPS & VACANCIES (per home) ── -->
@@ -2268,6 +2444,281 @@ async function deleteFaqItem(idx) {
   } catch (ex) { showToast(ex.message, true); }
 }
 
+
+// ══════════════════════════════════════════════════════════════════════════════
+// HOME PROFILE MANAGER
+// ══════════════════════════════════════════════════════════════════════════════
+let hpCurrentSlug = 'glan';
+let hpKeyInfo = [];
+let hpCiwThemes = [];
+let hpCareProvided = [];
+let hpFacilities = [];
+let hpAwardsList = [];
+
+async function loadHomeProfile(slug) {
+  hpCurrentSlug = slug || 'glan';
+  const statusBadge = document.getElementById('hp-home-status');
+  if (statusBadge) { statusBadge.textContent = '⏳ Loading…'; statusBadge.className = 'badge badge-admin2'; }
+  try {
+    await loadContent();
+    const h = (cData.homePages || {})[hpCurrentSlug] || {};
+    // Key Info
+    hpKeyInfo = Array.isArray(h.keyInfo) ? [...h.keyInfo] : [];
+    hpRenderKeyRows();
+    // Manager
+    const m = h.managerProfile || {};
+    document.getElementById('hp-mgr-name').value = m.name || '';
+    document.getElementById('hp-mgr-title').value = m.title || 'Home Manager';
+    document.getElementById('hp-mgr-bio').value = m.bio || '';
+    document.getElementById('hp-mgr-photo').value = m.photoUrl || '';
+    hpRenderMgrPreview();
+    // CIW
+    document.getElementById('hp-ciw-date').value = h.ciwInspectionDate || h.lastInspectionDate || '';
+    hpCiwThemes = Array.isArray(h.ciwThemes) ? [...h.ciwThemes] : [];
+    hpRenderCiwRows();
+    // Care
+    document.getElementById('hp-care-intro').value = h.careIntro || '';
+    hpCareProvided = Array.isArray(h.careProvided) ? [...h.careProvided] : [];
+    hpRenderCareList();
+    // Facilities
+    hpFacilities = Array.isArray(h.facilities) ? [...h.facilities] : [];
+    hpRenderFacilitiesList();
+    // Awards
+    hpAwardsList = Array.isArray(h.awardsList) ? [...h.awardsList] : [];
+    hpRenderAwardsRows();
+    // Brochure & Tour
+    document.getElementById('hp-brochure-url').value = h.brochureUrl || '';
+    document.getElementById('hp-tour-url').value = h.virtualTourUrl || '';
+    if (statusBadge) { statusBadge.textContent = '● Loaded'; statusBadge.className = 'badge badge-active'; }
+  } catch (ex) {
+    showToast('Failed to load home profile: ' + ex.message, true);
+    if (statusBadge) { statusBadge.textContent = '● Error'; statusBadge.className = 'badge badge-care'; }
+  }
+}
+
+async function saveHomeProfile() {
+  const btn = document.getElementById('hp-save-top-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Saving…';
+  try {
+    await loadContent();
+    const prev = (cData.homePages && cData.homePages[hpCurrentSlug]) || {};
+    const updated = {
+      ...prev,
+      keyInfo: hpKeyInfo.filter(k => k.label),
+      managerProfile: {
+        name: document.getElementById('hp-mgr-name').value.trim(),
+        title: document.getElementById('hp-mgr-title').value.trim() || 'Home Manager',
+        bio: document.getElementById('hp-mgr-bio').value.trim(),
+        photoUrl: document.getElementById('hp-mgr-photo').value.trim(),
+      },
+      ciwInspectionDate: document.getElementById('hp-ciw-date').value.trim(),
+      ciwThemes: hpCiwThemes.filter(c => c.theme),
+      careIntro: document.getElementById('hp-care-intro').value.trim(),
+      careProvided: hpCareProvided.filter(Boolean),
+      facilities: hpFacilities.filter(Boolean),
+      awardsList: hpAwardsList.filter(a => a.title),
+      brochureUrl: document.getElementById('hp-brochure-url').value.trim(),
+      virtualTourUrl: document.getElementById('hp-tour-url').value.trim(),
+    };
+    const payload = {
+      glan: hpCurrentSlug === 'glan' ? updated : (cData.homePages.glan || {}),
+      llys: hpCurrentSlug === 'llys' ? updated : (cData.homePages.llys || {}),
+      pentwyn: hpCurrentSlug === 'pentwyn' ? updated : (cData.homePages.pentwyn || {}),
+    };
+    const result = await api('PUT', '/api/admin/content/homePages', payload);
+    cData.homePages = result;
+    ensureHomePagesShape();
+    showToast('✅ Home profile saved — refresh the public site to see changes');
+  } catch (ex) {
+    showToast('Save failed: ' + ex.message, true);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '💾 Save All Changes';
+  }
+}
+
+// ── Key Information ──────────────────────────────────────────────────────────
+function hpRenderKeyRows() {
+  const tbody = document.getElementById('hp-key-tbody');
+  const empty = document.getElementById('hp-key-empty');
+  if (!hpKeyInfo.length) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  tbody.innerHTML = hpKeyInfo.map((row, i) => `
+    <tr>
+      <td><input class="field-input" type="text" value="${esc(row.label)}" onchange="hpKeyInfo[${i}].label=this.value" style="font-weight:600;font-size:0.85rem" placeholder="Label"></td>
+      <td><input class="field-input" type="text" value="${esc(row.value)}" onchange="hpKeyInfo[${i}].value=this.value" style="font-size:0.85rem" placeholder="Value"></td>
+      <td><button class="btn btn-danger btn-sm" onclick="hpRemoveKeyRow(${i})">🗑️</button></td>
+    </tr>
+  `).join('');
+}
+function hpAddKeyRow() {
+  hpKeyInfo.push({ label: '', value: '' });
+  hpRenderKeyRows();
+  // Focus the new label input
+  const inputs = document.querySelectorAll('#hp-key-tbody input');
+  if (inputs.length >= 2) inputs[inputs.length - 2].focus();
+}
+function hpRemoveKeyRow(i) {
+  hpKeyInfo.splice(i, 1);
+  hpRenderKeyRows();
+}
+
+// ── Manager photo preview ────────────────────────────────────────────────────
+function hpRenderMgrPreview() {
+  const url = document.getElementById('hp-mgr-photo').value.trim();
+  const prev = document.getElementById('hp-mgr-photo-preview');
+  if (url) {
+    prev.innerHTML = `<img src="${esc(url)}" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid var(--cobalt)" onerror="this.style.display='none'">`;
+  } else {
+    prev.innerHTML = '';
+  }
+}
+document.addEventListener('change', (e) => {
+  if (e.target.id === 'hp-mgr-photo') hpRenderMgrPreview();
+});
+
+// ── CIW Inspection Themes ────────────────────────────────────────────────────
+function hpRenderCiwRows() {
+  const tbody = document.getElementById('hp-ciw-tbody');
+  const empty = document.getElementById('hp-ciw-empty');
+  if (!hpCiwThemes.length) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  tbody.innerHTML = hpCiwThemes.map((row, i) => `
+    <tr>
+      <td><input class="field-input" type="text" value="${esc(row.theme)}" onchange="hpCiwThemes[${i}].theme=this.value" style="font-weight:600;font-size:0.85rem" placeholder="e.g. Well-being"></td>
+      <td>
+        <select class="field-select" onchange="hpCiwThemes[${i}].rating=this.value" style="font-size:0.85rem;padding:0.4rem 0.6rem">
+          <option value="Excellent" ${row.rating==='Excellent'?'selected':''}>Excellent</option>
+          <option value="Good" ${row.rating==='Good'?'selected':''}>Good</option>
+          <option value="Adequate" ${row.rating==='Adequate'?'selected':''}>Adequate</option>
+          <option value="Poor" ${row.rating==='Poor'?'selected':''}>Poor</option>
+          <option value="N/A" ${row.rating==='N/A'?'selected':''}>N/A</option>
+        </select>
+      </td>
+      <td><button class="btn btn-danger btn-sm" onclick="hpRemoveCiwRow(${i})">🗑️</button></td>
+    </tr>
+  `).join('');
+}
+function hpAddCiwRow() {
+  hpCiwThemes.push({ theme: '', rating: 'Excellent' });
+  hpRenderCiwRows();
+  const inputs = document.querySelectorAll('#hp-ciw-tbody input');
+  if (inputs.length) inputs[inputs.length - 1].focus();
+}
+function hpRemoveCiwRow(i) {
+  hpCiwThemes.splice(i, 1);
+  hpRenderCiwRows();
+}
+
+// ── Care Provided ────────────────────────────────────────────────────────────
+function hpRenderCareList() {
+  const container = document.getElementById('hp-care-list');
+  const empty = document.getElementById('hp-care-empty');
+  if (!hpCareProvided.length) {
+    container.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  container.innerHTML = hpCareProvided.map((item, i) => `
+    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+      <span style="color:var(--cobalt);font-weight:700">🔹</span>
+      <input class="field-input" type="text" value="${esc(item)}" onchange="hpCareProvided[${i}]=this.value" style="flex:1;font-size:0.85rem" placeholder="Care type...">
+      <button class="btn btn-danger btn-sm" onclick="hpRemoveCareItem(${i})">🗑️</button>
+    </div>
+  `).join('');
+}
+function hpAddCareItem() {
+  hpCareProvided.push('');
+  hpRenderCareList();
+  const inputs = document.querySelectorAll('#hp-care-list input');
+  if (inputs.length) inputs[inputs.length - 1].focus();
+}
+function hpRemoveCareItem(i) {
+  hpCareProvided.splice(i, 1);
+  hpRenderCareList();
+}
+
+// ── Facilities ───────────────────────────────────────────────────────────────
+function hpRenderFacilitiesList() {
+  const container = document.getElementById('hp-facilities-list');
+  const empty = document.getElementById('hp-facilities-empty');
+  if (!hpFacilities.length) {
+    container.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  container.innerHTML = hpFacilities.map((item, i) => `
+    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+      <span style="color:var(--cobalt);font-weight:700">🏗️</span>
+      <input class="field-input" type="text" value="${esc(item)}" onchange="hpFacilities[${i}]=this.value" style="flex:1;font-size:0.85rem" placeholder="Facility name...">
+      <button class="btn btn-danger btn-sm" onclick="hpRemoveFacilityItem(${i})">🗑️</button>
+    </div>
+  `).join('');
+}
+function hpAddFacilityItem() {
+  hpFacilities.push('');
+  hpRenderFacilitiesList();
+  const inputs = document.querySelectorAll('#hp-facilities-list input');
+  if (inputs.length) inputs[inputs.length - 1].focus();
+}
+function hpRemoveFacilityItem(i) {
+  hpFacilities.splice(i, 1);
+  hpRenderFacilitiesList();
+}
+
+// ── Awards ───────────────────────────────────────────────────────────────────
+function hpRenderAwardsRows() {
+  const tbody = document.getElementById('hp-awards-tbody');
+  const empty = document.getElementById('hp-awards-empty');
+  if (!hpAwardsList.length) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  tbody.innerHTML = hpAwardsList.map((row, i) => `
+    <tr>
+      <td><input class="field-input" type="text" value="${esc(row.title)}" onchange="hpAwardsList[${i}].title=this.value" style="font-weight:600;font-size:0.85rem" placeholder="Award title"></td>
+      <td><input class="field-input" type="text" value="${esc(row.description||'')}" onchange="hpAwardsList[${i}].description=this.value" style="font-size:0.85rem" placeholder="Short description"></td>
+      <td><button class="btn btn-danger btn-sm" onclick="hpRemoveAwardRow(${i})">🗑️</button></td>
+    </tr>
+  `).join('');
+}
+function hpAddAwardRow() {
+  hpAwardsList.push({ title: '', description: '' });
+  hpRenderAwardsRows();
+  const inputs = document.querySelectorAll('#hp-awards-tbody input');
+  if (inputs.length >= 2) inputs[inputs.length - 2].focus();
+}
+function hpRemoveAwardRow(i) {
+  hpAwardsList.splice(i, 1);
+  hpRenderAwardsRows();
+}
+
+// ── Jump to related section (pre-filtering to same home) ─────────────────────
+function jumpToSection(section) {
+  const slug = hpCurrentSlug;
+  // Pre-select the same home in the target section
+  const selMap = { team: 'team-home', gallery: 'gal-home', faqs: 'faq-home', homefeed: 'hf-home-select', homesextra: 'hx-home' };
+  const selId = selMap[section];
+  if (selId) {
+    const sel = document.getElementById(selId);
+    if (sel) sel.value = slug;
+  }
+  showSection(section);
+}
+
 // Override showSection to load content when switching to it
 const _origShowSection = showSection;
 showSection = function(name) {
@@ -2289,6 +2740,9 @@ showSection = function(name) {
   }
   if (name === 'homesextra') {
     loadContent().then(() => loadHomesExtraForm(document.getElementById('hx-home').value));
+  }
+  if (name === 'homeprofile') {
+    loadHomeProfile(document.getElementById('hp-home-select').value);
   }
   if (name === 'enquiries' || name === 'applications') {
     loadLeadData().catch((e) => showToast(e.message, true));

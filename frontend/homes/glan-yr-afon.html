@@ -9,7 +9,7 @@
   <meta name="description" content="Glan-yr-Afon Nursing Home in Blackwood provides expert nursing and residential care for 39 residents. Offering respite, palliative, and day care services with a 9.9 rating.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏡</text></svg>">
   <link rel="stylesheet" href="../assets/css/style.css">
-  <link rel="stylesheet" href="../assets/css/pages.css?v=2">
+  <link rel="stylesheet" href="../assets/css/pages.css?v=3">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -28,6 +28,7 @@
   </script>
 </head>
 <body>
+  <!-- NAVIGATION -->
   <nav class="navbar scrolled" id="navbar">
     <div class="nav-container">
       <a href="../index.html" class="nav-logo">
@@ -103,6 +104,7 @@
     </div>
   </div>
 
+  <!-- DIRECTORY CTA -->
   <div class="carehome-directory-cta">
     <div class="container carehome-directory-cta-inner">
       <div class="carehome-directory-cta-text">
@@ -129,7 +131,9 @@
     </div>
   </div>
 
-  <!-- CONTENT SECTIONS -->
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- CONTENT SECTIONS                              -->
+  <!-- ══════════════════════════════════════════════ -->
 
   <!-- Overview -->
   <section id="overview" class="home-section home-section--white">
@@ -144,33 +148,27 @@
           
           <!-- MANAGER HIGHLIGHT -->
           <div class="manager-section fade-up">
-            <img src="../assets/images/caregiver.png" alt="Home Manager" class="manager-image">
-            <div class="manager-info">
-              <span class="manager-role">Home Manager</span>
-              <h3>Meet Our Manager</h3>
-              <p class="manager-bio">With over 15 years of experience in clinical nursing and elderly care, our manager leads a dedicated team focused on dignity, respect, and personalized support for every resident at Glan-yr-Afon.</p>
-              <button class="btn btn-gold" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">💬 Speak with the Manager</button>
-            </div>
-          </div>
+<img id="dyn-mgr-img" src="../assets/images/caregiver.png" alt="Home Manager" class="manager-image">
+<div class="manager-info">
+<span class="manager-role" id="dyn-mgr-title">Home Manager</span>
+<h3>Meet <span id="dyn-mgr-name">...</span></h3>
+<p class="manager-bio" id="dyn-mgr-bio"></p>
+<button class="btn btn-gold" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">💬 Speak with the manager</button>
+</div>
+</div>
 
+          <!-- LOCATION RADAR WIDGET -->
           <div class="premium-location-wrap fade-up" id="glan-map-wrap" style="margin-top:2.5rem; border-radius:var(--radius-xl); min-height:360px; padding:2rem 1.5rem">
-            <!-- Grid BG -->
             <div class="premium-location-bg"></div>
-            
-            <!-- Radar blip -->
             <div class="premium-location-radar">
               <div class="radar-ring"></div>
               <div class="radar-ring"></div>
               <div class="radar-ring"></div>
             </div>
-
-            <!-- Glassmorphism Card -->
             <div class="premium-location-card">
               <h2 class="premium-loc-title">Locate Glan-yr-Afon</h2>
               <p class="premium-loc-sub">Off Ford Road, Fleur-de-Lys, Blackwood NP12 3WA</p>
-              
               <div id="glan-distance-readout" style="display:none"></div>
-              
               <button id="glan-distance-btn" class="btn btn-gold premium-btn-scan" style="width:100%" aria-label="Find distance from my location">
                 <span style="position:relative;z-index:2">📍 Check Your Distance</span>
               </button>
@@ -187,9 +185,12 @@
             </div>
           </div>
         </div>
-          <div class="fade-up fade-up-delay-2">
-            <div class="home-facts">
-              <h3 class="home-facts-title">Key Information</h3>
+
+        <!-- RIGHT COLUMN: KEY INFO -->
+        <div class="fade-up fade-up-delay-2">
+          <div class="home-facts">
+            <h3 class="home-facts-title">Key Information</h3>
+            <div id="dyn-key-info">
               <div class="home-fact"><span class="home-fact-label">Home Type</span><span class="home-fact-value">Nursing &amp; Residential</span></div>
               <div class="home-fact"><span class="home-fact-label">Rooms</span><span class="home-fact-value">39 Single Rooms</span></div>
               <div class="home-fact"><span class="home-fact-label">Centre Proximity</span><span class="home-fact-value">~1.3 miles to Blackwood (as crow flies)</span></div>
@@ -200,27 +201,31 @@
               <div class="home-fact"><span class="home-fact-label">Email</span><a href="mailto:care@valleycare.wales" class="home-fact-value" style="color:var(--clr-cobalt)">care@valleycare.wales</a></div>
               <div class="home-fact"><span class="home-fact-label">Visitors</span><span class="home-fact-value">Welcome anytime</span></div>
             </div>
-            <div class="availability-banner">
-              <div class="availability-label">Bed vacancies</div>
-              <div class="availability-text" id="glan-availability-text">Please contact us for the latest vacancies.</div>
-              <a href="tel:+441443835196" class="availability-phone glan-phone-link" id="glan-availability-phone">📞 01443 835196</a>
-            </div>
-            <div class="home-facts" style="margin-top:1.25rem">
-              <h3 class="home-facts-title">Care Inspectorate Wales (CIW)</h3>
-              <p class="body-text" style="font-size:0.875rem;margin-bottom:1rem;line-height:1.65">CIW is responsible for the <strong>registration and inspection</strong> of social care services in Wales, including Glan-yr-Afon. View this home’s service page and inspection reports on the CIW digital directory.</p>
-              <a href="https://digital.careinspectorate.wales/directory/service/SIN-00009997-VPXP" class="btn btn-primary" id="glan-ciw-link" style="display:inline-block;padding:0.5rem 1rem;font-size:0.85rem;border-radius:var(--radius-full)" target="_blank" rel="noopener noreferrer">CIW · Glan-yr-Afon service &amp; reports →</a>
-              <a href="#" class="btn btn-outline" id="glan-ciw-pdf" style="display:none;margin-top:0.75rem;padding:0.5rem 1rem;font-size:0.85rem;border-radius:var(--radius-full)" target="_blank" rel="noopener noreferrer">CIW PDF / document →</a>
-              <p class="body-text" id="glan-trust-extra" style="display:none;margin-top:1rem;font-size:0.82rem;color:var(--clr-text-mid)"></p>
-            </div>
-            <div class="home-facts" style="margin-top:1.25rem">
-              <h3 class="home-facts-title">News &amp; events</h3>
-              <p class="body-text" style="font-size:0.875rem;margin:0;line-height:1.65;color:var(--clr-text-mid)">The latest news and upcoming events for Glan-yr-Afon can be found on our <strong>News &amp; Events</strong> tab.</p>
-              <button type="button" class="btn btn-primary" style="margin-top:1rem;padding:0.45rem 1.1rem;font-size:0.85rem;border-radius:var(--radius-full)" onclick="document.getElementById('news').scrollIntoView({behavior:'smooth'})">Open News &amp; Events →</button>
-            </div>
+          </div>
+
+          <div class="availability-banner" style="margin-top:2rem">
+            <div class="availability-label">Bed vacancies</div>
+            <div class="availability-text" id="glan-availability-text">Please contact us for the latest vacancies.</div>
+            <a href="tel:+441443835196" class="availability-phone glan-phone-link" id="glan-availability-phone">📞 01443 835196</a>
+          </div>
+
+          <div class="home-facts" style="margin-top:2.5rem">
+            <h3 class="home-facts-title" style="margin-bottom:1rem">Care Inspectorate Wales (CIW)</h3>
+            <p class="body-text" style="font-size:0.875rem;margin-bottom:1rem;line-height:1.65">CIW is responsible for the <strong>registration and inspection</strong> of social care services in Wales, including Glan-yr-Afon. View this home's service page and inspection reports on the CIW digital directory.</p>
+            <div id="dyn-ciw-themes" style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem"></div>
+            <a href="https://digital.careinspectorate.wales/directory/service/SIN-00009997-VPXP" class="btn btn-primary" id="glan-ciw-link" style="display:inline-block;padding:0.5rem 1rem;font-size:0.85rem;border-radius:var(--radius-full)" target="_blank" rel="noopener noreferrer">CIW · Glan-yr-Afon service &amp; reports →</a>
+            <a href="#" class="btn btn-outline" id="glan-ciw-pdf" style="display:none;margin-top:0.75rem;padding:0.5rem 1rem;font-size:0.85rem;border-radius:var(--radius-full)" target="_blank" rel="noopener noreferrer">CIW PDF / document →</a>
+            <p class="body-text" id="glan-trust-extra" style="display:none;margin-top:1rem;font-size:0.82rem;color:var(--clr-text-mid)"></p>
+          </div>
+
+          <div class="home-facts" style="margin-top:2.5rem">
+            <h3 class="home-facts-title">News &amp; events</h3>
+            <p class="body-text" style="font-size:0.875rem;margin:0;line-height:1.65;color:var(--clr-text-mid)">The latest news and upcoming events for Glan-yr-Afon can be found on our <strong>News &amp; Events</strong> tab.</p>
+            <button type="button" class="btn btn-primary" style="margin-top:1rem;padding:0.45rem 1.1rem;font-size:0.85rem;border-radius:var(--radius-full)" onclick="document.getElementById('news').scrollIntoView({behavior:'smooth'})">Open News &amp; Events →</button>
           </div>
         </div>
       </div>
-
+    </div>
   </section>
 
   <!-- Care Provided -->
@@ -228,40 +233,9 @@
     <div class="container">
       <div class="fade-up">
         <h2 class="section-title" style="margin-bottom:0.75rem">Care <em>Provided</em></h2>
-        <p class="body-text" style="margin-bottom:2.5rem;max-width:680px">Glan-yr-Afon is registered with the Care Inspectorate Wales (CIW) to provide high-quality care for a maximum of 39 service users.</p>
+        <p class="body-text" id="dyn-care-intro" style="margin-bottom:2.5rem;max-width:680px"></p>
         
-        <div class="responsive-grid-2" style="gap:2.5rem">
-          <div>
-            <h3 style="font-family:var(--font-serif);font-size:1.25rem;color:var(--clr-midnight);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem">🩺 Primary Care Categories</h3>
-            <div class="services-list-grid" style="grid-template-columns:1fr;gap:0.75rem">
-              <div class="service-list-item">Older Person Care</div>
-              <div class="service-list-item">Physical Disability</div>
-              <div class="service-list-item">Visual / Hearing Impairment</div>
-            </div>
-          </div>
-          <div>
-            <h3 style="font-family:var(--font-serif);font-size:1.25rem;color:var(--clr-midnight);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem">⏳ Length of Stay</h3>
-            <div class="services-list-grid" style="grid-template-columns:1fr;gap:0.75rem">
-              <div class="service-list-item">Permanent Care</div>
-              <div class="service-list-item">Respite Care</div>
-            </div>
-          </div>
-          <div>
-            <h3 style="font-family:var(--font-serif);font-size:1.25rem;color:var(--clr-midnight);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem">🏠 Care Types Provided</h3>
-            <div class="services-list-grid" style="grid-template-columns:1fr;gap:0.75rem">
-              <div class="service-list-item">Residential Care</div>
-              <div class="service-list-item">Nursing Care (Max 39 Service Users)</div>
-            </div>
-          </div>
-          <div>
-            <h3 style="font-family:var(--font-serif);font-size:1.25rem;color:var(--clr-midnight);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem">➕ Other Care Provided</h3>
-            <div class="services-list-grid" style="grid-template-columns:1fr;gap:0.75rem">
-              <div class="service-list-item">Palliative / End of Life Care</div>
-              <div class="service-list-item">Convalescent Care</div>
-              <div class="service-list-item">Day Care (Supporting local home carers)</div>
-            </div>
-          </div>
-        </div>
+        <div class="responsive-grid-2" style="gap:2.5rem"><div id="dyn-care-container" style="grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));gap:1.5rem"></div></div>
       </div>
     </div>
   </section>
@@ -274,14 +248,7 @@
           <div>
             <h2 class="section-title" style="margin-bottom:1.5rem">Homely <em>Facilities</em></h2>
             <p class="body-text" style="margin-bottom:2rem">Glan-yr-Afon is designed to balance clinical safety with the comfort of home. We encourage personalisation and independence.</p>
-            <div style="display:grid;grid-template-columns:1fr;gap:0.75rem">
-              <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:var(--clr-cream);border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">🏠 Own Furniture if required</div>
-              <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:var(--clr-cream);border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">🛍️ Close to Local shops</div>
-              <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:var(--clr-cream);border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">🚌 Near Public Transport</div>
-              <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:var(--clr-cream);border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">🛗 Lift &amp; Wheelchair Access</div>
-              <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:var(--clr-cream);border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">🌿 Gardens &amp; Outdoor Spaces</div>
-              <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:var(--clr-cream);border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">📶 Residents Internet &amp; TV Access</div>
-            </div>
+            <div id="dyn-facilities-container" style="display:grid;grid-template-columns:1fr;gap:0.75rem"></div>
           </div>
           <div>
             <h2 class="section-title" style="margin-bottom:1.5rem">Life &amp; <em>Wellbeing</em></h2>
@@ -382,14 +349,7 @@
     <div class="container">
       <div class="fade-up">
         <h2 class="section-title" style="margin-bottom:2.5rem">Awards &amp; <em>Recognitions</em></h2>
-        <div class="glan-awards-grid">
-          <div style="background:#fff;border-radius:var(--radius-lg);padding:2rem;text-align:center;border:1px solid rgba(201,168,76,0.3);box-shadow:var(--shadow-sm);position:relative;overflow:hidden">
-            <div style="position:absolute;top:0;left:0;width:100%;height:4px;background:var(--clr-gold)"></div>
-            <div style="font-size:2.5rem;margin-bottom:1rem">🏆</div>
-            <h3 style="font-family:var(--font-serif);color:var(--clr-midnight);margin-bottom:0.35rem;font-size:1.05rem">Top 20 Care Homes Wales 2025</h3>
-            <p style="font-size:0.8rem;color:var(--clr-text-light);margin-bottom:0">The Awards are based on verified reviews and recommendations from residents and family or friends of residents.</p>
-          </div>
-        </div>
+        <div class="glan-awards-grid" id="dyn-awards-container" style="grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:1.5rem"></div></div>
       </div>
     </div>
   </section>
@@ -401,15 +361,13 @@
         <h2 class="cta-banner-title">Experience Glan-yr-Afon</h2>
         <p class="cta-banner-sub">Download our comprehensive brochure to learn more about our services, or book a personalized tour of our home.</p>
         <div class="cta-banner-actions">
-          <button class="btn btn-gold">📄 Download Brochure</button>
+          <a href="#enquiry" id="dyn-brochure-btn" class="btn btn-gold">📄 Download Brochure</a>
           <button class="btn btn-outline" style="border-color:#fff;color:#fff" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">📅 Book a Tour</button>
-          <button class="btn btn-primary btn-virtual-tour" onclick="openVirtualTour()">🎥 Virtual Tour</button>
+          <a href="#enquiry" id="dyn-tour-btn" class="btn btn-gold" style="background:#2E86C1;border-color:#2E86C1;">🎥 Virtual Tour</a>
         </div>
       </div>
     </div>
   </section>
-
-
 
   <!-- ENQUIRY -->
   <section class="enquiry-section section" id="enquiry">
@@ -454,7 +412,7 @@
     </div>
   </section>
 
-
+  <!-- NEWSLETTER SIGNUP -->
   <section class="section" style="background:var(--clr-midnight); color:white; text-align:center; padding: 4rem 1rem;">
     <div class="container" style="max-width: 500px;">
       <h2 style="font-family:var(--font-serif);font-size:2rem;margin-bottom:1rem;color:var(--clr-gold-light)">Stay Updated</h2>
@@ -468,6 +426,7 @@
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
       <div class="footer-bottom" style="padding-top:0">
@@ -476,11 +435,17 @@
       </div>
     </div>
   </footer>
+
+  <!-- STICKY BAR -->
   <div class="sticky-enquiry">
     <button class="sticky-btn sticky-btn-primary" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">💬 Enquire</button>
     <a href="tel:+441443835196" class="sticky-btn sticky-btn-phone glan-phone-link" id="glan-sticky-phone">📞 Call</a>
   </div>
+
+  <!-- TOAST -->
   <div class="toast" id="toast"><span class="toast-icon">✅</span><div><div class="toast-title">Enquiry Sent!</div><div class="toast-msg">Thank you — we'll be in touch within 24 hours.</div></div></div>
+
+  <!-- SCRIPTS -->
   <script src="../assets/js/runtime-config.js"></script>
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/main.js"></script>
@@ -518,8 +483,8 @@
       var disp = g.phoneDisplay || GLAN_FALLBACK.phoneDisplay;
       var tel = g.phoneTel || GLAN_FALLBACK.phoneTel;
       var href = telUk(tel);
-      document.querySelectorAll('.glan-phone-text').forEach(el => el.textContent = disp);
-      document.querySelectorAll('.glan-phone-link').forEach(el => {
+      document.querySelectorAll('.glan-phone-text').forEach(function(el) { el.textContent = disp; });
+      document.querySelectorAll('.glan-phone-link').forEach(function(el) {
         if (el.tagName === 'A') el.href = href;
         if (el.id === 'glan-availability-phone') el.textContent = '📞 ' + disp;
       });
@@ -550,7 +515,7 @@
         li.className = 'glan-feed-item';
         var src = feedAssetPath(it.imageUrl);
         var imgPart = src ? '<img class="glan-feed-thumb" src="' + escapeHtml(src) + '" alt="">' : '';
-        var inner = '<div class="glan-feed-item-inner">' + imgPart + '<div class="glan-feed-body"><span class="glan-feed-date">' + fmtDate(it.date) + '</span><h4>' + escapeHtml(it.title) + '</h4><p>' + escapeHtml(it.excerpt || '') + '</p></div></div>';
+        var inner = '<div class="glan-feed-item-inner">' + imgPart + '<div class="glan-feed-body"><span class="glan-feed-date">' + fmtDate(it.date) + '</span><h4><a style="text-decoration:none;color:inherit" href="../news.html?id=' + encodeURIComponent(it.id) + '">' + escapeHtml(it.title) + '</a></h4><p>' + escapeHtml(it.excerpt || '') + '</p></div></div>';
         li.innerHTML = inner;
         ul.appendChild(li);
       });
@@ -602,7 +567,65 @@
       }
       
       // Initialize Lightbox for this gallery
-      if (window.initGalleryLightbox) window.initGalleryLightbox('glan-gallery-grid');
+      
+      // JS dynamic injections generated by tool
+      if (g.keyInfo && g.keyInfo.length) {
+        var kEl = document.getElementById('dyn-key-info');
+        if(kEl) kEl.innerHTML = g.keyInfo.map(function(k) {
+          return '<div class="home-fact"><span class="home-fact-label">' + escapeHtml(k.label) + '</span><span class="home-fact-value">' + escapeHtml(k.value) + '</span></div>';
+        }).join('');
+      }
+      
+      if (g.managerProfile) {
+        var mname = document.getElementById('dyn-mgr-name'); if(mname) mname.textContent = g.managerProfile.name || 'Manager';
+        var mtitle = document.getElementById('dyn-mgr-title'); if(mtitle) mtitle.textContent = g.managerProfile.title || 'Home Manager';
+        var mbio = document.getElementById('dyn-mgr-bio'); if(mbio) mbio.textContent = g.managerProfile.bio || '';
+        var mimg = document.getElementById('dyn-mgr-img'); if(mimg && g.managerProfile.photoUrl && g.managerProfile.photoUrl !== '') {
+            mimg.src = feedAssetPath(g.managerProfile.photoUrl);
+        }
+      }
+
+      var cIntro = document.getElementById('dyn-care-intro'); if(cIntro) cIntro.textContent = g.careIntro || '';
+      if (g.careProvided && g.careProvided.length) {
+        var cEl = document.getElementById('dyn-care-container');
+        if(cEl) cEl.innerHTML = '<div><h3 style="font-family:var(--font-serif);font-size:1.25rem;color:var(--clr-midnight);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem">🩺 Care Provided</h3><div class="services-list-grid" style="grid-template-columns:1fr;gap:0.75rem">' + g.careProvided.map(function(c) {
+          return '<div class="service-list-item">' + escapeHtml(c) + '</div>';
+        }).join('') + '</div></div>';
+      }
+
+      if (g.facilities && g.facilities.length) {
+        var fEl = document.getElementById('dyn-facilities-container');
+        if(fEl) fEl.innerHTML = g.facilities.map(function(f) {
+           return '<div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:var(--clr-cream);border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.05);font-size:0.9rem">🔹 ' + escapeHtml(f) + '</div>';
+        }).join('');
+      }
+
+      if (g.awardsList && g.awardsList.length) {
+        var aEl = document.getElementById('dyn-awards-container');
+        if(aEl) aEl.innerHTML = g.awardsList.map(function(a) {
+           return '<div style="background:#fff;border-radius:var(--radius-lg);padding:1.5rem;text-align:center;border:1px solid rgba(201,168,76,0.3);box-shadow:var(--shadow-sm);position:relative;overflow:hidden"><div style="position:absolute;top:0;left:0;width:100%;height:4px;background:var(--clr-gold)"></div><div style="font-size:2rem;margin-bottom:0.75rem">🏆</div><h3 style="font-family:var(--font-serif);color:var(--clr-midnight);margin-bottom:0.35rem;font-size:1.05rem">' + escapeHtml(a.title) + '</h3><p style="font-size:0.8rem;color:var(--clr-text-light);margin-bottom:0">' + escapeHtml(a.description || '') + '</p></div>';
+        }).join('');
+      }
+
+      if (g.ciwThemes && g.ciwThemes.length) {
+        var ciwEl = document.getElementById('dyn-ciw-themes');
+        if(ciwEl) ciwEl.innerHTML = g.ciwThemes.map(function(c) {
+          return '<div style="display:flex;justify-content:space-between;padding:0.5rem;background:var(--clr-cream);border-radius:4px;font-size:0.8rem"><span style="font-weight:600">' + escapeHtml(c.theme) + '</span><span style="color:var(--clr-gold);font-weight:700">' + escapeHtml(c.rating) + '</span></div>';
+        }).join('');
+      }
+
+      var bBtn = document.getElementById('dyn-brochure-btn');
+      if(bBtn && g.brochureUrl) {
+         bBtn.href = g.brochureUrl;
+         bBtn.target = "_blank";
+      }
+
+      var tBtn = document.getElementById('dyn-tour-btn');
+      if(tBtn && g.virtualTourUrl) {
+         tBtn.href = g.virtualTourUrl;
+         tBtn.target = "_blank";
+      }
+if (window.initGalleryLightbox) window.initGalleryLightbox('glan-gallery-grid');
     }
     function run(g) {
       applyPhone(g);
@@ -619,21 +642,12 @@
         .then(function (d) {
           var g = d.homePages && d.homePages.glan;
           if (!g) { run(GLAN_FALLBACK); return; }
-          run({
-            phoneDisplay: g.phoneDisplay || GLAN_FALLBACK.phoneDisplay,
-            phoneTel: g.phoneTel || GLAN_FALLBACK.phoneTel,
-            ciwServiceUrl: g.ciwServiceUrl || GLAN_FALLBACK.ciwServiceUrl,
-            news: Array.isArray(g.news) ? g.news : GLAN_FALLBACK.news,
-            events: Array.isArray(g.events) ? g.events : GLAN_FALLBACK.events,
-            availabilityLine: g.availabilityLine,
-            mapEmbedHtml: g.mapEmbedHtml,
-            gallery: g.gallery,
-            team: g.team,
-            faqs: g.faqs,
-            ciwPdfUrl: g.ciwPdfUrl,
-            lastInspectionDate: g.lastInspectionDate,
-            awardsNote: g.awardsNote
-          });
+          // Merge API data with fallbacks for critical fields
+          var merged = Object.assign({}, GLAN_FALLBACK, g);
+          // Ensure news/events use fallback if API returns empty/missing lists
+          if (!merged.news || !merged.news.length) merged.news = GLAN_FALLBACK.news;
+          if (!merged.events || !merged.events.length) merged.events = GLAN_FALLBACK.events;
+          run(merged);
         })
         .catch(function () { run(GLAN_FALLBACK); });
     } else {
