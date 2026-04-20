@@ -210,9 +210,9 @@
 .home-detail-content {
   position: relative;
   z-index: 2;
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 max(2rem, 4vw);
   width: 100%;
 }
 
@@ -432,7 +432,7 @@ a.carehome-directory-cta-btn:hover {
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   scrollbar-width: thin;
-  padding: 0.35rem max(1.25rem, calc((100% - 1280px) / 2 + 1.25rem)) 1rem;
+  padding: 0.35rem max(2rem, 4vw) 1rem;
   -webkit-overflow-scrolling: touch;
 }
 .home-feed-track {
@@ -471,8 +471,8 @@ a.carehome-directory-cta-btn:hover {
   opacity: 0.35;
   cursor: default;
 }
-.home-feed-nav--prev { left: max(0.35rem, calc((100% - 1280px) / 2 + 0.35rem)); }
-.home-feed-nav--next { right: max(0.35rem, calc((100% - 1280px) / 2 + 0.35rem)); }
+.home-feed-nav--prev { left: calc(max(2rem, 4vw) - 1.25rem); }
+.home-feed-nav--next { right: calc(max(2rem, 4vw) - 1.25rem); }
 @media (max-width: 640px) {
   .home-feed-nav { display: none; }
 }

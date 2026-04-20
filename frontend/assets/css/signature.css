@@ -75,9 +75,9 @@
 .hero-sig-content {
   position: relative;
   z-index: 5;
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 10rem 2rem 10rem;
+  padding: 10rem max(2rem, 4vw) 10rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -682,7 +682,7 @@
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   scrollbar-width: thin;
-  padding: 0.35rem max(1.25rem, calc((100% - 1280px) / 2 + 1.25rem)) 1.25rem;
+  padding: 0.35rem max(2rem, 4vw) 1.25rem;
   -webkit-overflow-scrolling: touch;
 }
 .reduce-motion .testimonials-sig-scroll { scroll-behavior: auto; }
@@ -805,8 +805,8 @@
   opacity: 0.35;
   cursor: default;
 }
-.testi-sig-nav--prev { left: max(0.35rem, calc((100% - 1280px) / 2 + 0.35rem)); }
-.testi-sig-nav--next { right: max(0.35rem, calc((100% - 1280px) / 2 + 0.35rem)); }
+.testi-sig-nav--prev { left: calc(max(2rem, 4vw) - 1.25rem); }
+.testi-sig-nav--next { right: calc(max(2rem, 4vw) - 1.25rem); }
 @media (max-width: 640px) {
   .testi-sig-nav { display: none; }
 }
@@ -1113,9 +1113,9 @@
   grid-template-columns: 1fr 1fr;
   gap: 5rem;
   align-items: center;
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 5rem 2rem;
+  padding: 5rem max(2rem, 4vw);
   width: 100%;
 }
 .enquiry-sig-info { color: #fff; }
@@ -1303,9 +1303,9 @@
 }
 .footer-hills svg { display: block; width: 100%; }
 .footer-sig-inner {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 2rem 2rem;
+  padding: 0 max(2rem, 4vw) 2rem;
 }
 .footer-sig-grid {
   display: grid;

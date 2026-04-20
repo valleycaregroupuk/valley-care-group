@@ -98,9 +98,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .navbar.transparent { background: transparent; }
 .nav-container {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 max(2rem, 4vw);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -272,9 +272,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 8rem 2rem 4rem;
+  padding: 8rem max(2rem, 4vw) 4rem;
   width: 100%;
 }
 .hero-badge {
@@ -449,9 +449,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
    ============================================ */
 .section { padding: var(--space-2xl) 0; }
 .container {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 max(2rem, 4vw);
 }
 .section-eyebrow {
   display: inline-flex;
