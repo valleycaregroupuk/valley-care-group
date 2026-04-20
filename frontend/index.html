@@ -201,10 +201,10 @@
           <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--clr-midnight); margin-bottom: 0.5rem;">Find the nearest home to you</h3>
           <p style="color: var(--clr-text-mid); font-size: 0.95rem;">Enter your postcode or town to see which of our homes is closest.</p>
         </div>
-        <div class="locator-search-bar" style="display: flex; gap: 0.5rem; background: #fff; padding: 0.5rem; border-radius: var(--radius-full); box-shadow: 0 8px 24px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.04);">
-          <div class="locator-icon" style="display: flex; align-items: center; justify-content: center; padding-left: 1.25rem; font-size: 1.2rem;">📍</div>
-          <input type="text" id="locator-input" class="locator-input" placeholder="e.g. CF42, Blackwood, or Pyle..." style="flex: 1; border: none; outline: none; background: transparent; font-family: var(--font-sans); font-size: 1rem; color: var(--clr-midnight); padding: 0.5rem;">
-          <button id="locator-btn" class="btn btn-gold mag-btn" style="border-radius: var(--radius-full); padding: 0.75rem 1.75rem;">Search</button>
+        <div class="locator-search-bar">
+          <div class="locator-icon">📍</div>
+          <input type="text" id="locator-input" class="locator-input" placeholder="e.g. CF42, Blackwood, or Pyle...">
+          <button id="locator-btn" class="btn btn-gold mag-btn locator-btn">Search</button>
         </div>
         <div id="locator-error" class="locator-error" style="display: none; text-align: center; color: #E74C3C; margin-top: 1rem; font-size: 0.9rem; font-weight: 500;"></div>
         <div id="locator-results" class="locator-results" style="display: none; flex-direction: column; gap: 1rem; margin-top: 2rem;">

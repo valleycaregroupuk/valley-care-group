@@ -244,9 +244,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(13, 27, 42, 0.88) 0%,
-    rgba(27, 79, 114, 0.65) 50%,
-    rgba(13, 27, 42, 0.5) 100%
+    rgba(13, 27, 42, 0.95) 0%,
+    rgba(27, 79, 114, 0.8) 50%,
+    rgba(13, 27, 42, 0.7) 100%
   );
 }
 .hero-particles {
@@ -1563,7 +1563,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 768px) {
-  .nav-links, .nav-cta-btn { display: none; }
+  .nav-links, .nav-cta-btn { display: none !important; }
   .hamburger { display: flex; }
   .mobile-nav { display: flex; }
   /* Keep compact legal-page nav links accessible when no hamburger menu is present. */
