@@ -19,6 +19,13 @@
       }
     ],
     "rewrites": [
+      {
+        "source": "/api/**",
+        "run": {
+          "serviceId": "backend",
+          "region": "europe-west2"
+        }
+      },
       { "source": "/homes/:page", "destination": "/homes/:page.html" }
     ]
   }
