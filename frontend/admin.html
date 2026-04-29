@@ -600,7 +600,12 @@
             <div class="page-header-title">Gallery Manager</div>
             <div class="page-header-sub">Manage images displayed in the Gallery section of each home.</div>
           </div>
-          <button class="btn btn-primary" onclick="openGalleryDrawer(null)">+ Add Image</button>
+          <div style="display:flex;gap:0.5rem">
+            <button class="btn btn-primary" onclick="openGalleryDrawer(null)">+ Add Image</button>
+            <label class="btn btn-ghost" style="cursor:pointer">
+              📤 Bulk Upload <input type="file" multiple accept="image/*" style="display:none" onchange="bulkUploadGallery(this)">
+            </label>
+          </div>
         </div>
         <div class="table-card" style="padding:1.25rem 1.5rem;margin-bottom:1.25rem;max-width:420px">
           <label class="field-label" for="gal-home">Home</label>
@@ -1319,7 +1324,7 @@
         <div style="display:flex;gap:0.5rem">
           <input class="field-input" type="text" id="gal-url" required placeholder="assets/images/gallery/room1.jpg">
           <label class="btn btn-ghost" style="cursor:pointer;white-space:nowrap;padding:0.75rem 1rem;">
-            ↑ Upload <input type="file" style="display:none" accept="image/*,video/*" onchange="uploadAdminMedia(this, 'gal-url')">
+            ↑ Upload <input type="file" multiple id="gallery-file-input" style="display:none" accept="image/*,video/*" onchange="uploadGalleryMedia(this)">
           </label>
         </div>
       </div>
@@ -3003,6 +3008,61 @@ async function uploadAdminMedia(fileInput, targetInputId) {
     target.disabled = false;
     fileInput.value = ''; // Reset input
   }
+}
+
+async function bulkUploadGallery(fileInput) {
+  if (!fileInput.files.length) return;
+  const files = Array.from(fileInput.files);
+  showToast(`Uploading ${files.length} images...`);
+  
+  const list = [...(cData.homePages[currentGalleryHome].gallery || [])];
+  let successCount = 0;
+
+  for (const file of files) {
+    const formData = new FormData();
+    formData.append('file', file);
+    try {
+      const res = await fetch(API + '/api/admin/upload', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + getToken() },
+        body: formData
+      });
+      const data = await res.json();
+      if (res.ok) {
+        list.push({ url: data.url, alt: '' });
+        successCount++;
+      }
+    } catch (err) {
+      console.error('Bulk upload error:', err);
+    }
+  }
+
+  if (successCount > 0) {
+    try {
+      const res = await api('PUT', `/api/admin/home/${currentGalleryHome}/gallery`, list);
+      cData.homePages[currentGalleryHome].gallery = res.list;
+      renderGalleryRows();
+      showToast(`✅ ${successCount} images uploaded and added to gallery`);
+    } catch (ex) {
+      showToast('Failed to update gallery list: ' + ex.message, true);
+    }
+  } else {
+    showToast('Upload failed for all selected images', true);
+  }
+  fileInput.value = '';
+}
+
+async function uploadGalleryMedia(fileInput) {
+  if (!fileInput.files.length) return;
+  const files = Array.from(fileInput.files);
+  
+  if (files.length === 1) {
+    return uploadAdminMedia(fileInput, 'gal-url');
+  }
+  
+  // Multiple files selected in the drawer
+  await bulkUploadGallery(fileInput);
+  closeGalleryDrawer();
 }
 
 // ── Site Settings ─────────────────────────────────────────────────────────────
