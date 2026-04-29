@@ -3209,8 +3209,8 @@ function renderHfTables() {
         <td>${hasImg}</td>
         <td>${hp}</td>
         <td><div class="action-btns">
-          <button type="button" class="btn btn-ghost btn-sm" onclick="openHfDrawer(${JSON.stringify(type)}, ${JSON.stringify(item.id)})">✏️ Edit</button>
-          <button type="button" class="btn btn-danger btn-sm" onclick="deleteHfItem(${JSON.stringify(type)}, ${JSON.stringify(item.id)})">🗑️</button>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="openHfDrawer('${type}', '${item.id}')">✏️ Edit</button>
+          <button type="button" class="btn btn-danger btn-sm" onclick="deleteHfItem('${type}', '${item.id}')">🗑️</button>
         </div></td>
       </tr>`;
     }).join('');

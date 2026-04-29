@@ -249,7 +249,7 @@
         <div class="job-footer">
           <span class="job-posted">📅 Posted: ${fmtPosted(job.posted)}</span>
           <button class="btn btn-primary btn-sm"
-                  onclick="openJobApply(${JSON.stringify(job.id)}, ${JSON.stringify(esc(job.title))}, ${JSON.stringify(esc(job.homeLabel||job.home))})"
+                  onclick="openJobApply('${job.id}', '${esc(job.title).replace(/'/g, "\\'")}', '${esc(job.homeLabel||job.home).replace(/'/g, "\\'")}')"
           >${esc(job.btnLabel || 'Apply Now')}</button>
         </div>
       </div>
