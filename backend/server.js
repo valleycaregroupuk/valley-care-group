@@ -2008,13 +2008,16 @@ app.use((req, res) => {
 // ---------------------------------------------------------------------------
 app.use((err, req, res, _next) => {
   if (err && err.code === 'LIMIT_FILE_SIZE') {
-    return res.status(400).json({ error: 'File too large (maximum 2MB).' });
+    return res.status(400).json({ error: 'File too large. Limits: CVs 5MB, Newsletters 5MB, Media 50MB.' });
   }
   if (process.env.SENTRY_DSN) {
     try { require('@sentry/node').captureException(err); } catch (_) { /* optional dep */ }
   }
-  console.error('Unhandled error:', err.message);
-  res.status(500).json({ error: 'An unexpected error occurred.' });
+  console.error('Unhandled error:', err);
+  res.status(err.status || 500).json({ 
+    error: err.message || 'An unexpected error occurred.',
+    details: IS_PROD ? undefined : err.stack
+  });
 });
 
 // ---------------------------------------------------------------------------

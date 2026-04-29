@@ -457,15 +457,8 @@
       phoneDisplay: '01443 835196',
       phoneTel: '01443835196',
       ciwServiceUrl: 'https://digital.careinspectorate.wales/directory/service/SIN-00009997-VPXP',
-      news: [
-        { id: 'glan-n1', date: '2025-03-01', title: 'Top 20 Wales — carehome.co.uk 2025', excerpt: 'We are proud to be named among the Top 20 Care Homes in Wales, based on verified reviews from residents and families.', imageUrl: 'assets/images/hero_bg.png' },
-        { id: 'glan-n2', date: '2025-02-10', title: 'Spring activities programme launched', excerpt: 'Our activities team has published a fresh programme of music, outings, and wellbeing sessions for the season ahead.', imageUrl: 'assets/images/interior.png' },
-        { id: 'glan-n3', date: '2025-01-20', title: 'Families welcome — visiting times', excerpt: 'We continue to welcome families at any time. Please ring ahead if you would like to join us for lunch or a garden walk.', imageUrl: '' }
-      ],
-      events: [
-        { id: 'glan-e1', date: '2025-04-18', title: 'Easter celebration afternoon', excerpt: 'Residents and guests are invited to an afternoon of music, tea, and seasonal treats in our main lounge.', imageUrl: 'assets/images/caregiver.png' },
-        { id: 'glan-e2', date: '2025-05-12', title: 'Open afternoon for prospective families', excerpt: 'Meet the team, tour the home, and ask questions in an informal setting. Please call to reserve a place.', imageUrl: '' }
-      ]
+      news: [],
+      events: []
     };
     function telUk(d) {
       if (!d) return '#';
@@ -492,20 +485,20 @@
       if (st) st.setAttribute('href', href);
     }
     function applyCiw(g) {
-      var url = (g && g.ciwServiceUrl) || GLAN_FALLBACK.ciwServiceUrl;
-      var a = document.getElementById('glan-ciw-link');
-      if (a && url) a.setAttribute('href', url);
-
+      var ciw = document.getElementById('glan-ciw-link');
       var reportUrl = g && g.ciwReportUrl;
       var pdfBtn = document.getElementById('glan-ciw-pdf');
-      if (pdfBtn) {
+
+      if (ciw) {
         if (reportUrl) {
-          pdfBtn.setAttribute('href', reportUrl);
-          pdfBtn.style.display = 'inline-block';
+          ciw.setAttribute('href', reportUrl);
+          ciw.innerHTML = 'View CIW Inspection Report →';
         } else {
-          pdfBtn.style.display = 'none';
+          ciw.setAttribute('href', (g && g.ciwServiceUrl) || GLAN_FALLBACK.ciwServiceUrl);
+          ciw.innerHTML = 'CIW · Glan-yr-Afon service & reports →';
         }
       }
+      if (pdfBtn) pdfBtn.style.display = 'none'; // Merged into main button
     }
     function feedAssetPath(url) {
       if (!url || !String(url).trim()) return '';
@@ -641,8 +634,18 @@ if (window.initGalleryLightbox) window.initGalleryLightbox('glan-gallery-grid');
     function run(g) {
       applyPhone(g);
       applyCiw(g);
-      renderFeed('glan-news-list', g.news || []);
-      renderFeed('glan-events-list', g.events || []);
+      var newsItems = g.news || [];
+      var eventItems = g.events || [];
+      var newsSec = document.getElementById('news');
+      if (newsSec) {
+        if (newsItems.length === 0 && eventItems.length === 0) {
+          newsSec.style.display = 'none';
+        } else {
+          newsSec.style.display = 'block';
+          renderFeed('glan-news-list', newsItems);
+          renderFeed('glan-events-list', eventItems);
+        }
+      }
       applyExtras(g);
     }
     var base = (window.API_BASE || '').replace(/\/$/, '');
@@ -655,9 +658,9 @@ if (window.initGalleryLightbox) window.initGalleryLightbox('glan-gallery-grid');
           if (!g) { run(GLAN_FALLBACK); return; }
           // Merge API data with fallbacks for critical fields
           var merged = Object.assign({}, GLAN_FALLBACK, g);
-          // Ensure news/events use fallback if API returns empty/missing lists
-          if (!merged.news || !merged.news.length) merged.news = GLAN_FALLBACK.news;
-          if (!merged.events || !merged.events.length) merged.events = GLAN_FALLBACK.events;
+          // Only use fallbacks if the fields are missing entirely from the API response
+          if (g.news === undefined) merged.news = GLAN_FALLBACK.news;
+          if (g.events === undefined) merged.events = GLAN_FALLBACK.events;
           run(merged);
         })
         .catch(function () { run(GLAN_FALLBACK); });

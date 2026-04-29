@@ -440,13 +440,8 @@
       phoneDisplay: '01633 680217',
       phoneTel: '01633680217',
       ciwServiceUrl: 'https://digital.careinspectorate.wales/',
-      news: [
-        { id: 'llys-n1', date: '2025-03-05', title: 'Top 20 Care Homes Wales 2024', excerpt: 'Llys Gwyn is honoured to appear among Wales\'s most recommended homes on carehome.co.uk.', imageUrl: 'assets/images/interior.png' },
-        { id: 'llys-n2', date: '2025-02-14', title: 'Philosophy: care with passion', excerpt: 'Personalised support, freshly cooked meals, and a full activities programme in a homely environment.', imageUrl: 'assets/images/caregiver.png' }
-      ],
-      events: [
-        { id: 'llys-e1', date: '2025-04-22', title: 'Spring coffee morning for families', excerpt: 'Join us for tea, cake, and a relaxed chat with our team — RSVP appreciated.', imageUrl: '' }
-      ]
+      news: [],
+      events: []
     };
     function telUk(d) {
       if (!d) return '#';
@@ -485,20 +480,20 @@
       if (et) et.textContent = disp;
     }
     function applyCiw(g) {
-      var url = (g && g.ciwServiceUrl) || LLYS_FALLBACK.ciwServiceUrl;
-      var a = document.getElementById('llys-ciw-link');
-      if (a && url) a.setAttribute('href', url);
-
+      var ciw = document.getElementById('llys-ciw-link');
       var reportUrl = g && g.ciwReportUrl;
       var pdfBtn = document.getElementById('llys-ciw-pdf');
-      if (pdfBtn) {
+
+      if (ciw) {
         if (reportUrl) {
-          pdfBtn.setAttribute('href', reportUrl);
-          pdfBtn.style.display = 'inline-block';
+          ciw.setAttribute('href', reportUrl);
+          ciw.innerHTML = 'View CIW Inspection Report →';
         } else {
-          pdfBtn.style.display = 'none';
+          ciw.setAttribute('href', (g && g.ciwServiceUrl) || LLYS_FALLBACK.ciwServiceUrl);
+          ciw.innerHTML = 'CIW digital directory →';
         }
       }
+      if (pdfBtn) pdfBtn.style.display = 'none'; // Merged into main button
     }
     function renderFeed(ulId, items) {
       var ul = document.getElementById(ulId);
@@ -621,8 +616,18 @@ if (window.initGalleryLightbox) window.initGalleryLightbox('llys-gallery-grid');
     function run(g) {
       applyPhone(g);
       applyCiw(g);
-      renderFeed('llys-news-list', g.news || []);
-      renderFeed('llys-events-list', g.events || []);
+      var newsItems = g.news || [];
+      var eventItems = g.events || [];
+      var newsSec = document.getElementById('news');
+      if (newsSec) {
+        if (newsItems.length === 0 && eventItems.length === 0) {
+          newsSec.style.display = 'none';
+        } else {
+          newsSec.style.display = 'block';
+          renderFeed('llys-news-list', newsItems);
+          renderFeed('llys-events-list', eventItems);
+        }
+      }
       applyExtras(g);
     }
     var base = (window.API_BASE || '').replace(/\/$/, '');
@@ -634,8 +639,9 @@ if (window.initGalleryLightbox) window.initGalleryLightbox('llys-gallery-grid');
           var g = d.homePages && d.homePages.llys;
           if (!g) { run(LLYS_FALLBACK); return; }
           var merged = Object.assign({}, LLYS_FALLBACK, g);
-          if (!merged.news || !merged.news.length) merged.news = LLYS_FALLBACK.news;
-          if (!merged.events || !merged.events.length) merged.events = LLYS_FALLBACK.events;
+          // Only use fallbacks if the fields are missing entirely from the API response
+          if (g.news === undefined) merged.news = LLYS_FALLBACK.news;
+          if (g.events === undefined) merged.events = LLYS_FALLBACK.events;
           run(merged);
         })
         .catch(function () { run(LLYS_FALLBACK); });

@@ -448,12 +448,8 @@
       ciwServiceUrl: 'https://digital.careinspectorate.wales/',
       phoneDisplay: '',
       phoneTel: '',
-      news: [
-        { id: 'pent-n1', date: '2025-04-01', title: 'Welcome to our updated Ty Pentwyn page', excerpt: 'Accurate service details from our verified directory listing — contact us for vacancies and visits.', imageUrl: 'assets/images/caregiver.png' }
-      ],
-      events: [
-        { id: 'pent-e1', date: '2025-05-08', title: 'Open door for families', excerpt: 'We welcome enquiries and visits — please email the home or use our carehome.co.uk profile to get in touch.', imageUrl: '' }
-      ]
+      news: [],
+      events: []
     };
     function mailto(m) { return 'mailto:' + (m || '').replace(/^mailto:/i, ''); }
     function fmtDate(iso) {
@@ -483,18 +479,19 @@
         if (el) el.setAttribute('href', listUrl);
       });
       var ciw = document.getElementById('pentwyn-ciw-link');
-      if (ciw) ciw.setAttribute('href', g.ciwServiceUrl || PENT_FALLBACK.ciwServiceUrl);
-
       var reportUrl = g && g.ciwReportUrl;
       var pdfBtn = document.getElementById('pentwyn-ciw-pdf');
-      if (pdfBtn) {
+
+      if (ciw) {
         if (reportUrl) {
-          pdfBtn.setAttribute('href', reportUrl);
-          pdfBtn.style.display = 'inline-block';
+          ciw.setAttribute('href', reportUrl);
+          ciw.innerHTML = 'View CIW Inspection Report →';
         } else {
-          pdfBtn.style.display = 'none';
+          ciw.setAttribute('href', g.ciwServiceUrl || PENT_FALLBACK.ciwServiceUrl);
+          ciw.innerHTML = 'CIW digital directory →';
         }
       }
+      if (pdfBtn) pdfBtn.style.display = 'none'; // Merged into main button
     }
     function renderFeed(ulId, items) {
       var ul = document.getElementById(ulId);
@@ -616,8 +613,18 @@ if (window.initGalleryLightbox) window.initGalleryLightbox('pentwyn-gallery-grid
     }
     function run(g) {
       applyLinks(g);
-      renderFeed('pentwyn-news-list', g.news || []);
-      renderFeed('pentwyn-events-list', g.events || []);
+      var newsItems = g.news || [];
+      var eventItems = g.events || [];
+      var newsSec = document.getElementById('news');
+      if (newsSec) {
+        if (newsItems.length === 0 && eventItems.length === 0) {
+          newsSec.style.display = 'none';
+        } else {
+          newsSec.style.display = 'block';
+          renderFeed('pentwyn-news-list', newsItems);
+          renderFeed('pentwyn-events-list', eventItems);
+        }
+      }
       applyExtras(g);
     }
     var base = (window.API_BASE || '').replace(/\/$/, '');
@@ -629,8 +636,9 @@ if (window.initGalleryLightbox) window.initGalleryLightbox('pentwyn-gallery-grid
           var p = d.homePages && d.homePages.pentwyn;
           if (!p) { run(PENT_FALLBACK); return; }
           var merged = Object.assign({}, PENT_FALLBACK, p);
-          if (!merged.news || !merged.news.length) merged.news = PENT_FALLBACK.news;
-          if (!merged.events || !merged.events.length) merged.events = PENT_FALLBACK.events;
+          // Only use fallbacks if the fields are missing entirely from the API response
+          if (p.news === undefined) merged.news = PENT_FALLBACK.news;
+          if (p.events === undefined) merged.events = PENT_FALLBACK.events;
           run(merged);
         })
         .catch(function () { run(PENT_FALLBACK); });
