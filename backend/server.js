@@ -343,13 +343,15 @@ const uploadNewsletterAssets = uploadCv.fields([
 
 const uploadMedia = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 50 * 1024 * 1024 }, // Allowed up to 50MB for videos/images
+  limits: { fileSize: 50 * 1024 * 1024 }, // Allowed up to 50MB for videos/images/docs
   fileFilter: (_req, file, cb) => {
-    const okMime = /^image\/(jpeg|png|webp|gif|svg\+xml)$/i.test(file.mimetype) || /^video\/(mp4|webm|ogg)$/i.test(file.mimetype);
+    const okMime = /^image\/(jpeg|png|webp|gif|svg\+xml)$/i.test(file.mimetype) || 
+                   /^video\/(mp4|webm|ogg)$/i.test(file.mimetype) ||
+                   file.mimetype === 'application/pdf';
     const ext = (file.originalname || '').toLowerCase();
-    const okExt = /\.(jpg|jpeg|png|webp|gif|svg|mp4|webm|ogg)$/i.test(ext);
+    const okExt = /\.(jpg|jpeg|png|webp|gif|svg|mp4|webm|ogg|pdf)$/i.test(ext);
     if (okMime && okExt) cb(null, true);
-    else cb(new Error('File type not supported. Allowed: JPG, PNG, WebP, GIF, SVG, MP4, WebM, OGG.'));
+    else cb(new Error('File type not supported. Allowed: JPG, PNG, WebP, GIF, SVG, MP4, WebM, OGG, PDF.'));
   },
 });
 
