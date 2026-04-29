@@ -200,6 +200,7 @@
             <p class="body-text" style="font-size:0.82rem;margin-top:0;margin-bottom:0.75rem">Care Inspectorate Wales registers and inspects social care services in Wales. Inspection reports and service information are published on the CIW digital directory.</p>
             <div id="dyn-ciw-themes" style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem"></div>
             <a href="https://digital.careinspectorate.wales/" class="btn btn-primary" id="pentwyn-ciw-link" style="display:inline-block;padding:0.55rem 1.25rem;font-size:0.85rem;border-radius:var(--radius-full)" target="_blank" rel="noopener noreferrer">CIW digital directory →</a>
+            <a href="#" class="btn btn-outline" id="pentwyn-ciw-pdf" style="display:none;margin-top:0.75rem;padding:0.5rem 1rem;font-size:0.85rem;border-radius:var(--radius-full)" target="_blank" rel="noopener noreferrer">📄 Download CIW Report (PDF) →</a>
           </div>
 
           <div class="home-facts" style="margin-top:2rem">
@@ -483,6 +484,17 @@
       });
       var ciw = document.getElementById('pentwyn-ciw-link');
       if (ciw) ciw.setAttribute('href', g.ciwServiceUrl || PENT_FALLBACK.ciwServiceUrl);
+
+      var reportUrl = g && g.ciwReportUrl;
+      var pdfBtn = document.getElementById('pentwyn-ciw-pdf');
+      if (pdfBtn) {
+        if (reportUrl) {
+          pdfBtn.setAttribute('href', reportUrl);
+          pdfBtn.style.display = 'inline-block';
+        } else {
+          pdfBtn.style.display = 'none';
+        }
+      }
     }
     function renderFeed(ulId, items) {
       var ul = document.getElementById(ulId);

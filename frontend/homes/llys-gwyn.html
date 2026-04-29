@@ -206,6 +206,7 @@
               <div class="home-fact"><span class="home-fact-label">Leadership &amp; Management</span><span class="home-fact-value" style="color:#117A65">Excellent</span></div>
             </div>
             <a href="https://digital.careinspectorate.wales/" class="btn btn-primary" id="llys-ciw-link" style="display:inline-block;padding:0.55rem 1.25rem;font-size:0.85rem;border-radius:var(--radius-full)" target="_blank" rel="noopener noreferrer">CIW digital directory →</a>
+            <a href="#" class="btn btn-outline" id="llys-ciw-pdf" style="display:none;margin-top:0.75rem;padding:0.5rem 1rem;font-size:0.85rem;border-radius:var(--radius-full)" target="_blank" rel="noopener noreferrer">📄 Download CIW Report (PDF) →</a>
           </div>
 
           <div class="home-facts" style="margin-top:2rem">
@@ -487,6 +488,17 @@
       var url = (g && g.ciwServiceUrl) || LLYS_FALLBACK.ciwServiceUrl;
       var a = document.getElementById('llys-ciw-link');
       if (a && url) a.setAttribute('href', url);
+
+      var reportUrl = g && g.ciwReportUrl;
+      var pdfBtn = document.getElementById('llys-ciw-pdf');
+      if (pdfBtn) {
+        if (reportUrl) {
+          pdfBtn.setAttribute('href', reportUrl);
+          pdfBtn.style.display = 'inline-block';
+        } else {
+          pdfBtn.style.display = 'none';
+        }
+      }
     }
     function renderFeed(ulId, items) {
       var ul = document.getElementById(ulId);
