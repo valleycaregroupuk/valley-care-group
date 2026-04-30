@@ -8,6 +8,8 @@ def bust_cache():
             content = f.read()
             
         new_content = content.replace('pages.css"', 'pages.css?v=2"')
+        new_content = new_content.replace('signature.css"', 'signature.css?v=2"')
+        new_content = new_content.replace('style.css"', 'style.css?v=2"')
         
         if content != new_content:
             with open(path, 'w', encoding='utf-8') as f:
