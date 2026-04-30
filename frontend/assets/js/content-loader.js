@@ -24,7 +24,12 @@
   document.querySelectorAll('[data-edit-key]').forEach(el => {
     const key = el.getAttribute('data-edit-key');
     if (liveData[key] !== undefined && liveData[key] !== '') {
-      el.innerHTML = liveData[key];
+      const val = liveData[key];
+      el.innerHTML = val;
+      // If it's a counter, update the target too
+      if (el.hasAttribute('data-target') && !isNaN(parseFloat(val))) {
+        el.setAttribute('data-target', val);
+      }
     }
   });
 })();

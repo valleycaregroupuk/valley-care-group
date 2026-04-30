@@ -262,6 +262,7 @@ function sanitiseHomePageExtras(hp) {
       role: sanitise(m.role).slice(0, 120),
       bio: sanitise(m.bio).slice(0, 1500),
       photoUrl: sanitise(m.photoUrl).slice(0, 500),
+      showOnAboutUs: !!m.showOnAboutUs,
     })).filter((m) => m.name);
   }
   if (Array.isArray(out.faqs)) {

@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ---- Counter observer ----
   let countersTriggered = false;
-  const counterSection = document.querySelector('.hero-stats');
+  const counterSection = document.querySelector('.hero-stats, .stats-section');
   if (counterSection) {
     const counterObs = new IntersectionObserver(entries => {
       entries.forEach(entry => {

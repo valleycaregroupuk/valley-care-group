@@ -1383,6 +1383,13 @@
           </label>
         </div>
       </div>
+      <div class="field-group" style="margin-top:0.5rem">
+        <label style="display:flex;align-items:center;gap:0.6rem;font-size:0.875rem;color:var(--text-mid);cursor:pointer">
+          <input type="checkbox" id="tm-about" style="width:18px;height:18px"> 
+          <strong>Show on "About Us" Page</strong>
+        </label>
+        <div class="field-help">If ticked, this person will appear in the "Leadership" section of the About Us page.</div>
+      </div>
       <div class="drawer-footer">
         <button type="button" class="btn btn-ghost" onclick="closeTeamDrawer()">Cancel</button>
         <button type="submit" class="btn btn-primary" id="team-save-btn">💾 Save Member</button>
@@ -2350,6 +2357,7 @@ function renderTeamRows() {
           <button class="btn btn-danger btn-sm" onclick="deleteTeamItem(${idx})">🗑️</button>
         </div>
       </td>
+      <td>${m.showOnAboutUs ? '<span class="badge badge-active">About Us</span>' : ''}</td>
     </tr>
   `).join('');
   empty.style.display = list.length ? 'none' : 'block';
@@ -2365,6 +2373,7 @@ function openTeamDrawer(idx) {
     document.getElementById('tm-role').value = m.role;
     document.getElementById('tm-bio').value = m.bio || '';
     document.getElementById('tm-photo').value = m.photoUrl || '';
+    document.getElementById('tm-about').checked = !!m.showOnAboutUs;
   }
   document.getElementById('team-overlay').classList.add('open');
 }
@@ -2376,7 +2385,8 @@ async function saveTeamItem(e) {
     name: document.getElementById('tm-name').value.trim(),
     role: document.getElementById('tm-role').value.trim(),
     bio: document.getElementById('tm-bio').value.trim(),
-    photoUrl: document.getElementById('tm-photo').value.trim()
+    photoUrl: document.getElementById('tm-photo').value.trim(),
+    showOnAboutUs: document.getElementById('tm-about').checked
   };
   const list = [...(cData.homePages[currentTeamHome].team || [])];
   if (idx !== '') list[idx] = item; else list.push(item);

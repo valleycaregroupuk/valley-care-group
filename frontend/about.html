@@ -57,20 +57,20 @@
     <div class="container">
       <div class="about-stats-strip fade-up">
         <div class="about-stat">
-          <div class="about-stat-num"><span class="count-num" data-target="20">0</span>+</div>
-          <div class="about-stat-label">Years of Service</div>
+          <div class="about-stat-num"><span class="count-num" data-target="21" data-edit-key="homepage.stat1Value">21</span><span data-edit-key="homepage.stat1Suffix">+</span></div>
+          <div class="about-stat-label" data-edit-key="homepage.stat1Label">Years of Service</div>
         </div>
         <div class="about-stat">
-          <div class="about-stat-num"><span class="count-num" data-target="3">0</span></div>
-          <div class="about-stat-label">Care Homes</div>
+          <div class="about-stat-num"><span class="count-num" data-target="3" data-edit-key="homepage.stat2Value">3</span><span data-edit-key="homepage.stat2Suffix"></span></div>
+          <div class="about-stat-label" data-edit-key="homepage.stat2Label">Care Homes</div>
         </div>
         <div class="about-stat">
-          <div class="about-stat-num"><span class="count-num" data-target="120">0</span>+</div>
-          <div class="about-stat-label">Residents</div>
+          <div class="about-stat-num"><span class="count-num" data-target="105" data-edit-key="homepage.stat3Value">105</span><span data-edit-key="homepage.stat3Suffix"></span></div>
+          <div class="about-stat-label" data-edit-key="homepage.stat3Label">Registered Places</div>
         </div>
         <div class="about-stat">
-          <div class="about-stat-num"><span class="count-num" data-target="48">0</span>+</div>
-          <div class="about-stat-label">Dedicated Staff</div>
+          <div class="about-stat-num"><span class="count-num" data-target="64" data-edit-key="homepage.stat4Value">64</span><span data-edit-key="homepage.stat4Suffix">+</span></div>
+          <div class="about-stat-label" data-edit-key="homepage.stat4Label">Verified Reviews</div>
         </div>
       </div>
     </div>
@@ -160,40 +160,9 @@
         <p class="section-subtitle" style="margin:0 auto">Our leadership team brings together decades of clinical, operational, and care management expertise.</p>
       </div>
 
-      <div class="team-grid">
-
-        <div class="team-card fade-up fade-up-delay-1">
-          <div class="team-avatar team-avatar--blue">👩</div>
-          <div class="team-info">
-            <div class="team-name">Home Manager — Glan-yr-Afon</div>
-            <div class="team-role">Registered General Nurse · 15 years experience</div>
-          </div>
-        </div>
-
-        <div class="team-card fade-up fade-up-delay-2">
-          <div class="team-avatar team-avatar--teal">👨</div>
-          <div class="team-info">
-            <div class="team-name">Home Manager — Llys Gwyn</div>
-            <div class="team-role">Experienced Residential Care Manager · 12 years</div>
-          </div>
-        </div>
-
-        <div class="team-card fade-up fade-up-delay-3">
-          <div class="team-avatar team-avatar--purple">👩‍⚕️</div>
-          <div class="team-info">
-            <div class="team-name">Director of Nursing</div>
-            <div class="team-role">Clinical Lead · RGN · 20+ years in elderly care</div>
-          </div>
-        </div>
-
-        <div class="team-card fade-up fade-up-delay-4">
-          <div class="team-avatar team-avatar--gold">🧑‍💼</div>
-          <div class="team-info">
-            <div class="team-name">Operations Director</div>
-            <div class="team-role">Care Group Oversight · Quality Assurance Lead</div>
-          </div>
-        </div>
-
+      <div class="team-grid" id="about-team-grid">
+        <!-- Dynamic loading via script below -->
+        <div style="grid-column:1/-1;text-align:center;padding:3rem;opacity:0.5">Loading leadership team...</div>
       </div>
     </div>
   </section>
@@ -328,5 +297,69 @@
   <script src="assets/js/config.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/content-loader.js"></script>
+
+  <script>
+    /**
+     * Dynamic Leadership Team Loader for About Us page
+     * Fetches all homes' content and collects team members marked 'showOnAboutUs'
+     */
+    (async function initAboutTeam() {
+      const grid = document.getElementById('about-team-grid');
+      const base = (window.__API_BASE__ || window.API_BASE || '').replace(/\/$/, '');
+      
+      try {
+        const res = await fetch(base + '/api/content');
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        
+        const aboutTeam = [];
+        const homePages = data.homePages || {};
+        
+        // Collect members from all homes that have showOnAboutUs=true
+        Object.keys(homePages).forEach(slug => {
+          const hp = homePages[slug];
+          if (hp.team && Array.isArray(hp.team)) {
+            hp.team.forEach(m => {
+              if (m.showOnAboutUs) aboutTeam.push(m);
+            });
+          }
+        });
+
+        if (aboutTeam.length === 0) {
+          grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;opacity:0.6">Our leadership team information will be appearing here soon.</div>';
+          return;
+        }
+
+        const avatars = ['team-avatar--blue', 'team-avatar--teal', 'team-avatar--purple', 'team-avatar--gold'];
+        
+        grid.innerHTML = aboutTeam.map((m, i) => `
+          <div class="team-card fade-up" style="animation-delay: ${0.1 * i}s">
+            ${m.photoUrl 
+              ? `<img src="${m.photoUrl}" alt="${m.name}" class="team-avatar" style="object-fit:cover;border-radius:12px;margin-bottom:1.5rem">`
+              : `<div class="team-avatar ${avatars[i % avatars.length]}">${m.name[0]}</div>`
+            }
+            <div class="team-info">
+              <div class="team-name">${m.name}</div>
+              <div class="team-role">${m.role}</div>
+              ${m.bio ? `<div class="team-bio" style="font-size:0.8rem;margin-top:0.75rem;opacity:0.8;line-height:1.5">${m.bio}</div>` : ''}
+            </div>
+          </div>
+        `).join('');
+        
+        // Trigger animations for new cards
+        if (window.IntersectionObserver) {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+          }, { threshold: 0.1 });
+          grid.querySelectorAll('.team-card').forEach(card => observer.observe(card));
+        }
+
+      } catch (e) {
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;opacity:0.6">Please contact us for leadership team details.</div>';
+      }
+    })();
+  </script>
 </body>
 </html>
