@@ -1471,50 +1471,67 @@ a.carehome-directory-cta-btn:hover {
   }
 }
 
-/* ---- Locator Widget ---- */
+/* ---- Locator Results ---- */
 .locator-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
   background: white;
   border-radius: var(--radius-lg);
-  padding: 1.25rem 1.75rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+  padding: 1.5rem 2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
   border: 1px solid rgba(0,0,0,0.06);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.3s var(--ease-out);
   flex-wrap: wrap;
   gap: 1.5rem;
+  position: relative;
+  overflow: hidden;
 }
 .locator-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--clr-gold);
 }
 .locator-card--closest {
   border: 2px solid var(--clr-gold);
-  background: linear-gradient(to right, #fff, rgba(212, 175, 55, 0.05));
+  background: linear-gradient(to right, #fff, rgba(212, 175, 55, 0.03));
+}
+.locator-card--closest::after {
+  content: 'Closest';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--clr-gold);
+  color: var(--clr-midnight);
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
 }
 .locator-card-dist {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 80px;
-  border-right: 1px solid rgba(0,0,0,0.08);
-  padding-right: 1.5rem;
+  min-width: 90px;
+  border-right: 1px solid rgba(0,0,0,0.06);
+  padding-right: 2rem;
 }
 .locator-card-dist-num {
   font-family: var(--font-serif);
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   font-weight: 700;
   color: var(--clr-midnight);
   line-height: 1;
 }
 .locator-card-dist-unit {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   text-transform: uppercase;
   font-weight: 700;
-  color: var(--clr-text-light);
-  letter-spacing: 0.05em;
+  color: var(--clr-gold);
+  letter-spacing: 0.08em;
   margin-top: 0.25rem;
 }
 .locator-card-info {
@@ -1522,12 +1539,14 @@ a.carehome-directory-cta-btn:hover {
   min-width: 200px;
 }
 .locator-badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   padding: 0.25rem 0.75rem;
   background: rgba(39, 174, 96, 0.1);
   color: #27AE60;
   border-radius: var(--radius-full);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -1535,14 +1554,21 @@ a.carehome-directory-cta-btn:hover {
 }
 .locator-card-name {
   font-family: var(--font-serif);
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   color: var(--clr-midnight);
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 0.25rem;
 }
 .locator-card-loc {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--clr-text-mid);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.locator-card-loc::before {
+  content: '📍';
+  font-size: 0.9rem;
 }
 .locator-card-action {
   flex-shrink: 0;
