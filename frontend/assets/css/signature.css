@@ -814,6 +814,7 @@
   display: block;
   aspect-ratio: 4/5;
   object-fit: cover;
+  object-position: top;
 }
 
 .story-image-accent {
@@ -826,6 +827,7 @@
   border: 4px solid #fff;
   aspect-ratio: 4/3;
   object-fit: cover;
+  object-position: top;
 }
 
 .story-award-badge {
