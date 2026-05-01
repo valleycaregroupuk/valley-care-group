@@ -15,7 +15,12 @@
 
   var isLocal =
     typeof location !== 'undefined' &&
-    (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
+    (location.hostname === 'localhost' || 
+     location.hostname === '127.0.0.1' || 
+     location.hostname === '0.0.0.0' ||
+     location.hostname.startsWith('192.168.') ||
+     location.hostname.startsWith('10.') ||
+     location.hostname.endsWith('.local'));
 
   if (fromMeta) window.API_BASE = fromMeta;
   else if (fromRuntime) window.API_BASE = fromRuntime.replace(/\/$/, '');

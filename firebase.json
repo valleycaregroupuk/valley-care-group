@@ -2,6 +2,8 @@
   "hosting": {
     "public": "frontend",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "cleanUrls": true,
+    "trailingSlash": false,
     "headers": [
       {
         "source": "**",
@@ -19,6 +21,8 @@
       }
     ],
     "rewrites": [
+      { "source": "/admin", "destination": "/admin.html" },
+      { "source": "/login", "destination": "/admin.html" },
       { "source": "/homes/:page", "destination": "/homes/:page.html" }
     ]
   }
