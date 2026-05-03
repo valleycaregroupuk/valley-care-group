@@ -7,6 +7,16 @@
   <meta http-equiv="Permissions-Policy" content="geolocation=(self)">
   <title>Llys Gwyn Residential Home — Valley Care Group</title>
   <meta name="description" content="Llys Gwyn Residential Home, Pyle — 31 places, Grayson Enterprises Ltd. CIW ratings to Oct 2025, 9.7 on carehome.co.uk. Care with passion.">
+  <link rel="canonical" href="https://www.valleycaregroup.co.uk/homes/llys-gwyn">
+  <meta property="og:title" content="Llys Gwyn Residential Home — Valley Care Group">
+  <meta property="og:description" content="Warm, person-centred residential care in Pyle with activities, family visits, and a highly rated team at Llys Gwyn.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.valleycaregroup.co.uk/homes/llys-gwyn">
+  <meta property="og:image" content="https://www.valleycaregroup.co.uk/assets/images/homes/llys-main.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Llys Gwyn Residential Home — Valley Care Group">
+  <meta name="twitter:description" content="Warm, person-centred residential care in Pyle with activities, family visits, and a highly rated team at Llys Gwyn.">
+  <meta name="twitter:image" content="https://www.valleycaregroup.co.uk/assets/images/homes/llys-main.jpg">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏡</text></svg>">
   <link rel="stylesheet" href="../assets/css/style.css?v=2">
   <link rel="stylesheet" href="../assets/css/pages.css?v=3">
@@ -21,9 +31,10 @@
       "streetAddress": "Heol Broom, Maudlum",
       "addressLocality": "Pyle, Bridgend",
       "postalCode": "CF33 4PN",
-      "addressCountry": "UK"
+      "addressCountry": "GB"
     },
-    "telephone": "01633 680217"
+    "telephone": "01633 680217",
+    "url": "https://www.valleycaregroup.co.uk/homes/llys-gwyn"
   }
   </script>
 </head>
@@ -432,6 +443,7 @@
   <script src="../assets/js/runtime-config.js"></script>
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/home-page-shared.js"></script>
   <script src="../assets/js/content-loader.js"></script>
   <script src="../assets/js/carehome-ratings.js"></script>
   <script>
@@ -454,16 +466,13 @@
       catch (e) { return iso; }
     }
     function feedAssetPath(url) {
+      if (window.VCGHomePage) return window.VCGHomePage.feedAssetPath(url, '../');
       if (!url || !String(url).trim()) return '';
-      var u = String(url).trim();
-      if (/^https?:\/\//i.test(u)) return u;
-      return '../' + u.replace(/^\//, '');
+      return '../' + String(url).trim().replace(/^\//, '');
     }
     function escapeHtml(s) {
-      if (!s) return '';
-      var d = document.createElement('div');
-      d.textContent = s;
-      return d.innerHTML;
+      if (window.VCGHomePage) return window.VCGHomePage.escapeHtml(s);
+      return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
     function applyPhone(g) {
       var disp = g.phoneDisplay || LLYS_FALLBACK.phoneDisplay;
@@ -498,19 +507,17 @@
     function renderFeed(ulId, items) {
       var ul = document.getElementById(ulId);
       if (!ul) return;
-      ul.innerHTML = '';
-      if (!items || !items.length) {
-        ul.innerHTML = '<li class="glan-feed-item"><p style="margin:0;color:var(--clr-text-mid)">No items to show yet.</p></li>';
+      if (window.VCGHomePage) {
+        window.VCGHomePage.renderFeedList(
+          ul,
+          items,
+          fmtDate,
+          function (it) { return '../news.html?id=' + encodeURIComponent(it.id); },
+          '../'
+        );
         return;
       }
-      items.forEach(function (it) {
-        var li = document.createElement('li');
-        li.className = 'glan-feed-item';
-        var src = feedAssetPath(it.imageUrl);
-        var imgPart = src ? '<img class="glan-feed-thumb" src="' + escapeHtml(src) + '" alt="">' : '';
-        li.innerHTML = '<div class="glan-feed-item-inner">' + imgPart + '<div class="glan-feed-body"><span class="glan-feed-date">' + fmtDate(it.date) + '</span><h4><a style="text-decoration:none;color:inherit" href="../news.html?id=' + encodeURIComponent(it.id) + '">' + escapeHtml(it.title) + '</a></h4><p>' + escapeHtml(it.excerpt || '') + '</p></div></div>';
-        ul.appendChild(li);
-      });
+      ul.innerHTML = '';
     }
     function applyExtras(g) {
       var av = document.getElementById('llys-availability-text');

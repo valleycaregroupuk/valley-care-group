@@ -2,6 +2,11 @@
   "name": "vcg-frontend",
   "private": true,
   "scripts": {
-    "build": "node scripts/inject-config.js"
+    "build": "node scripts/inject-config.js",
+    "lint": "eslint assets/js scripts --ext .js",
+    "test": "node -e \"console.log('No frontend tests configured yet')\""
+  },
+  "devDependencies": {
+    "eslint": "^10.3.0"
   }
 }

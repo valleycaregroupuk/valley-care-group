@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "lint": "eslint . --ext .js",
+    "test": "node -e \"console.log('No backend tests configured yet')\""
   },
   "dependencies": {
     "@google-cloud/storage": "^7.14.0",
@@ -22,6 +24,7 @@
     "resend": "^4.0.0"
   },
   "devDependencies": {
+    "eslint": "^10.3.0",
     "nodemon": "^3.1.0"
   },
   "engines": {

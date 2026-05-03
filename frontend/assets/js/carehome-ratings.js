@@ -77,10 +77,11 @@
     var meta = document.querySelector('meta[name="description"]');
     if (meta && meta.content) {
       var page = (location.pathname || '').split('/').pop() || '';
-      if (page === 'glan-yr-afon.html' && gS) {
+      var slug = page.replace(/\.html$/i, '');
+      if (slug === 'glan-yr-afon' && gS) {
         meta.content = meta.content.replace(/\d+(?:\.\d+)?(?= rating)/, gS);
       }
-      if (page === 'llys-gwyn.html' && lS) {
+      if (slug === 'llys-gwyn' && lS) {
         meta.content = meta.content.replace(/\d+(?:\.\d+)?(?= on carehome)/, lS);
       }
     }

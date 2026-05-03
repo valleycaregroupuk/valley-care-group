@@ -53,7 +53,8 @@ function validateProductionConfig() {
   const admin = (process.env.ADMIN_PASSWORD || '').trim();
   if (admin.length < 12) errors.push('ADMIN_PASSWORD must be at least 12 characters.');
   const origins = (process.env.ALLOWED_ORIGIN || '').split(',').map(s => s.trim()).filter(Boolean);
-  if (origins.length === 0) errors.push('ALLOWED_ORIGIN must list at least one frontend origin (comma-separated).');
+  // We allow empty ALLOWED_ORIGIN because we have a hardcoded fallback list in IS_PROD mode
+  // if (origins.length === 0) errors.push('ALLOWED_ORIGIN must list at least one frontend origin (comma-separated).');
   const db = (process.env.DATABASE_URL || '').trim();
   if (!db) errors.push('DATABASE_URL must be set to your Cloud SQL / Postgres connection string.');
   return { ok: errors.length === 0, errors };

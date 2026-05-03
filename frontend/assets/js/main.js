@@ -2,6 +2,93 @@
 // VALLEY CARE GROUP — Main JS
 // ================================
 
+function escapeHtmlUnsafe(s) {
+  return String(s || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function sanitiseTrustedHtml(rawHtml) {
+  const html = String(rawHtml || '');
+  const tpl = document.createElement('template');
+  tpl.innerHTML = html;
+
+  tpl.content.querySelectorAll('script, iframe, object, embed, form, link, meta').forEach((el) => el.remove());
+
+  tpl.content.querySelectorAll('*').forEach((el) => {
+    Array.from(el.attributes).forEach((attr) => {
+      const n = attr.name.toLowerCase();
+      const v = String(attr.value || '').trim().toLowerCase();
+      if (n.startsWith('on')) {
+        el.removeAttribute(attr.name);
+        return;
+      }
+      if ((n === 'href' || n === 'src' || n === 'xlink:href') && (v.startsWith('javascript:') || v.startsWith('data:text/html'))) {
+        el.removeAttribute(attr.name);
+        return;
+      }
+      if (n === 'style') {
+        el.removeAttribute(attr.name);
+      }
+    });
+  });
+
+  return tpl.innerHTML;
+}
+
+function setHtmlSafely(el, html) {
+  if (!el) return '';
+  const safe = sanitiseTrustedHtml(html);
+  el.innerHTML = safe;
+  return safe;
+}
+
+function ensureSeoMetaTags(opts) {
+  const data = opts || {};
+  const path = (window.location.pathname || '/').replace(/\/index\.html$/i, '/').replace(/\.html$/i, '');
+  const normalizedPath = path === '' ? '/' : path;
+  const canonical = data.canonicalUrl || (window.location.origin + normalizedPath);
+  const title = data.title || document.title;
+  const description = data.description || (document.querySelector('meta[name="description"]') && document.querySelector('meta[name="description"]').content) || '';
+  const image = data.image || (window.location.origin + '/assets/images/homes/ty-pentwyn-exterior.jpg');
+  const type = data.type || 'website';
+
+  function upsertMeta(attr, key, value) {
+    if (!value) return;
+    let node = document.querySelector(`meta[${attr}="${key}"]`);
+    if (!node) {
+      node = document.createElement('meta');
+      node.setAttribute(attr, key);
+      document.head.appendChild(node);
+    }
+    node.setAttribute('content', value);
+  }
+
+  let canonicalEl = document.querySelector('link[rel="canonical"]');
+  if (!canonicalEl) {
+    canonicalEl = document.createElement('link');
+    canonicalEl.setAttribute('rel', 'canonical');
+    document.head.appendChild(canonicalEl);
+  }
+  canonicalEl.setAttribute('href', canonical);
+
+  if (description) upsertMeta('name', 'description', description);
+  upsertMeta('property', 'og:title', title);
+  upsertMeta('property', 'og:description', description);
+  upsertMeta('property', 'og:type', type);
+  upsertMeta('property', 'og:url', canonical);
+  upsertMeta('property', 'og:image', image);
+  upsertMeta('name', 'twitter:card', 'summary_large_image');
+  upsertMeta('name', 'twitter:title', title);
+  upsertMeta('name', 'twitter:description', description);
+  upsertMeta('name', 'twitter:image', image);
+}
+
+window.ensureSeoMetaTags = ensureSeoMetaTags;
+
 document.addEventListener('DOMContentLoaded', function () {
 
   // ---- Force scroll to top on refresh ----
@@ -48,6 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ---- Navbar scroll behaviour ----
   const navbar = document.getElementById('navbar');
+  ensureSeoMetaTags();
   if (navbar) {
     const handleScroll = () => {
       if (window.scrollY > 60) {
@@ -759,8 +847,8 @@ window.initDistanceTracker = function(targetLat, targetLng, btnId, readOutId) {
       if (!res.ok) throw new Error('Not found');
       const issue = await res.json();
       title.textContent = issue.subject;
-      body.innerHTML = issue.htmlContent;
-      window._currentNlHtml = issue.htmlContent;
+      const safeHtml = setHtmlSafely(body, issue.htmlContent);
+      window._currentNlHtml = safeHtml;
       window._currentNlSubject = issue.subject;
     } catch (e) {
       body.innerHTML = '<div style="padding:3rem;text-align:center;color:#c00">Failed to load newsletter.</div>';
@@ -771,11 +859,11 @@ window.initDistanceTracker = function(targetLat, targetLng, btnId, readOutId) {
     if (!window._currentNlHtml) return;
     const subject = window._currentNlSubject || 'Newsletter';
     const printWin = window.open('', '_blank', 'width=800,height=700');
-    printWin.document.write('<!DOCTYPE html><html><head><title>' + subject + '</title>'
+    printWin.document.write('<!DOCTYPE html><html><head><title>' + escapeHtmlUnsafe(subject) + '</title>'
       + '<style>body{margin:0;font-family:Arial,sans-serif}@media print{.no-print{display:none}}</style>'
       + '</head><body>'
       + '<div class="no-print" style="padding:1rem;background:#1C2E40;color:#DFC071;display:flex;justify-content:space-between;align-items:center;">'
-      + '<strong>' + subject + '</strong>'
+      + '<strong>' + escapeHtmlUnsafe(subject) + '</strong>'
       + '<button onclick="window.print()" style="background:#DFC071;color:#1C2E40;border:none;padding:0.5rem 1rem;border-radius:4px;cursor:pointer;font-weight:700">\uD83D\uDDA8\uFE0F Print / Save as PDF</button>'
       + '</div>' + window._currentNlHtml + '</body></html>');
     printWin.document.close();

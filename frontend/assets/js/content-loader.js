@@ -7,6 +7,14 @@
 'use strict';
 
 (async function() {
+  function setSafeContent(el, val) {
+    if (val === '') {
+      el.textContent = '';
+      return;
+    }
+    el.textContent = String(val);
+  }
+
   let cData = {};
   try {
     // Attempt to load live content from API
@@ -34,14 +42,14 @@
     if (val !== undefined) {
       // If the value is empty, the user explicitly wants to clear it
       if (val === '') {
-        el.innerHTML = '';
+        setSafeContent(el, '');
         // Special case: hide parent if it's a badge or similar decorative element
         if (el.closest('.hero-sig-badge') || el.closest('.announce-bar')) {
           const parent = el.parentElement;
           if (parent) parent.style.display = 'none';
         }
       } else {
-        el.innerHTML = val;
+        setSafeContent(el, val);
         // Ensure parent is visible if we have content
         if (el.closest('.hero-sig-badge') || el.closest('.announce-bar')) {
           const parent = el.parentElement;
