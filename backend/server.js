@@ -71,7 +71,7 @@ const ADMIN_PW = IS_PROD && !PRODUCTION_MISCONFIGURED
   : (process.env.ADMIN_PASSWORD || 'vcg2025');
 
 const ALLOWED_ORIGINS = IS_PROD && !PRODUCTION_MISCONFIGURED
-  ? (process.env.ALLOWED_ORIGIN || '').split(',').map(s => s.trim()).filter(Boolean)
+  ? (process.env.ALLOWED_ORIGIN || 'https://valleycaregroup.co.uk,https://www.valleycaregroup.co.uk,https://valleycare.wales,https://www.valleycare.wales').split(',').map(s => s.trim()).filter(Boolean)
   : true;
 
 // ---------------------------------------------------------------------------
@@ -518,9 +518,9 @@ function defaultContent() {
       announcementText: '🏡 Explore Ty Pentwyn Nursing Home in the Rhondda — specialist nursing & residential care →',
       announcementLink: 'homes/pentwyn.html',
       phone: '01633 680217',
-      email: 'care@valleycare.wales',
+      email: 'care@valleycaregroup.co.uk',
       address: 'Off Ford Road, Fleur-de-Lys, Blackwood NP12 3WA',
-      canonicalBase: 'https://www.valleycare.wales',
+      canonicalBase: 'https://www.valleycaregroup.co.uk',
       publicAnalyticsId: '',
     },
     homepage: {
@@ -580,7 +580,7 @@ function defaultContent() {
           { label: 'carehome.co.uk Rating', value: '9.9 / 10 ⭐' },
           { label: 'Reviews', value: '41 Reviews' },
           { label: 'Phone', value: '01443 835196' },
-          { label: 'Email', value: 'care@valleycare.wales' },
+          { label: 'Email', value: 'care@valleycaregroup.co.uk' },
           { label: 'Visitors', value: 'Welcome anytime' },
         ],
         managerProfile: {
@@ -700,8 +700,8 @@ function defaultContent() {
         ],
       },
       pentwyn: {
-        phoneDisplay: '',
-        phoneTel: '',
+        phoneDisplay: '01443 778010',
+        phoneTel: '01443778010',
         managerEmail: 'managertypentwyn@outlook.com',
         carehomeListingUrl: 'https://www.carehome.co.uk/carehome.cfm/searchazref/20005017TYPA',
         ciwServiceUrl: 'https://digital.careinspectorate.wales/',
@@ -1001,7 +1001,7 @@ app.post('/api/enquiries', async (req, res) => {
           <p style="font-size: 0.9em; color: #666;">
             <strong>Valley Care Group</strong><br>
             Caring with Heart · Since 2005<br>
-            <a href="https://www.valleycare.wales">www.valleycare.wales</a>
+            <a href="https://www.valleycaregroup.co.uk">www.valleycaregroup.co.uk</a>
           </p>
         </div>
       `,
@@ -1695,7 +1695,7 @@ app.post('/api/admin/newsletters', requireAuth, uploadNewsletterAssets, async (r
       if (subs.length > 0) {
         const bccList = subs.map(s => s.email).filter(Boolean);
         const subject = `Newsletter Update: ${issue.title} (${issue.month} ${issue.year})`;
-        const newsLink = `https://www.valleycare.wales/news.html?issue=${issue.id}`;
+        const newsLink = `https://www.valleycaregroup.co.uk/news.html?issue=${issue.id}`;
         
         const html = `
           <div style="font-family: Arial, sans-serif; color: #1C2E40; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
@@ -1823,7 +1823,7 @@ app.post('/api/admin/newsletter/send', requireAuth, async (req, res) => {
     `;
 
     const success = await sendResendEmail({
-      to: process.env.ENQUIRY_NOTIFY_TO || 'care@valleycare.wales',
+      to: process.env.ENQUIRY_NOTIFY_TO || 'care@valleycaregroup.co.uk',
       bcc: bccList,
       subject: subject,
       html: fullHtml,

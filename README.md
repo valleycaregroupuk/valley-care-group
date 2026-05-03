@@ -98,4 +98,4 @@ Valley Care Group provides compassionate nursing and residential care across Sou
 - **Llys Gwyn Residential Home** — Pyle, Bridgend (CF33 4PN) — **01633 680217**
 - **Ty Pentwyn Nursing Home** — Treorchy, RCT (CF42 6HD) — **managertypentwyn@outlook.com** · telephone on [carehome.co.uk listing](https://www.carehome.co.uk/carehome.cfm/searchazref/20005017TYPA) (operator: Quality Care (Surrey) Ltd)
 
-✉️ **care@valleycare.wales** — see **contact.html** for all numbers.
+✉️ **care@valleycaregroup.co.uk** — see **contact.html** for all numbers.

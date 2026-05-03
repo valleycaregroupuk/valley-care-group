@@ -19,15 +19,38 @@
   }
 
   const liveData = cData.live || {};
+  const homepage = cData.homepage || {};
+  const site     = cData.site || {};
 
   // Apply mapped content to DOM
   document.querySelectorAll('[data-edit-key]').forEach(el => {
     const key = el.getAttribute('data-edit-key');
-    if (liveData[key] !== undefined && liveData[key] !== '') {
-      const val = liveData[key];
-      el.innerHTML = val;
+    
+    // Check in liveData, then homepage, then site
+    let val = liveData[key];
+    if (val === undefined) val = homepage[key];
+    if (val === undefined) val = site[key];
+
+    if (val !== undefined) {
+      // If the value is empty, the user explicitly wants to clear it
+      if (val === '') {
+        el.innerHTML = '';
+        // Special case: hide parent if it's a badge or similar decorative element
+        if (el.closest('.hero-sig-badge') || el.closest('.announce-bar')) {
+          const parent = el.parentElement;
+          if (parent) parent.style.display = 'none';
+        }
+      } else {
+        el.innerHTML = val;
+        // Ensure parent is visible if we have content
+        if (el.closest('.hero-sig-badge') || el.closest('.announce-bar')) {
+          const parent = el.parentElement;
+          if (parent) parent.style.display = '';
+        }
+      }
+      
       // If it's a counter, update the target too
-      if (el.hasAttribute('data-target') && !isNaN(parseFloat(val))) {
+      if (el.hasAttribute('data-target') && !isNaN(parseFloat(val)) && val !== '') {
         el.setAttribute('data-target', val);
       }
     }
