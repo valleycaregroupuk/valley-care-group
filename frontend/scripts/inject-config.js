@@ -6,7 +6,10 @@
 const fs = require('fs');
 const path = require('path');
 
-const base = (process.env.PUBLIC_API_BASE || process.env.API_BASE || '').trim().replace(/\/$/, '');
+const DEFAULT_PROD_API_BASE = 'https://vcg-backend-778094361124.europe-west2.run.app';
+const requestedBase = (process.env.PUBLIC_API_BASE || process.env.API_BASE || '').trim().replace(/\/$/, '');
+const isLocalBuild = process.env.NODE_ENV !== 'production' && !process.env.CI;
+const base = requestedBase || (isLocalBuild ? '' : DEFAULT_PROD_API_BASE);
 const ga = (process.env.PUBLIC_GA_ID || '').trim();
 const sentry = (process.env.PUBLIC_SENTRY_DSN || '').trim();
 
