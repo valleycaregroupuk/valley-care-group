@@ -71,7 +71,7 @@ const ADMIN_PW = IS_PROD && !PRODUCTION_MISCONFIGURED
   : (process.env.ADMIN_PASSWORD || 'vcg2025');
 
 const ALLOWED_ORIGINS = IS_PROD && !PRODUCTION_MISCONFIGURED
-  ? (process.env.ALLOWED_ORIGIN || 'https://valleycaregroup.co.uk,https://www.valleycaregroup.co.uk,https://valleycare.wales,https://www.valleycare.wales').split(',').map(s => s.trim()).filter(Boolean)
+  ? (process.env.ALLOWED_ORIGIN || 'https://valleycaregroup.co.uk,https://www.valleycaregroup.co.uk,https://valleycare.wales,https://www.valleycare.wales,https://valley-care-production-87df5.web.app,https://valley-care-production-87df5.firebaseapp.com').split(',').map(s => s.trim()).filter(Boolean)
   : true;
 
 // ---------------------------------------------------------------------------
@@ -109,7 +109,7 @@ async function checkKvRateLimit(req, bucket, maxRequests, windowSec) {
     return true;
   } catch (e) {
     console.warn('Rate limit store error:', e.message);
-    return true;
+    return false;
   }
 }
 
@@ -346,13 +346,13 @@ const uploadMedia = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 50 * 1024 * 1024 }, // Allowed up to 50MB for videos/images/docs
   fileFilter: (_req, file, cb) => {
-    const okMime = /^image\/(jpeg|png|webp|gif|svg\+xml)$/i.test(file.mimetype) || 
+    const okMime = /^image\/(jpeg|png|webp|gif)$/i.test(file.mimetype) ||
                    /^video\/(mp4|webm|ogg)$/i.test(file.mimetype) ||
                    file.mimetype === 'application/pdf';
     const ext = (file.originalname || '').toLowerCase();
-    const okExt = /\.(jpg|jpeg|png|webp|gif|svg|mp4|webm|ogg|pdf)$/i.test(ext);
+    const okExt = /\.(jpg|jpeg|png|webp|gif|mp4|webm|ogg|pdf)$/i.test(ext);
     if (okMime && okExt) cb(null, true);
-    else cb(new Error('File type not supported. Allowed: JPG, PNG, WebP, GIF, SVG, MP4, WebM, OGG, PDF.'));
+    else cb(new Error('File type not supported. Allowed: JPG, PNG, WebP, GIF, MP4, WebM, OGG, PDF.'));
   },
 });
 
@@ -368,13 +368,24 @@ app.use((req, res, next) => {
   });
 });
 
-app.use(helmet({ contentSecurityPolicy: false }));
+app.use(helmet({
+  contentSecurityPolicy: {
+    useDefaults: false,
+    directives: {
+      defaultSrc: ["'none'"],
+      frameAncestors: ["'none'"],
+      baseUri: ["'none'"],
+      formAction: ["'none'"],
+    },
+  },
+  crossOriginEmbedderPolicy: false,
+}));
 
 app.use(cors({
   origin: ALLOWED_ORIGINS,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
+  credentials: false,
 }));
 
 app.use(express.json({ limit: '50kb' }));
@@ -390,7 +401,6 @@ app.use((req, res, next) => {
   if (PRODUCTION_MISCONFIGURED) {
     return res.status(503).json({
       error: 'Service unavailable — production configuration is incomplete.',
-      details: prodConfig.errors,
     });
   }
   next();
@@ -838,6 +848,28 @@ function sanitise(val) {
   return String(val).replace(/<[^>]*>/g, '').trim().slice(0, 2000);
 }
 
+function sanitiseNestedContent(value, depth) {
+  if (depth > 5) return undefined;
+  if (value == null) return value;
+  if (typeof value === 'string') return sanitise(value);
+  if (typeof value === 'number' || typeof value === 'boolean') return value;
+  if (Array.isArray(value)) {
+    return value
+      .slice(0, 100)
+      .map((item) => sanitiseNestedContent(item, depth + 1))
+      .filter((item) => item !== undefined);
+  }
+  if (typeof value === 'object') {
+    const out = {};
+    Object.keys(value).slice(0, 200).forEach((key) => {
+      const safeVal = sanitiseNestedContent(value[key], depth + 1);
+      if (safeVal !== undefined) out[key] = safeVal;
+    });
+    return out;
+  }
+  return undefined;
+}
+
 // ---------------------------------------------------------------------------
 // ── AUTH ROUTES
 // ---------------------------------------------------------------------------
@@ -933,7 +965,7 @@ app.get('/api/content', async (req, res) => {
 // ── PUBLIC: enquiries & job applications
 // ---------------------------------------------------------------------------
 
-app.post('/api/enquiries', async (req, res) => {
+app.post('/api/enquiries', formLimiter, async (req, res) => {
   try {
     if (!(await checkKvRateLimit(req, 'enquiry', 10, 3600))) {
       return res.status(429).json({ error: 'Too many enquiries. Please try again later.' });
@@ -1015,7 +1047,7 @@ app.post('/api/enquiries', async (req, res) => {
   }
 });
 
-app.post('/api/home-reviews', async (req, res) => {
+app.post('/api/home-reviews', formLimiter, async (req, res) => {
   try {
     if (!(await checkKvRateLimit(req, 'home_reviews', 5, 3600))) {
       return res.status(429).json({ error: 'Too many submissions. Please try again later.' });
@@ -1102,7 +1134,7 @@ app.post('/api/home-reviews', async (req, res) => {
 app.post('/api/newsletter/subscribe', formLimiter, async (req, res) => {
   try {
     const { email } = req.body;
-    if (!email || !String(email).includes('@')) {
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).trim())) {
       return res.status(400).json({ error: 'Valid email is required.' });
     }
     
@@ -1128,7 +1160,7 @@ app.post('/api/newsletter/subscribe', formLimiter, async (req, res) => {
   }
 });
 
-app.post('/api/applications', (req, res, next) => {
+app.post('/api/applications', formLimiter, (req, res, next) => {
   uploadCv.single('cv')(req, res, (err) => {
     if (err) return res.status(400).json({ error: err.message || 'Invalid upload.' });
     next();
@@ -1353,7 +1385,8 @@ app.put('/api/admin/content/:section', requireAuth, async (req, res) => {
         if (c.homePages[k]) c.homePages[k] = sanitiseHomePageExtras(c.homePages[k]);
       });
     } else {
-      c[sec] = { ...c[sec], ...req.body };
+      const safeBody = sanitiseNestedContent(req.body || {}, 0);
+      c[sec] = { ...(c[sec] || {}), ...(safeBody && typeof safeBody === 'object' ? safeBody : {}) };
     }
     await writeContent(c);
     console.log(`✏️  Content updated: ${sec}`);
@@ -1717,7 +1750,7 @@ app.post('/api/admin/newsletters', requireAuth, uploadNewsletterAssets, async (r
         `;
 
         await sendResendEmail({
-          to: process.env.ENQUIRY_NOTIFY_TO || 'care@valleycare.wales',
+          to: process.env.ENQUIRY_NOTIFY_TO || 'care@valleycaregroup.co.uk',
           bcc: bccList,
           subject: subject,
           html: html,
@@ -1729,7 +1762,7 @@ app.post('/api/admin/newsletters', requireAuth, uploadNewsletterAssets, async (r
 
     // Always send alert to admin
     await sendResendEmail({
-      to: 'valleycaregroupuk@gmail.com',
+      to: process.env.ADMIN_ALERT_EMAIL || process.env.ENQUIRY_NOTIFY_TO || 'care@valleycaregroup.co.uk',
       subject: `[Admin Alert] Newsletter Uploaded: ${issue.title}`,
       html: `
         <h3>Newsletter Successfully Uploaded</h3>
@@ -1744,7 +1777,7 @@ app.post('/api/admin/newsletters', requireAuth, uploadNewsletterAssets, async (r
     res.json({ ok: true, issue, sentCount });
   } catch (err) {
     console.error('POST /api/admin/newsletters error:', err.message);
-    res.status(500).json({ error: err.message || 'Failed to save newsletter.' });
+    res.status(500).json({ error: 'Failed to save newsletter.' });
   }
 });
 
@@ -2016,7 +2049,7 @@ app.use((err, req, res, _next) => {
   }
   console.error('Unhandled error:', err);
   res.status(err.status || 500).json({ 
-    error: err.message || 'An unexpected error occurred.',
+    error: IS_PROD ? 'An unexpected error occurred.' : (err.message || 'An unexpected error occurred.'),
     details: IS_PROD ? undefined : err.stack
   });
 });
