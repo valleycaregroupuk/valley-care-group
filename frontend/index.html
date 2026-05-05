@@ -15,13 +15,13 @@
     content="Nursing and residential care across South Wales: Glan-yr-Afon, Llys Gwyn, and Ty Pentwyn. CIW registered. Glan-yr-Afon and Llys Gwyn are highly rated on carehome.co.uk; Ty Pentwyn is listed on the directory.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.valleycaregroup.co.uk/">
-  <meta property="og:image" content="https://www.valleycaregroup.co.uk/assets/images/homes/ty-pentwyn-exterior.jpg">
+  <meta property="og:image" content="https://www.valleycaregroup.co.uk/assets/images/logo.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Valley Care Group — Care Homes in Wales">
   <meta name="twitter:description" content="Nursing and residential care across South Wales: Glan-yr-Afon, Llys Gwyn, and Ty Pentwyn. CIW registered and family focused.">
-  <meta name="twitter:image" content="https://www.valleycaregroup.co.uk/assets/images/homes/ty-pentwyn-exterior.jpg">
+  <meta name="twitter:image" content="https://www.valleycaregroup.co.uk/assets/images/logo.png">
   <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏡</text></svg>">
+    href="assets/images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="assets/css/style.css?v=2">
   <link rel="stylesheet" href="assets/css/pages.css?v=2">
@@ -41,14 +41,14 @@
     <div id="announcebar" class="announce-bar" role="region" aria-label="Site announcement">
       <span class="announce-dot" aria-hidden="true"></span>
       <a id="announce-link" href="homes/pentwyn.html" style="color:inherit;text-decoration:none">
-        <span id="announce-text">🏡 Explore Ty Pentwyn Nursing Home in the Rhondda — specialist nursing &amp;
+        <span id="announce-text">Explore Ty Pentwyn Nursing Home in the Rhondda — specialist nursing &amp;
           residential care →</span>
       </a>
     </div>
     <nav class="navbar transparent" id="navbar">
       <div class="nav-container">
         <a href="index.html" class="nav-logo">
-          <div class="nav-logo-icon">🏡</div>
+          <div class="nav-logo-icon"><img class="nav-logo-img" src="assets/images/favicon.png" alt="Logo"></div>
           <div class="nav-logo-text">
             <span class="nav-logo-name">Valley Care Group</span>
             <span class="nav-logo-tagline">Caring with Heart · Since 2005</span>
@@ -115,7 +115,7 @@
       <div class="hero-sig-actions">
         <button class="btn btn-gold btn-lg mag-btn"
           onclick="document.getElementById('our-homes').scrollIntoView({behavior:'smooth'})">
-          🏡 Explore Our Homes
+          Explore Our Homes
         </button>
         <button class="btn btn-outline btn-lg mag-btn"
           onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">
@@ -859,7 +859,7 @@
     <div class="footer-sig-inner">
       <div class="footer-sig-grid">
         <div>
-          <div class="footer-glow-tagline">Valley Care Group</div>
+          <div class="footer-logo-area"><img src="assets/images/logo.png" alt="Valley Care Group" style="max-width:200px;margin-bottom:1.25rem;display:block"></div>
           <div class="nav-logo-tagline" style="margin-bottom:1rem;font-size:0.72rem">CARING WITH HEART · EST. 2005</div>
           <p class="footer-brand-desc">Providing compassionate, person-centred nursing and residential care across South
             Wales. CIW registered. Family values at the core of everything we do.</p>
@@ -1117,7 +1117,7 @@
             const img = assetPath(it.imageUrl);
             const top = img
               ? `<img class="home-feed-card-img" src="${escH(img)}" alt="" loading="lazy" decoding="async">`
-              : '<div class="home-feed-placeholder" aria-hidden="true">🏡</div>';
+              : '<div class="home-feed-placeholder" aria-hidden="true"><img src="assets/images/favicon.png" alt="" style="width:48px;height:48px;opacity:0.3"></div>';
             const su = storyUrl(it);
             return `<article class="home-feed-card"><a class="home-feed-card-hit" href="${escH(su)}"><div class="home-feed-card-hit-media">${top}</div><div class="home-feed-card-body"><div class="home-feed-card-meta">${escH(it.kind)} · ${escH(it.homeLabel)} · ${escH(fd(it.date))}</div><h3 class="home-feed-card-title">${escH(it.title)}</h3><p class="home-feed-card-excerpt">${escH(it.excerpt || '')}</p><span class="home-feed-card-cta">Read full story →</span></div></a><a class="home-feed-card-secondary" href="${escH(it.homeHref)}">${escH(it.homeLabel)} — home page →</a></article>`;
           }).join('');

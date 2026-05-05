@@ -10,12 +10,12 @@
   <meta property="og:description" content="News and events from Valley Care Group homes across South Wales — stories for families and residents.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.valleycaregroup.co.uk/news">
-  <meta property="og:image" content="https://www.valleycaregroup.co.uk/assets/images/homes/ty-pentwyn-exterior.jpg">
+  <meta property="og:image" content="https://www.valleycaregroup.co.uk/assets/images/logo.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="News &amp; Events — Valley Care Group">
   <meta name="twitter:description" content="News and events from Valley Care Group homes across South Wales — stories for families and residents.">
-  <meta name="twitter:image" content="https://www.valleycaregroup.co.uk/assets/images/homes/ty-pentwyn-exterior.jpg">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏡</text></svg>">
+  <meta name="twitter:image" content="https://www.valleycaregroup.co.uk/assets/images/logo.png">
+  <link rel="icon" href="assets/images/favicon.png">
   <link rel="stylesheet" href="assets/css/style.css?v=2">
   <link rel="stylesheet" href="assets/css/pages.css?v=2">
 </head>
@@ -24,7 +24,7 @@
   <nav class="navbar scrolled" id="navbar">
     <div class="nav-container">
       <a href="index.html" class="nav-logo">
-        <div class="nav-logo-icon">🏡</div>
+        <div class="nav-logo-icon"><img class="nav-logo-img" src="assets/images/favicon.png" alt="Logo"></div>
         <div class="nav-logo-text">
           <span class="nav-logo-name">Valley Care Group</span>
           <span class="nav-logo-tagline">Caring with Heart · Since 2005</span>
@@ -94,7 +94,7 @@
       <div class="footer-grid">
         <div>
           <div class="footer-logo-wrap">
-            <div class="nav-logo-icon" style="width:40px;height:40px;font-size:1.3rem">🏡</div>
+            <div class="nav-logo-icon" style="width:40px;height:40px"><img class="nav-logo-img" src="assets/images/favicon.png" alt="Logo"></div>
             <div class="nav-logo-text">
               <span class="nav-logo-name">Valley Care Group</span>
               <span class="nav-logo-tagline">Caring with Heart · Since 2005</span>
@@ -192,7 +192,7 @@
       const img = assetPath(it.imageUrl);
       const media = img
         ? '<img class="news-hub-main-media" src="' + esc(img) + '" alt="' + esc(it.title || 'Valley Care Group news') + '" width="1200" height="630">'
-        : '<div class="news-hub-main-placeholder" aria-hidden="true">🏡</div>';
+        : '<div class="news-hub-main-placeholder" aria-hidden="true"><img src="assets/images/favicon.png" alt="" style="width:64px;height:64px;opacity:0.2"></div>';
       const meta = esc(it.kind) + ' · ' + esc(it.homeLabel) + ' · ' + esc(formatDate(it.date));
       const body = (it.excerpt || '').trim()
         ? '<p class="news-hub-main-text">' + esc(it.excerpt) + '</p>'

@@ -340,7 +340,7 @@
     <!-- Sidebar -->
     <aside class="sidebar">
       <div class="sidebar-logo">
-        <div class="sidebar-logo-icon">🏡</div>
+        <div class="sidebar-logo-icon"><img class="nav-logo-img" src="assets/images/favicon.png" alt="Logo"></div>
         <div class="sidebar-logo-name">Valley Care Group</div>
         <div class="sidebar-logo-sub">Admin Console</div>
       </div>
@@ -763,9 +763,9 @@
         <div style="display:flex;align-items:center;gap:1rem;margin-bottom:2rem;flex-wrap:wrap">
           <label class="field-label" style="margin:0;font-weight:700;font-size:1rem" for="hp-home-select">Select Home:</label>
           <select class="field-select" id="hp-home-select" onchange="loadHomeProfile(this.value)" style="max-width:320px;font-size:1rem;padding:0.65rem 1rem;font-weight:600;border:2px solid var(--cobalt);border-radius:var(--radius-sm)">
-            <option value="glan">🏡 Glan-yr-Afon Nursing Home</option>
-            <option value="llys">🏡 Llys Gwyn Residential Home</option>
-            <option value="pentwyn">🏡 Ty Pentwyn Nursing Home</option>
+            <option value="glan">Glan-yr-Afon Nursing Home</option>
+            <option value="llys">Llys Gwyn Residential Home</option>
+            <option value="pentwyn">Ty Pentwyn Nursing Home</option>
           </select>
           <span class="badge badge-active" id="hp-home-status">● Loaded</span>
         </div>
@@ -1793,7 +1793,7 @@ function renderJobsTable() {
     <tr id="row-${j.id}">
       <td>
         <div class="job-title-cell">${esc(j.title)}</div>
-        <div class="job-home-cell">🏡 ${esc(HOME_LABELS[j.home]||j.home)}</div>
+        <div class="job-home-cell">${esc(HOME_LABELS[j.home]||j.home)}</div>
       </td>
       <td>${typeBadge(j.type)}</td>
       <td>${catBadge(j.category)}</td>
