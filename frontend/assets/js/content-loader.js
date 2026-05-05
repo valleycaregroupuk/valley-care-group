@@ -12,7 +12,12 @@
       el.textContent = '';
       return;
     }
-    el.textContent = String(val);
+    // If setHtmlSafely is available from main.js, use it to allow basic tags like <em> and <br>
+    if (typeof window.setHtmlSafely === 'function') {
+      window.setHtmlSafely(el, val);
+    } else {
+      el.textContent = String(val);
+    }
   }
 
   let cData = {};

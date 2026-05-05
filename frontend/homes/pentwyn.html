@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Permissions-Policy" content="geolocation=(self)">
   <title>Ty Pentwyn Nursing Home — Treorchy | Valley Care Group</title>
-  <meta name="description" content="Ty Pentwyn Nursing Home, Pentwyn Road, Treorchy CF42 6HD — up to 35 residents. Nursing and residential care, dementia support, learning disability and autism, physical disability, sensory impairment. Operated by Quality Care (Surrey) Ltd. CIW registered.">
+  <meta name="description" content="Ty Pentwyn Nursing Home, Pentwyn Road, Treorchy CF42 6HD — up to 35 residents. Nursing and residential care, dementia support, learning disability and autism, physical disability, sensory impairment. Operated by Ati2ude Care. CIW registered.">
   <link rel="canonical" href="https://www.valleycaregroup.co.uk/homes/pentwyn">
   <meta property="og:title" content="Ty Pentwyn Nursing Home — Valley Care Group">
   <meta property="og:description" content="Specialist nursing and residential care in Treorchy, including dementia and disability support at Ty Pentwyn Nursing Home.">
@@ -89,7 +89,7 @@
         <div class="rating-divider"></div>
         <div class="rating-fact"><span class="rating-fact-label">Type</span><span class="rating-fact-value">Nursing &amp; residential · 35 places</span></div>
         <div class="rating-divider"></div>
-        <div class="rating-fact"><span class="rating-fact-label">Operator</span><span class="rating-fact-value">Quality Care (Surrey) Ltd</span></div>
+        <div class="rating-fact"><span class="rating-fact-label">Operator</span><span class="rating-fact-value">Ati2ude Care</span></div>
         <div class="rating-divider"></div>
         <div class="rating-fact"><span class="rating-fact-label">Location</span><span class="rating-fact-value">Treorchy, RCT</span></div>
       </div>
@@ -153,7 +153,7 @@
           <span class="section-eyebrow">About Ty Pentwyn</span>
           <h2 class="section-title">Nursing &amp; residential care in the <em>Rhondda</em></h2>
           <p class="body-text mb-med">Ty Pentwyn Nursing Home on <strong>Pentwyn Road, Treorchy</strong> is registered for up to <strong>35 service users</strong>. We provide <strong>residential care</strong> and <strong>dementia residential care</strong>, with nurse-led support for older people and those with dementia, learning disability or autism, physical disability, and sensory impairment — in line with our registration with <strong>Care Inspectorate Wales (CIW)</strong>.</p>
-          <p class="body-text mb-med">The home is operated by <strong>Quality Care (Surrey) Ltd</strong> (privately owned). <strong>Susan Rosser</strong> is the <strong>Registered Manager</strong>. The local authority is <strong>Rhondda Cynon Taff County Borough Council</strong>.</p>
+          <p class="body-text mb-med">The home is operated by <strong>Ati2ude Care</strong> (privately owned). <strong>Susan Rosser</strong> is the <strong>Registered Manager</strong>. The local authority is <strong>Rhondda Cynon Taff County Borough Council</strong>.</p>
           
           <!-- MANAGER HIGHLIGHT -->
           <div class="manager-section fade-up">
@@ -520,7 +520,10 @@
     }
     function applyExtras(g) {
       var av = document.getElementById('pentwyn-availability-text');
-      if (av && g.availabilityLine) av.textContent = g.availabilityLine;
+      if (av && g.availabilityLine) {
+        if (typeof window.setHtmlSafely === 'function') window.setHtmlSafely(av, g.availabilityLine);
+        else av.textContent = g.availabilityLine;
+      }
       var mw = document.getElementById('pentwyn-map-wrap');
       if (mw && g.mapEmbedHtml) {
         var safeHtml = g.mapEmbedHtml.replace(/<iframe/gi, '<iframe allow="" referrerpolicy="no-referrer"');
@@ -569,15 +572,31 @@
       }
       
       if (g.managerProfile) {
-        var mname = document.getElementById('dyn-mgr-name'); if(mname) mname.textContent = g.managerProfile.name || 'Manager';
-        var mtitle = document.getElementById('dyn-mgr-title'); if(mtitle) mtitle.textContent = g.managerProfile.title || 'Home Manager';
-        var mbio = document.getElementById('dyn-mgr-bio'); if(mbio) mbio.textContent = g.managerProfile.bio || '';
+        var mname = document.getElementById('dyn-mgr-name'); 
+        if(mname) {
+          if (typeof window.setHtmlSafely === 'function') window.setHtmlSafely(mname, g.managerProfile.name || 'Manager');
+          else mname.textContent = g.managerProfile.name || 'Manager';
+        }
+        var mtitle = document.getElementById('dyn-mgr-title'); 
+        if(mtitle) {
+          if (typeof window.setHtmlSafely === 'function') window.setHtmlSafely(mtitle, g.managerProfile.title || 'Home Manager');
+          else mtitle.textContent = g.managerProfile.title || 'Home Manager';
+        }
+        var mbio = document.getElementById('dyn-mgr-bio'); 
+        if(mbio) {
+          if (typeof window.setHtmlSafely === 'function') window.setHtmlSafely(mbio, g.managerProfile.bio || '');
+          else mbio.textContent = g.managerProfile.bio || '';
+        }
         var mimg = document.getElementById('dyn-mgr-img'); if(mimg && g.managerProfile.photoUrl && g.managerProfile.photoUrl !== '') {
             mimg.src = feedAssetPath(g.managerProfile.photoUrl);
         }
       }
 
-      var cIntro = document.getElementById('dyn-care-intro'); if(cIntro) cIntro.textContent = g.careIntro || '';
+      var cIntro = document.getElementById('dyn-care-intro'); 
+      if(cIntro) {
+        if (typeof window.setHtmlSafely === 'function') window.setHtmlSafely(cIntro, g.careIntro || '');
+        else cIntro.textContent = g.careIntro || '';
+      }
       if (g.careProvided && g.careProvided.length) {
         var cEl = document.getElementById('dyn-care-container');
         if(cEl) cEl.innerHTML = '<div><h3 style="font-family:var(--font-serif);font-size:1.25rem;color:var(--clr-midnight);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem">🩺 Care Provided</h3><div class="services-list-grid" style="grid-template-columns:1fr;gap:0.75rem">' + g.careProvided.map(function(c) {

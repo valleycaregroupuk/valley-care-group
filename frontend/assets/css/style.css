@@ -7,22 +7,22 @@
 
 /* === CSS Custom Properties === */
 :root {
-  /* Core Palette — Deep Welsh Slate meets Warm Gold */
-  --clr-midnight: #0D1B2A;
-  --clr-slate: #1C2E40;
-  --clr-cobalt: #1B4F72;
-  --clr-sky: #2E86C1;
-  --clr-light-blue: #AED6F1;
-  --clr-gold: #C9A84C;
-  --clr-gold-light: #E8C97E;
-  --clr-cream: #FAF7F2;
-  --clr-warm-white: #FEFEFE;
-  --clr-sage: #6B8F71;
-  --clr-sage-light: #9DC4A0;
-  --clr-rose: #C0392B;
-  --clr-text-dark: #1A1A2E;
-  --clr-text-mid: #4A5568;
-  --clr-text-light: #718096;
+  /* Core Palette — Brightened & Professional */
+  --clr-midnight: #14283D;
+  --clr-slate: #253D54;
+  --clr-cobalt: #1F5F89;
+  --clr-sky: #3498DB;
+  --clr-light-blue: #D6EAF8;
+  --clr-gold: #D4AF37;
+  --clr-gold-light: #F1D483;
+  --clr-cream: #FDFBF7;
+  --clr-warm-white: #FFFFFF;
+  --clr-sage: #7DAD7F;
+  --clr-sage-light: #B4D6B6;
+  --clr-rose: #E74C3C;
+  --clr-text-dark: #2C3E50;
+  --clr-text-mid: #5D6D7E;
+  --clr-text-light: #85929E;
   --clr-border: rgba(201, 168, 76, 0.2);
 
   /* Typography Scale */
@@ -91,10 +91,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   transition: background var(--transition-med), padding var(--transition-med), box-shadow var(--transition-med);
 }
 .navbar.scrolled {
-  background: rgba(13, 27, 42, 0.97);
+  background: rgba(20, 40, 61, 0.95);
   backdrop-filter: blur(20px);
   padding: 0.8rem 0;
-  box-shadow: 0 4px 40px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 40px rgba(0,0,0,0.2);
 }
 .navbar.transparent { background: transparent; }
 .nav-container {
@@ -244,9 +244,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(13, 27, 42, 0.95) 0%,
-    rgba(27, 79, 114, 0.8) 50%,
-    rgba(13, 27, 42, 0.7) 100%
+    rgba(20, 40, 61, 0.85) 0%,
+    rgba(31, 95, 137, 0.7) 50%,
+    rgba(20, 40, 61, 0.6) 100%
   );
 }
 .hero-particles {

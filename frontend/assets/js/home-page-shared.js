@@ -2,6 +2,9 @@
 
 (function () {
   function escapeHtml(value) {
+    if (typeof window.sanitiseTrustedHtml === 'function') {
+      return window.sanitiseTrustedHtml(value);
+    }
     const s = String(value == null ? '' : value);
     const node = document.createElement('div');
     node.textContent = s;

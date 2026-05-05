@@ -976,9 +976,18 @@
       function setText(id, val) {
         if (!val && val !== 0) return;
         const el = document.getElementById(id);
-        if (el) el.textContent = val;
+        if (el) {
+          if (typeof window.setHtmlSafely === 'function') {
+            window.setHtmlSafely(el, val);
+          } else {
+            el.textContent = val;
+          }
+        }
       }
       function escH(s) {
+        if (typeof window.sanitiseTrustedHtml === 'function') {
+          return window.sanitiseTrustedHtml(s);
+        }
         return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
       }
       try {

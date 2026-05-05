@@ -22,16 +22,10 @@ function sanitiseTrustedHtml(rawHtml) {
     Array.from(el.attributes).forEach((attr) => {
       const n = attr.name.toLowerCase();
       const v = String(attr.value || '').trim().toLowerCase();
-      if (n.startsWith('on')) {
+      // Block event handlers and dangerous protocols
+      if (n.startsWith('on') || v.startsWith('javascript:') || v.startsWith('data:text/html') || v.startsWith('vbscript:')) {
         el.removeAttribute(attr.name);
         return;
-      }
-      if ((n === 'href' || n === 'src' || n === 'xlink:href') && (v.startsWith('javascript:') || v.startsWith('data:text/html'))) {
-        el.removeAttribute(attr.name);
-        return;
-      }
-      if (n === 'style') {
-        el.removeAttribute(attr.name);
       }
     });
   });

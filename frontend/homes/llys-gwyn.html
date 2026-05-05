@@ -521,7 +521,10 @@
     }
     function applyExtras(g) {
       var av = document.getElementById('llys-availability-text');
-      if (av && g.availabilityLine) av.textContent = g.availabilityLine;
+      if (av && g.availabilityLine) {
+        if (typeof window.setHtmlSafely === 'function') window.setHtmlSafely(av, g.availabilityLine);
+        else av.textContent = g.availabilityLine;
+      }
       var mw = document.getElementById('llys-map-wrap');
       if (mw && g.mapEmbedHtml) {
         var safeHtml = g.mapEmbedHtml.replace(/<iframe/gi, '<iframe allow="" referrerpolicy="no-referrer"');
@@ -570,15 +573,31 @@
       }
       
       if (g.managerProfile) {
-        var mname = document.getElementById('dyn-mgr-name'); if(mname) mname.textContent = g.managerProfile.name || 'Manager';
-        var mtitle = document.getElementById('dyn-mgr-title'); if(mtitle) mtitle.textContent = g.managerProfile.title || 'Home Manager';
-        var mbio = document.getElementById('dyn-mgr-bio'); if(mbio) mbio.textContent = g.managerProfile.bio || '';
+        var mname = document.getElementById('dyn-mgr-name'); 
+        if(mname) {
+          if (typeof window.setHtmlSafely === 'function') window.setHtmlSafely(mname, g.managerProfile.name || 'Manager');
+          else mname.textContent = g.managerProfile.name || 'Manager';
+        }
+        var mtitle = document.getElementById('dyn-mgr-title'); 
+        if(mtitle) {
+          if (typeof window.setHtmlSafely === 'function') window.setHtmlSafely(mtitle, g.managerProfile.title || 'Home Manager');
+          else mtitle.textContent = g.managerProfile.title || 'Home Manager';
+        }
+        var mbio = document.getElementById('dyn-mgr-bio'); 
+        if(mbio) {
+          if (typeof window.setHtmlSafely === 'function') window.setHtmlSafely(mbio, g.managerProfile.bio || '');
+          else mbio.textContent = g.managerProfile.bio || '';
+        }
         var mimg = document.getElementById('dyn-mgr-img'); if(mimg && g.managerProfile.photoUrl && g.managerProfile.photoUrl !== '') {
             mimg.src = feedAssetPath(g.managerProfile.photoUrl);
         }
       }
 
-      var cIntro = document.getElementById('dyn-care-intro'); if(cIntro) cIntro.textContent = g.careIntro || '';
+      var cIntro = document.getElementById('dyn-care-intro'); 
+      if(cIntro) {
+        if (typeof window.setHtmlSafely === 'function') window.setHtmlSafely(cIntro, g.careIntro || '');
+        else cIntro.textContent = g.careIntro || '';
+      }
       if (g.careProvided && g.careProvided.length) {
         var cEl = document.getElementById('dyn-care-container');
         if(cEl) cEl.innerHTML = '<div><h3 style="font-family:var(--font-serif);font-size:1.25rem;color:var(--clr-midnight);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem">🩺 Care Provided</h3><div class="services-list-grid" style="grid-template-columns:1fr;gap:0.75rem">' + g.careProvided.map(function(c) {
