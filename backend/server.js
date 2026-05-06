@@ -901,6 +901,10 @@ app.post('/api/auth/login', loginLimiter, async (req, res) => {
     const hash  = await getAdminHash();
     const valid = await bcrypt.compare(password, hash);
     if (!valid) {
+      console.warn('🔐 Failed admin login attempt', {
+        ip: req.ip,
+        ua: req.get('user-agent') || 'unknown',
+      });
       await new Promise(r => setTimeout(r, 600));
       return res.status(401).json({ error: 'Incorrect password. Please try again.' });
     }

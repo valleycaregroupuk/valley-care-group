@@ -1570,7 +1570,8 @@ function setToken(t)      { sessionStorage.setItem('vcg_token', t); }
 function clearToken()     { sessionStorage.removeItem('vcg_token'); }
 
 // ── API helper ───────────────────────────────────────────────────────────────
-async function api(method, path, body) {
+async function api(method, path, body, opts) {
+  const options = opts || {};
   const headers = { 'Content-Type': 'application/json' };
   const token = getToken();
   if (token) headers['Authorization'] = 'Bearer ' + token;
@@ -1586,7 +1587,7 @@ async function api(method, path, body) {
     throw new Error('Cannot reach the server. Please refresh and try again.');
   }
 
-  if (res.status === 401) {
+  if (res.status === 401 && !options.skipAuthRedirect) {
     // Token expired or invalid — send back to login
     clearToken();
     showLogin('Session expired. Please sign in again.');
@@ -1609,17 +1610,33 @@ async function doLogin(e) {
   e.preventDefault();
   const btn  = document.getElementById('login-btn');
   const err  = document.getElementById('login-error');
-  const pw   = document.getElementById('admin-pass').value;
+  const warn = document.getElementById('login-warn');
+  const input = document.getElementById('admin-pass');
+  const rawPw = input.value || '';
+  const pw = rawPw.trim();
   err.style.display = 'none';
+  warn.style.display = 'none';
+
+  if (!pw) {
+    err.textContent = 'Please enter your password.';
+    err.style.display = 'block';
+    return;
+  }
+
+  if (rawPw !== pw) {
+    warn.textContent = 'Leading/trailing spaces were removed from your password input.';
+    warn.style.display = 'block';
+  }
+
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> Signing in…';
 
   try {
-    const { token } = await api('POST', '/api/auth/login', { password: pw });
+    const { token } = await api('POST', '/api/auth/login', { password: pw }, { skipAuthRedirect: true });
     setToken(token);
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('admin-app').style.display = 'block';
-    document.getElementById('admin-pass').value = '';
+    input.value = '';
     checkApiStatus();
     loadAll();
   } catch (ex) {
