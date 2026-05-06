@@ -26,6 +26,30 @@
         "headers": [
           { "key": "Cache-Control", "value": "no-store, max-age=0, must-revalidate" }
         ]
+      },
+      {
+        "source": "/assets/js/config.js",
+        "headers": [
+          { "key": "Cache-Control", "value": "no-store, max-age=0, must-revalidate" }
+        ]
+      },
+      {
+        "source": "/admin.html",
+        "headers": [
+          { "key": "Cache-Control", "value": "no-store, max-age=0, must-revalidate" }
+        ]
+      },
+      {
+        "source": "/admin",
+        "headers": [
+          { "key": "Cache-Control", "value": "no-store, max-age=0, must-revalidate" }
+        ]
+      },
+      {
+        "source": "/login",
+        "headers": [
+          { "key": "Cache-Control", "value": "no-store, max-age=0, must-revalidate" }
+        ]
       }
     ],
     "rewrites": [

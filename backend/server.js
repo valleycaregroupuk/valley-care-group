@@ -801,11 +801,28 @@ async function writeContent(c) {
 // ── ADMIN HASH ────────────────────────────────────────────────────────────
 async function getAdminHash() {
   let hash = await kv.get(KEY_ADMINHASH);
-  if (!hash) {
+  if (!hash || typeof hash !== 'string') {
     hash = bcrypt.hashSync(ADMIN_PW, 12);
     await kv.set(KEY_ADMINHASH, hash);
     console.log('🔐 Admin password hash generated and stored in KV');
+    return hash;
   }
+
+  // Keep env-driven password changes in sync with persisted hash.
+  // This avoids "password suddenly stopped working" after rotating ADMIN_PASSWORD.
+  try {
+    const matchesEnvPassword = await bcrypt.compare(ADMIN_PW, hash);
+    if (!matchesEnvPassword) {
+      hash = bcrypt.hashSync(ADMIN_PW, 12);
+      await kv.set(KEY_ADMINHASH, hash);
+      console.log('🔐 Admin password hash rotated to match current ADMIN_PASSWORD');
+    }
+  } catch (err) {
+    console.warn('⚠️  Could not verify admin hash; regenerating:', err.message);
+    hash = bcrypt.hashSync(ADMIN_PW, 12);
+    await kv.set(KEY_ADMINHASH, hash);
+  }
+
   return hash;
 }
 
