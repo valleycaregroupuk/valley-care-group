@@ -965,14 +965,20 @@ function mergePublicContent(stored) {
     glan: {
       ...def.homePages.glan,
       ...(hp.glan || {}),
+      phoneDisplay: def.homePages.glan.phoneDisplay,
+      phoneTel: def.homePages.glan.phoneTel,
     },
     llys: {
       ...def.homePages.llys,
       ...(hp.llys || {}),
+      phoneDisplay: def.homePages.llys.phoneDisplay,
+      phoneTel: def.homePages.llys.phoneTel,
     },
     pentwyn: {
       ...def.homePages.pentwyn,
       ...(hp.pentwyn || {}),
+      phoneDisplay: def.homePages.pentwyn.phoneDisplay,
+      phoneTel: def.homePages.pentwyn.phoneTel,
     },
   };
   c.testimonials = Array.isArray(c.testimonials) ? c.testimonials : (def.testimonials || []);
