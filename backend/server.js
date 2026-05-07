@@ -669,7 +669,7 @@ function defaultContent() {
           { label: 'Operator', value: 'Grayson Enterprises Ltd' },
           { label: 'Manager', value: 'Sharanjit Kaur' },
           { label: 'Location', value: 'Pyle, Bridgend' },
-          { label: 'Phone', value: '01656 743 666' },
+          { label: 'Phone', value: '01656 743666' },
           { label: 'Email', value: 'contact@llysgwyn.com' },
         ],
         managerProfile: {

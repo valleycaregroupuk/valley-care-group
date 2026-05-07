@@ -101,7 +101,7 @@ npx serve frontend
 
 Valley Care Group provides compassionate nursing and residential care across South Wales.
 - **Glan-yr-Afon Nursing Home** — Blackwood, Caerphilly — **01443 835196**
-- **Llys Gwyn Residential Home** — Pyle, Bridgend (CF33 4PN) — **01656 743 666**
+- **Llys Gwyn Residential Home** — Pyle, Bridgend (CF33 4PN) — **01656 743666**
 - **Ty Pentwyn Nursing Home** — Treorchy, RCT (CF42 6HD) — **01443 778010** · **managertypentwyn@outlook.com** · [carehome.co.uk listing](https://www.carehome.co.uk/carehome.cfm/searchazref/20005017TYPA) (operator: Ati2ude Care Ltd)
 
 ✉️ **care@valleycaregroup.co.uk** — see **contact.html** for all numbers.
