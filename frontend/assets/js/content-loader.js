@@ -7,16 +7,51 @@
 'use strict';
 
 (async function() {
+  function sanitiseTrustedHtml(rawHtml) {
+    var html = String(rawHtml || '');
+    var tpl = document.createElement('template');
+    tpl.innerHTML = html;
+
+    tpl.content.querySelectorAll('script, iframe, object, embed, form, link, meta').forEach(function (el) {
+      el.remove();
+    });
+
+    tpl.content.querySelectorAll('*').forEach(function (el) {
+      Array.from(el.attributes).forEach(function (attr) {
+        var n = String(attr.name || '').toLowerCase();
+        var v = String(attr.value || '').trim().toLowerCase();
+        if (n.indexOf('on') === 0 || v.indexOf('javascript:') === 0 || v.indexOf('data:text/html') === 0 || v.indexOf('vbscript:') === 0) {
+          el.removeAttribute(attr.name);
+        }
+      });
+    });
+
+    return tpl.innerHTML;
+  }
+
+  function decodeLikelyEncodedHtml(raw) {
+    var text = String(raw || '');
+    if (text.indexOf('&lt;') === -1 && text.indexOf('&gt;') === -1) return text;
+    // Only decode when it looks like encoded tags (e.g. &lt;em&gt;...&lt;/em&gt;).
+    if (!/&lt;\s*\/?\s*[a-z][^&]*&gt;/i.test(text)) return text;
+    var textarea = document.createElement('textarea');
+    textarea.innerHTML = text;
+    return textarea.value;
+  }
+
   function setSafeContent(el, val) {
     if (val === '') {
       el.textContent = '';
       return;
     }
+    var normalised = decodeLikelyEncodedHtml(val);
     // If setHtmlSafely is available from main.js, use it to allow basic tags like <em> and <br>
     if (typeof window.setHtmlSafely === 'function') {
-      window.setHtmlSafely(el, val);
+      window.setHtmlSafely(el, normalised);
     } else {
-      el.textContent = String(val);
+      // Fallback for rare load-order/runtime issues where main.js did not expose setHtmlSafely.
+      // Keep rich text rendering and sanitisation behaviour consistent across pages.
+      el.innerHTML = sanitiseTrustedHtml(normalised);
     }
   }
 
