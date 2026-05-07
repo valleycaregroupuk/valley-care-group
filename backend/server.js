@@ -18,17 +18,17 @@ try {
       if (k && !k.startsWith('#') && !process.env[k.trim()])
         process.env[k.trim()] = v.join('=').trim();
     });
-} catch (_) {}
+} catch (_) { }
 
-const crypto    = require('crypto');
-const express   = require('express');
-const bcrypt    = require('bcryptjs');
-const jwt       = require('jsonwebtoken');
-const cors      = require('cors');
-const helmet    = require('helmet');
+const crypto = require('crypto');
+const express = require('express');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const cors = require('cors');
+const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const multer    = require('multer');
-const path      = require('path');
+const multer = require('multer');
+const path = require('path');
 
 // ---------------------------------------------------------------------------
 // KV store: PostgreSQL (Cloud SQL) or in-memory when DATABASE_URL is unset
@@ -78,15 +78,15 @@ const ALLOWED_ORIGINS = IS_PROD && !PRODUCTION_MISCONFIGURED
 // ---------------------------------------------------------------------------
 // KV key helpers
 // ---------------------------------------------------------------------------
-const KEY_JOBS        = 'vcg:jobs';
-const KEY_CONTENT     = 'vcg:content';
-const KEY_ADMINHASH   = 'vcg:admin_hash';
-const KEY_ENQUIRIES   = 'vcg:enquiries';
+const KEY_JOBS = 'vcg:jobs';
+const KEY_CONTENT = 'vcg:content';
+const KEY_ADMINHASH = 'vcg:admin_hash';
+const KEY_ENQUIRIES = 'vcg:enquiries';
 const KEY_APPLICATIONS = 'vcg:applications';
 const KEY_HOME_REVIEWS = 'vcg:home_reviews';
-const KEY_SUBSCRIBERS  = 'vcg:subscribers';
-const KEY_NL_ARCHIVE   = 'vcg:nl_archive';
-const KEY_NEWSLETTERS  = 'vcg:newsletter_issues';
+const KEY_SUBSCRIBERS = 'vcg:subscribers';
+const KEY_NL_ARCHIVE = 'vcg:nl_archive';
+const KEY_NEWSLETTERS = 'vcg:newsletter_issues';
 
 // ---------------------------------------------------------------------------
 // Shared KV rate limit (works across serverless instances)
@@ -348,8 +348,8 @@ const uploadMedia = multer({
   limits: { fileSize: 50 * 1024 * 1024 }, // Allowed up to 50MB for videos/images/docs
   fileFilter: (_req, file, cb) => {
     const okMime = /^image\/(jpeg|png|webp|gif)$/i.test(file.mimetype) ||
-                   /^video\/(mp4|webm|ogg)$/i.test(file.mimetype) ||
-                   file.mimetype === 'application/pdf';
+      /^video\/(mp4|webm|ogg)$/i.test(file.mimetype) ||
+      file.mimetype === 'application/pdf';
     const ext = (file.originalname || '').toLowerCase();
     const okExt = /\.(jpg|jpeg|png|webp|gif|mp4|webm|ogg|pdf)$/i.test(ext);
     if (okMime && okExt) cb(null, true);
@@ -541,7 +541,7 @@ function defaultContent() {
       heroLine3: 'Home.',
       heroSubtitle: 'Nursing and residential care across South Wales — Glan-yr-Afon, Llys Gwyn, and Ty Pentwyn. Person-centred support, regulated by Care Inspectorate Wales (CIW).',
       stat1Value: 20, stat1Suffix: '+', stat1Label: 'Years of Care',
-      stat2Value: 3,  stat2Suffix: '',  stat2Label: 'Care Homes',
+      stat2Value: 3, stat2Suffix: '', stat2Label: 'Care Homes',
       stat3Value: 105, stat3Suffix: '', stat3Label: 'Registered places (max.)',
       stat4Value: 64, stat4Suffix: '', stat4Label: 'Directory reviews (Glan & Llys)',
       carehomeGlanScore: '9.9',
@@ -568,7 +568,7 @@ function defaultContent() {
           { url: 'assets/images/caregiver.png', alt: 'Care Team at Work' }
         ],
         team: [
-          { name: 'Alice Thompson', role: 'Home Manager', bio: 'Alice has over 15 years of experience in senior care management and is dedicated to person-centred care.', photoUrl: 'assets/images/caregiver.png' },
+          { name: 'Alex', role: 'Home Manager', bio: 'Alex has over 25 years of experience in senior care management and is dedicated to person-centred care.', photoUrl: 'assets/images/caregiver.png' },
           { name: 'Dr. James Wilson', role: 'Lead Nurse', bio: 'James oversees clinical excellence and leads our team of qualified RGNs.', photoUrl: '' }
         ],
         faqs: [
@@ -587,17 +587,18 @@ function defaultContent() {
           { label: 'Home Type', value: 'Nursing & Residential' },
           { label: 'Rooms', value: '39 Single Rooms' },
           { label: 'Centre Proximity', value: '~1.3 miles to Blackwood' },
+          { label: 'Operator', value: 'Comfort Care Homes (Glan Yr Afon) Ltd' },
           { label: 'Registration', value: 'Care Inspectorate Wales (CIW)' },
           { label: 'carehome.co.uk Rating', value: '9.9 / 10 ⭐' },
           { label: 'Reviews', value: '41 Reviews' },
           { label: 'Phone', value: '01443 835196' },
-          { label: 'Email', value: 'care@valleycaregroup.co.uk' },
+          { label: 'Email', value: 'info.glanyrafoncarehome@gmail.com' },
           { label: 'Visitors', value: 'Welcome anytime' },
         ],
         managerProfile: {
-          name: 'Alice Thompson',
+          name: 'Alex',
           title: 'Home Manager',
-          bio: 'Alice has over 15 years of experience in senior care management and is dedicated to person-centred care.',
+          bio: 'Alex has over 25 years of experience in senior care management and is dedicated to person-centred care.',
           photoUrl: 'assets/images/caregiver.png',
         },
         ciwInspectionDate: '15 March 2025',
@@ -669,7 +670,7 @@ function defaultContent() {
           { label: 'Manager', value: 'Sharanjit Kaur' },
           { label: 'Location', value: 'Pyle, Bridgend' },
           { label: 'Phone', value: '01656 743 666' },
-          { label: 'Visitors', value: 'Welcome anytime' },
+          { label: 'Email', value: 'contact@llysgwyn.com' },
         ],
         managerProfile: {
           name: 'Sharanjit Kaur',
@@ -716,7 +717,7 @@ function defaultContent() {
         managerEmail: 'managertypentwyn@outlook.com',
         carehomeListingUrl: 'https://www.carehome.co.uk/carehome.cfm/searchazref/20005017TYPA',
         ciwServiceUrl: 'https://digital.careinspectorate.wales/',
-        operator: 'Quality Care (Surrey) Ltd',
+        operator: 'Ati2ude Care Ltd',
         manager: 'Susan Rosser (Registered Manager)',
         availabilityLine: 'Please contact us for the latest vacancies.',
         mapEmbedHtml: '',
@@ -740,10 +741,10 @@ function defaultContent() {
         keyInfo: [
           { label: 'Home Type', value: 'Nursing & Residential' },
           { label: 'Capacity', value: 'Up to 35 residents' },
-          { label: 'Operator', value: 'Quality Care (Surrey) Ltd' },
+          { label: 'Operator', value: 'Ati2ude Care Ltd' },
           { label: 'Manager', value: 'Susan Rosser (Registered Manager)' },
           { label: 'Location', value: 'Treorchy, RCT' },
-          { label: 'Local Authority', value: 'Rhondda Cynon Taff County Borough Council' },
+          { label: 'Phone', value: '01443 778 010' },
         ],
         managerProfile: {
           name: 'Susan Rosser',
@@ -898,7 +899,7 @@ app.post('/api/auth/login', loginLimiter, async (req, res) => {
     return res.status(400).json({ error: 'Password is required.' });
   }
   try {
-    const hash  = await getAdminHash();
+    const hash = await getAdminHash();
     const valid = await bcrypt.compare(password, hash);
     if (!valid) {
       console.warn('🔐 Failed admin login attempt', {
@@ -1159,21 +1160,21 @@ app.post('/api/newsletter/subscribe', formLimiter, async (req, res) => {
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).trim())) {
       return res.status(400).json({ error: 'Valid email is required.' });
     }
-    
+
     const cleanEmail = email.trim().toLowerCase();
     const subs = await readSubscribers();
-    
+
     if (subs.find(s => s.email === cleanEmail)) {
       // Already subscribed, silently succeed
       return res.json({ ok: true });
     }
-    
+
     subs.push({
       id: eid('sub_'),
       email: cleanEmail,
       date: new Date().toISOString()
     });
-    
+
     await writeSubscribers(subs);
     res.status(201).json({ ok: true });
   } catch (err) {
@@ -1293,18 +1294,18 @@ app.post('/api/admin/jobs', requireAuth, async (req, res) => {
   try {
     const jobs = await readJobs();
     const job = {
-      id:        uid(),
-      title:     sanitise(req.body.title),
-      home:      sanitise(req.body.home),
+      id: uid(),
+      title: sanitise(req.body.title),
+      home: sanitise(req.body.home),
       homeLabel: sanitise(req.body.homeLabel),
-      location:  sanitise(req.body.location),
-      type:      sanitise(req.body.type),
-      category:  sanitise(req.body.category),
-      desc:      sanitise(req.body.desc),
-      reqs:      sanitise(req.body.reqs),
-      posted:    sanitise(req.body.posted),
-      status:    ['active','hidden'].includes(req.body.status) ? req.body.status : 'active',
-      btnLabel:  sanitise(req.body.btnLabel) || 'Apply Now',
+      location: sanitise(req.body.location),
+      type: sanitise(req.body.type),
+      category: sanitise(req.body.category),
+      desc: sanitise(req.body.desc),
+      reqs: sanitise(req.body.reqs),
+      posted: sanitise(req.body.posted),
+      status: ['active', 'hidden'].includes(req.body.status) ? req.body.status : 'active',
+      btnLabel: sanitise(req.body.btnLabel) || 'Apply Now',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -1324,21 +1325,21 @@ app.post('/api/admin/jobs', requireAuth, async (req, res) => {
 app.put('/api/admin/jobs/:id', requireAuth, async (req, res) => {
   try {
     const jobs = await readJobs();
-    const idx  = jobs.findIndex(j => j.id === req.params.id);
+    const idx = jobs.findIndex(j => j.id === req.params.id);
     if (idx === -1) return res.status(404).json({ error: 'Job not found.' });
     const updated = {
       ...jobs[idx],
-      title:     sanitise(req.body.title)     || jobs[idx].title,
-      home:      sanitise(req.body.home)      || jobs[idx].home,
+      title: sanitise(req.body.title) || jobs[idx].title,
+      home: sanitise(req.body.home) || jobs[idx].home,
       homeLabel: sanitise(req.body.homeLabel) || jobs[idx].homeLabel,
-      location:  sanitise(req.body.location),
-      type:      sanitise(req.body.type)      || jobs[idx].type,
-      category:  sanitise(req.body.category)  || jobs[idx].category,
-      desc:      sanitise(req.body.desc)      || jobs[idx].desc,
-      reqs:      sanitise(req.body.reqs),
-      posted:    sanitise(req.body.posted),
-      status:    ['active','hidden'].includes(req.body.status) ? req.body.status : jobs[idx].status,
-      btnLabel:  sanitise(req.body.btnLabel)  || 'Apply Now',
+      location: sanitise(req.body.location),
+      type: sanitise(req.body.type) || jobs[idx].type,
+      category: sanitise(req.body.category) || jobs[idx].category,
+      desc: sanitise(req.body.desc) || jobs[idx].desc,
+      reqs: sanitise(req.body.reqs),
+      posted: sanitise(req.body.posted),
+      status: ['active', 'hidden'].includes(req.body.status) ? req.body.status : jobs[idx].status,
+      btnLabel: sanitise(req.body.btnLabel) || 'Apply Now',
       updatedAt: new Date().toISOString(),
     };
     jobs[idx] = updated;
@@ -1354,7 +1355,7 @@ app.put('/api/admin/jobs/:id', requireAuth, async (req, res) => {
 app.delete('/api/admin/jobs/:id', requireAuth, async (req, res) => {
   try {
     const jobs = await readJobs();
-    const idx  = jobs.findIndex(j => j.id === req.params.id);
+    const idx = jobs.findIndex(j => j.id === req.params.id);
     if (idx === -1) return res.status(404).json({ error: 'Job not found.' });
     const [deleted] = jobs.splice(idx, 1);
     await writeJobs(jobs);
@@ -1369,13 +1370,13 @@ app.delete('/api/admin/jobs/:id', requireAuth, async (req, res) => {
 app.patch('/api/admin/jobs/:id/status', requireAuth, async (req, res) => {
   try {
     const jobs = await readJobs();
-    const job  = jobs.find(j => j.id === req.params.id);
+    const job = jobs.find(j => j.id === req.params.id);
     if (!job) return res.status(404).json({ error: 'Job not found.' });
     const { status } = req.body;
-    if (!['active','hidden'].includes(status)) {
+    if (!['active', 'hidden'].includes(status)) {
       return res.status(400).json({ error: 'Status must be "active" or "hidden".' });
     }
-    job.status    = status;
+    job.status = status;
     job.updatedAt = new Date().toISOString();
     await writeJobs(jobs);
     res.json(job);
@@ -1390,7 +1391,7 @@ app.put('/api/admin/content/:section', requireAuth, async (req, res) => {
   try {
     const c = await readContent();
     const sec = req.params.section;
-    if (!['site','homepage','live','homePages'].includes(sec)) return res.status(400).json({ error: 'Unknown section.' });
+    if (!['site', 'homepage', 'live', 'homePages'].includes(sec)) return res.status(400).json({ error: 'Unknown section.' });
     if (sec === 'homePages' && req.body && typeof req.body === 'object') {
       const prev = { ...(c.homePages || {}) };
       c.homePages = { ...prev, ...req.body };
@@ -1426,13 +1427,13 @@ app.post('/api/admin/content/testimonials', requireAuth, async (req, res) => {
     const c = await readContent();
     if (!Array.isArray(c.testimonials)) c.testimonials = [];
     const t = {
-      id:          'tt_' + Date.now(),
-      name:        sanitise(req.body.name),
-      relation:    sanitise(req.body.relation),
-      home:        sanitise(req.body.home),
-      initials:    sanitise(req.body.initials).slice(0, 2),
+      id: 'tt_' + Date.now(),
+      name: sanitise(req.body.name),
+      relation: sanitise(req.body.relation),
+      home: sanitise(req.body.home),
+      initials: sanitise(req.body.initials).slice(0, 2),
       avatarColor: /^#[0-9a-fA-F]{3,6}$/.test(req.body.avatarColor) ? req.body.avatarColor : '#1B4F72',
-      text:        sanitise(req.body.text),
+      text: sanitise(req.body.text),
     };
     if (!t.name || !t.text) return res.status(400).json({ error: 'name and text are required.' });
     c.testimonials.push(t);
@@ -1449,12 +1450,12 @@ app.put('/api/admin/content/testimonials/:id', requireAuth, async (req, res) => 
     if (i === -1) return res.status(404).json({ error: 'Testimonial not found.' });
     c.testimonials[i] = {
       ...c.testimonials[i],
-      name:        sanitise(req.body.name)     || c.testimonials[i].name,
-      relation:    sanitise(req.body.relation),
-      home:        sanitise(req.body.home),
-      initials:    sanitise(req.body.initials).slice(0, 2),
+      name: sanitise(req.body.name) || c.testimonials[i].name,
+      relation: sanitise(req.body.relation),
+      home: sanitise(req.body.home),
+      initials: sanitise(req.body.initials).slice(0, 2),
       avatarColor: /^#[0-9a-fA-F]{3,6}$/.test(req.body.avatarColor) ? req.body.avatarColor : c.testimonials[i].avatarColor,
-      text:        sanitise(req.body.text)     || c.testimonials[i].text,
+      text: sanitise(req.body.text) || c.testimonials[i].text,
     };
     await writeContent(c);
     res.json(c.testimonials[i]);
@@ -1694,14 +1695,14 @@ app.get('/api/admin/newsletters', requireAuth, async (req, res) => {
 app.post('/api/admin/newsletters', requireAuth, uploadNewsletterAssets, async (req, res) => {
   try {
     const { id, title, month, year, description, home, sendEmail: broadcast } = req.body;
-    
+
     if (!title || !month || !year) {
       return res.status(400).json({ error: 'Title, Month, and Year are required.' });
     }
 
     const list = await readNewsletterIssues();
     let issue = id ? list.find(n => n.id === id) : null;
-    
+
     if (!issue) {
       issue = {
         id: eid('iss_'),
@@ -1751,7 +1752,7 @@ app.post('/api/admin/newsletters', requireAuth, uploadNewsletterAssets, async (r
         const bccList = subs.map(s => s.email).filter(Boolean);
         const subject = `Newsletter Update: ${issue.title} (${issue.month} ${issue.year})`;
         const newsLink = `https://www.valleycaregroup.co.uk/news.html?issue=${issue.id}`;
-        
+
         const html = `
           <div style="font-family: Arial, sans-serif; color: #1C2E40; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
             <div style="background-color: #1C2E40; padding: 24px; text-align: center;">
@@ -1850,18 +1851,18 @@ app.delete('/api/admin/subscribers/:email', requireAuth, async (req, res) => {
 app.post('/api/admin/newsletter/send', requireAuth, async (req, res) => {
   try {
     const { subject, previewText, htmlContent } = req.body;
-    
+
     if (!subject || !htmlContent) {
       return res.status(400).json({ error: 'Subject and HTML content are required.' });
     }
-    
+
     const subs = await readSubscribers();
     if (subs.length === 0) {
       return res.status(400).json({ error: 'No subscribers to send to.' });
     }
 
     const bccList = subs.map(s => s.email).filter(Boolean);
-    
+
     const fullHtml = `
       <div style="font-family: Arial, sans-serif; color: #1C2E40; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
         <div style="background-color: #1C2E40; padding: 24px; text-align: center;">
@@ -1888,12 +1889,12 @@ app.post('/api/admin/newsletter/send', requireAuth, async (req, res) => {
     if (!success && process.env.RESEND_API_KEY) {
       return res.status(500).json({ error: 'Email service failed to deliver the broadcast.' });
     }
-    
+
     if (!process.env.RESEND_API_KEY) {
-       console.log('--- MOCK NEWSLETTER BROADCAST ---');
-       console.log(`BCC: ${bccList.join(', ')}`);
-       console.log(`Subject: ${subject}`);
-       console.log('---------------------------------');
+      console.log('--- MOCK NEWSLETTER BROADCAST ---');
+      console.log(`BCC: ${bccList.join(', ')}`);
+      console.log(`Subject: ${subject}`);
+      console.log('---------------------------------');
     }
 
     // Save to public archive so users can browse past issues
@@ -1946,17 +1947,17 @@ app.get('/api/admin/stats', requireAuth, async (req, res) => {
   try {
     const jobs = await readJobs();
     const activeJobs = jobs.filter(j => j.status === 'active');
-    
+
     const glanJobs = activeJobs.filter(j => j.home === 'glan').length;
     const llysJobs = activeJobs.filter(j => j.home === 'llys').length;
     const pentwynJobs = activeJobs.filter(j => j.home === 'pentwyn').length;
-    
+
     const enquiries = await readEnquiries();
     const newEnquiries = enquiries.length;
-    
+
     const applications = await readApplications();
     const newApplications = applications.length;
-    
+
     const subs = await readSubscribers();
     const activeSubscribers = subs.length;
 
@@ -1980,15 +1981,15 @@ app.put('/api/admin/home/:slug/:collection', requireAuth, async (req, res) => {
     const { slug, collection } = req.params;
     const allowedHomes = ['glan', 'llys', 'pentwyn'];
     const allowedCollections = ['team', 'faqs', 'gallery'];
-    
+
     if (!allowedHomes.includes(slug)) return res.status(400).json({ error: 'Invalid home slug' });
     if (!allowedCollections.includes(collection)) return res.status(400).json({ error: 'Invalid collection' });
-    
+
     const content = await readContent();
     if (!content.homePages[slug]) content.homePages[slug] = {};
-    
+
     const incoming = Array.isArray(req.body) ? req.body : [];
-    
+
     let list = [];
     if (collection === 'team') {
       list = incoming.map(i => ({
@@ -2008,7 +2009,7 @@ app.put('/api/admin/home/:slug/:collection', requireAuth, async (req, res) => {
         alt: sanitise(i.alt).slice(0, 200)
       })).filter(i => i.url);
     }
-    
+
     content.homePages[slug][collection] = list;
     await writeContent(content);
     res.json({ ok: true, list });
@@ -2022,17 +2023,17 @@ app.put('/api/admin/home/:slug/:collection', requireAuth, async (req, res) => {
 app.post('/api/admin/upload', requireAuth, uploadMedia.single('file'), async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: 'No file uploaded.' });
-    
+
     const { uploadBuffer } = require('./lib/gcs-upload');
     const ext = path.extname(req.file.originalname) || '';
     const dest = `uploads/${Date.now()}_${crypto.randomBytes(4).toString('hex')}${ext}`;
-    
+
     const url = await uploadBuffer({
       buffer: req.file.buffer,
       destPath: dest,
       contentType: req.file.mimetype
     });
-    
+
     res.json({ ok: true, url });
   } catch (err) {
     console.error('POST /api/admin/upload error:', err.message);
@@ -2070,7 +2071,7 @@ app.use((err, req, res, _next) => {
     try { require('@sentry/node').captureException(err); } catch (_) { /* optional dep */ }
   }
   console.error('Unhandled error:', err);
-  res.status(err.status || 500).json({ 
+  res.status(err.status || 500).json({
     error: IS_PROD ? 'An unexpected error occurred.' : (err.message || 'An unexpected error occurred.'),
     details: IS_PROD ? undefined : err.stack
   });
