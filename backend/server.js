@@ -528,7 +528,7 @@ function defaultContent() {
       announcementEnabled: true,
       announcementText: '🏡 Explore Ty Pentwyn Nursing Home in the Rhondda — specialist nursing & residential care →',
       announcementLink: 'homes/pentwyn.html',
-      phone: '01633 680217',
+      phone: '01656 743 666',
       email: 'care@valleycaregroup.co.uk',
       address: 'Off Ford Road, Fleur-de-Lys, Blackwood NP12 3WA',
       canonicalBase: 'https://www.valleycaregroup.co.uk',
@@ -637,8 +637,8 @@ function defaultContent() {
         ],
       },
       llys: {
-        phoneDisplay: '01633 680217',
-        phoneTel: '01633680217',
+        phoneDisplay: '01656 743 666',
+        phoneTel: '01656743666',
         ciwServiceUrl: 'https://digital.careinspectorate.wales/',
         operator: 'Grayson Enterprises Ltd',
         manager: 'Sharanjit Kaur',
@@ -668,7 +668,7 @@ function defaultContent() {
           { label: 'Operator', value: 'Grayson Enterprises Ltd' },
           { label: 'Manager', value: 'Sharanjit Kaur' },
           { label: 'Location', value: 'Pyle, Bridgend' },
-          { label: 'Phone', value: '01633 680217' },
+          { label: 'Phone', value: '01656 743 666' },
           { label: 'Visitors', value: 'Welcome anytime' },
         ],
         managerProfile: {
