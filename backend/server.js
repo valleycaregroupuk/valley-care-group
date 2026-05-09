@@ -2002,7 +2002,8 @@ app.put('/api/admin/home/:slug/:collection', requireAuth, async (req, res) => {
         name: sanitise(i.name).slice(0, 120),
         role: sanitise(i.role).slice(0, 120),
         bio: sanitise(i.bio).slice(0, 1500),
-        photoUrl: sanitise(i.photoUrl).slice(0, 500)
+        photoUrl: sanitise(i.photoUrl).slice(0, 500),
+        showOnAboutUs: !!i.showOnAboutUs
       })).filter(i => i.name);
     } else if (collection === 'faqs') {
       list = incoming.map(i => ({
