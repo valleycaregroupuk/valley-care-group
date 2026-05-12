@@ -4,4 +4,4 @@ Disallow: /admin
 Disallow: /admin.html
 Disallow: /login
 
-Sitemap: https://www.valleycaregroup.co.uk/sitemap.xml
+Sitemap: https://valleycaregroup.co.uk/sitemap.xml
