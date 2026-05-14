@@ -8,6 +8,8 @@
  *
  * This file may be updated or replaced during the build/deploy process.
  */
+window.MAINTENANCE_MODE = true; // Set to true to activate maintenance page
+
 (function () {
   var PROD_API_BASE = 'https://vcg-backend-778094361124.europe-west2.run.app';
   var KNOWN_BAD_API_BASES = [

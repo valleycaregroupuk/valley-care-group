@@ -2,6 +2,17 @@
 // VALLEY CARE GROUP — Main JS
 // ================================
 
+// ---- Maintenance Mode Guard ----
+(function() {
+  const isMaintenance = window.MAINTENANCE_MODE === true;
+  const isMaintenancePage = window.location.pathname.includes('maintenance.html');
+  const isAdminPage = window.location.pathname.includes('admin.html') || window.location.pathname.includes('/admin');
+  
+  if (isMaintenance && !isMaintenancePage && !isAdminPage) {
+    window.location.href = '/maintenance.html';
+  }
+})();
+
 function escapeHtmlUnsafe(s) {
   return String(s || '')
     .replace(/&/g, '&amp;')

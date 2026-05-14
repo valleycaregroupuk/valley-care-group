@@ -52,6 +52,13 @@
         ]
       }
     ],
+    "redirects": [
+      {
+        "source": "/maintenance",
+        "destination": "/maintenance.html",
+        "type": 302
+      }
+    ],
     "rewrites": [
       { "source": "/admin", "destination": "/admin.html" },
       { "source": "/login", "destination": "/admin.html" },

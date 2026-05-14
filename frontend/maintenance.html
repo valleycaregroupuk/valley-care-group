@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Maintenance — Valley Care Group</title>
+    <!-- Use existing styles for tokens -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        :root {
+            --m-bg: #14283D;
+            --m-gold: #D4AF37;
+            --m-gold-light: #F1D483;
+        }
+
+        body {
+            background-color: var(--m-bg);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(31, 95, 137, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(201, 168, 76, 0.1) 0%, transparent 40%);
+            color: #fff;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: 'Inter', system-ui, sans-serif;
+            text-align: center;
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        .maintenance-container {
+            max-width: 680px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Decorative Background Elements */
+        .decor-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.4;
+        }
+        .decor-1 { width: 300px; height: 300px; background: var(--m-gold); top: -150px; left: -150px; }
+        .decor-2 { width: 400px; height: 400px; background: var(--clr-cobalt); bottom: -200px; right: -200px; }
+
+        .logo-wrap {
+            margin-bottom: 3rem;
+            animation: logoFadeIn 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .logo-img {
+            width: 100px;
+            height: auto;
+            filter: drop-shadow(0 0 20px rgba(201, 168, 76, 0.3));
+        }
+
+        .m-content {
+            animation: contentFadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+        }
+
+        .m-eyebrow {
+            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--m-gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .m-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            color: #fff;
+        }
+
+        .m-title em {
+            font-style: italic;
+            color: var(--m-gold-light);
+            font-weight: 400;
+        }
+
+        .m-desc {
+            font-size: clamp(1.05rem, 2vw, 1.2rem);
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 3.5rem;
+            font-weight: 300;
+            max-width: 580px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .m-contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            animation: contentFadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: all 0.4s ease;
+        }
+
+        .contact-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-5px);
+            border-color: rgba(201, 168, 76, 0.3);
+        }
+
+        .contact-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--m-gold);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .contact-value {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .footer-note {
+            margin-top: 4rem;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+            animation: fadeIn 1.5s ease-out 1s both;
+        }
+
+        @keyframes logoFadeIn {
+            from { opacity: 0; transform: scale(0.8); filter: blur(10px); }
+            to { opacity: 1; transform: scale(1); filter: blur(0); }
+        }
+
+        @keyframes contentFadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 480px) {
+            .m-title { font-size: 2.2rem; }
+            .m-contact-grid { grid-template-columns: 1fr; }
+            body { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="decor-circle decor-1"></div>
+    <div class="decor-circle decor-2"></div>
+
+    <div class="maintenance-container">
+        <div class="logo-wrap">
+            <img src="assets/images/logo.png" alt="Valley Care Group" class="logo-img">
+        </div>
+
+        <div class="m-content">
+            <span class="m-eyebrow">Scheduled Maintenance</span>
+            <h1 class="m-title">Refining Our<br><em>Care Experience</em></h1>
+            <p class="m-desc">
+                We are currently updating our website to better reflect our commitment to excellence. 
+                Our homes remain open and our dedicated teams are available to assist you directly.
+            </p>
+        </div>
+
+        <div class="m-contact-grid">
+            <a href="tel:01443835196" class="contact-card">
+                <div class="contact-label">Glan-yr-Afon</div>
+                <div class="contact-value">01443 835196</div>
+            </a>
+            <a href="tel:01656743666" class="contact-card">
+                <div class="contact-label">Llys Gwyn</div>
+                <div class="contact-value">01656 743 666</div>
+            </a>
+            <a href="tel:01443778010" class="contact-card">
+                <div class="contact-label">Ty Pentwyn</div>
+                <div class="contact-value">01443 778010</div>
+            </a>
+            <a href="mailto:care@valleycaregroup.co.uk" class="contact-card">
+                <div class="contact-label">Email Support</div>
+                <div class="contact-value">care@valleycaregroup.co.uk</div>
+            </a>
+        </div>
+
+        <p class="footer-note">
+            &copy; 2026 Valley Care Group. We care with passion and have passion to care.
+        </p>
+    </div>
+</body>
+</html>
