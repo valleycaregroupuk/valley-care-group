@@ -6,6 +6,12 @@
     <title>Under Maintenance — Valley Care Group</title>
     <!-- Use existing styles for tokens -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/config.js"></script>
+    <script>
+        if (window.MAINTENANCE_MODE !== true) {
+            window.location.href = '/';
+        }
+    </script>
     <style>
         :root {
             --m-bg: #14283D;
