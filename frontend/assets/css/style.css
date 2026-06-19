@@ -8,8 +8,8 @@
 /* === CSS Custom Properties === */
 :root {
   /* Core Palette — Brightened & Professional */
-  --clr-midnight: #14283D;
-  --clr-slate: #253D54;
+  --clr-midnight: #1E3A5A;
+  --clr-slate: #2F4E6F;
   --clr-cobalt: #1F5F89;
   --clr-sky: #3498DB;
   --clr-light-blue: #D6EAF8;
@@ -91,7 +91,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   transition: background var(--transition-med), padding var(--transition-med), box-shadow var(--transition-med);
 }
 .navbar.scrolled {
-  background: rgba(20, 40, 61, 0.95);
+  background: rgba(30, 58, 90, 0.88);
   backdrop-filter: blur(20px);
   padding: 0.8rem 0;
   box-shadow: 0 4px 40px rgba(0,0,0,0.2);

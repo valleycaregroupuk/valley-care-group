@@ -205,7 +205,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(20,40,61,0.85) 0%, rgba(20,40,61,0.4) 60%, transparent 100%);
+  background: linear-gradient(to top, rgba(30,58,90,0.78) 0%, rgba(30,58,90,0.35) 60%, transparent 100%);
 }
 .home-detail-content {
   position: relative;
@@ -1905,7 +1905,7 @@ a.carehome-directory-cta-btn:hover {
    NEWSLETTER ARCHIVE STRIP
    ================================================ */
 .nl-archive-strip {
-  background: linear-gradient(135deg, #0d1b2a 0%, #1a2f44 100%);
+  background: linear-gradient(135deg, var(--clr-midnight) 0%, var(--clr-slate) 100%);
   padding: 1.5rem 0;
   border-top: 1px solid rgba(223, 192, 113, 0.15);
   border-bottom: 1px solid rgba(223, 192, 113, 0.15);
