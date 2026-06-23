@@ -213,6 +213,8 @@
             <div id="dyn-ciw-themes" style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem"></div>
             <a href="https://digital.careinspectorate.wales/" class="btn btn-primary" id="pentwyn-ciw-link" style="display:inline-block;padding:0.55rem 1.25rem;font-size:0.85rem;border-radius:var(--radius-full)" target="_blank" rel="noopener noreferrer">CIW digital directory →</a>
             <a href="#" class="btn btn-outline" id="pentwyn-ciw-pdf" style="display:none;margin-top:0.75rem;padding:0.5rem 1rem;font-size:0.85rem;border-radius:var(--radius-full)" target="_blank" rel="noopener noreferrer">📄 Download CIW Report (PDF) →</a>
+            <div id="dyn-ar-themes" style="display:none;flex-direction:column;gap:0.5rem;margin-top:1.25rem;margin-bottom:1rem"></div>
+            <a href="#" class="btn btn-primary" id="pentwyn-ar-link" style="display:none;margin-top:0.75rem;padding:0.55rem 1.25rem;font-size:0.85rem;border-radius:var(--radius-full)" target="_blank" rel="noopener noreferrer">View Annual Report →</a>
           </div>
 
           <div class="home-facts" style="margin-top:2rem">
@@ -503,6 +505,36 @@
       }
       if (pdfBtn) pdfBtn.style.display = 'none'; // Merged into main button
     }
+    function applyAnnualReport(g) {
+      var arLink = document.getElementById('pentwyn-ar-link');
+      var arUrl = g && (g.annualReportUrl || g.annualReportPdfUrl);
+      var arThemes = g && g.annualReportThemes;
+      var arThemesEl = document.getElementById('dyn-ar-themes');
+
+      if (arLink) {
+        if (arUrl) {
+          arLink.setAttribute('href', arUrl);
+          arLink.style.display = 'inline-block';
+        } else {
+          arLink.style.display = 'none';
+        }
+      }
+
+      if (arThemesEl) {
+        if (arThemes && arThemes.length) {
+          arThemesEl.innerHTML = arThemes.map(function(c) {
+            var ratingColor = '';
+            if (c.rating === 'Excellent') ratingColor = ' style="color:#117A65;font-weight:700"';
+            else if (c.rating === 'Good') ratingColor = ' style="color:#2E4053;font-weight:700"';
+            return '<div style="display:flex;justify-content:space-between;padding:0.5rem;background:var(--clr-cream);border-radius:4px;font-size:0.8rem"><span style="font-weight:600">' + escapeHtml(c.theme) + '</span><span' + ratingColor + '>' + escapeHtml(c.rating) + '</span></div>';
+          }).join('');
+          arThemesEl.style.display = 'flex';
+        } else {
+          arThemesEl.innerHTML = '';
+          arThemesEl.style.display = 'none';
+        }
+      }
+    }
     function renderFeed(ulId, items) {
       var ul = document.getElementById(ulId);
       if (!ul) return;
@@ -640,6 +672,7 @@ if (window.initGalleryLightbox) window.initGalleryLightbox('pentwyn-gallery-grid
     }
     function run(g) {
       applyLinks(g);
+      applyAnnualReport(g);
       var newsItems = g.news || [];
       var eventItems = g.events || [];
       var newsSec = document.getElementById('news');

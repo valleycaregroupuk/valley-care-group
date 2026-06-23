@@ -846,6 +846,36 @@
           </div>
         </div>
 
+        <!-- ────────────────── 3b. ANNUAL REPORT ────────────────── -->
+        <div class="table-card" style="margin-bottom:1.5rem">
+          <div class="table-card-header">
+            <div>
+              <div class="table-card-title">📄 Annual Report Themes</div>
+              <div style="font-size:0.78rem;color:var(--text-light);margin-top:0.15rem">Annual Quality of Care Report themes and ratings.</div>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm" onclick="hpAddAnnualReportRow()">+ Add Theme</button>
+          </div>
+          <div style="padding:0.75rem 1.25rem;border-bottom:1px solid var(--border)">
+            <label class="field-label" for="hp-ar-date" style="margin-bottom:0.35rem">Annual Report Date / Year</label>
+            <input class="field-input" type="text" id="hp-ar-date" placeholder="e.g. 2025/2026" maxlength="60" style="max-width:220px">
+          </div>
+          <table>
+            <thead><tr><th style="width:50%">Theme</th><th>Rating</th><th style="width:90px">Actions</th></tr></thead>
+            <tbody id="hp-ar-tbody"></tbody>
+          </table>
+          <div class="empty-state" id="hp-ar-empty" style="display:none;padding:1.5rem"><p>No annual report themes. Click "+ Add Theme" to add one.</p></div>
+          <div style="padding:1rem 1.25rem; background:var(--bg-light); border-top:1px solid var(--border)">
+            <label class="field-label" for="hp-ar-report-url">Annual Report PDF</label>
+            <div style="display:flex;gap:0.5rem;align-items:center">
+              <input class="field-input" type="text" id="hp-ar-report-url" placeholder="https://... or upload a PDF" maxlength="500" style="flex:1">
+              <label class="btn btn-ghost" style="cursor:pointer;white-space:nowrap;padding:0.6rem 1rem;">
+                📤 Upload PDF <input type="file" style="display:none" accept="application/pdf" onchange="uploadAdminMedia(this, 'hp-ar-report-url')">
+              </label>
+            </div>
+            <div style="font-size:0.72rem;color:var(--text-light);margin-top:0.35rem">Optional: Link to the annual report PDF for families to download.</div>
+          </div>
+        </div>
+
         <!-- ────────────────── 4. CARE PROVIDED ────────────────── -->
         <div class="table-card" style="margin-bottom:1.5rem">
           <div class="table-card-header">
@@ -2505,6 +2535,7 @@ async function deleteFaqItem(idx) {
 let hpCurrentSlug = 'glan';
 let hpKeyInfo = [];
 let hpCiwThemes = [];
+let hpAnnualReportThemes = [];
 let hpCareProvided = [];
 let hpFacilities = [];
 let hpAwardsList = [];
@@ -2531,6 +2562,11 @@ async function loadHomeProfile(slug) {
     document.getElementById('hp-ciw-report-url').value = h.ciwReportUrl || '';
     hpCiwThemes = Array.isArray(h.ciwThemes) ? [...h.ciwThemes] : [];
     hpRenderCiwRows();
+    // Annual Report
+    document.getElementById('hp-ar-date').value = h.annualReportDate || '';
+    document.getElementById('hp-ar-report-url').value = h.annualReportUrl || h.annualReportPdfUrl || '';
+    hpAnnualReportThemes = Array.isArray(h.annualReportThemes) ? [...h.annualReportThemes] : [];
+    hpRenderAnnualReportRows();
     // Care
     document.getElementById('hp-care-intro').value = h.careIntro || '';
     hpCareProvided = Array.isArray(h.careProvided) ? [...h.careProvided] : [];
@@ -2570,6 +2606,9 @@ async function saveHomeProfile() {
       ciwInspectionDate: document.getElementById('hp-ciw-date').value.trim(),
       ciwReportUrl: document.getElementById('hp-ciw-report-url').value.trim(),
       ciwThemes: hpCiwThemes.filter(c => c.theme),
+      annualReportDate: document.getElementById('hp-ar-date').value.trim(),
+      annualReportUrl: document.getElementById('hp-ar-report-url').value.trim(),
+      annualReportThemes: hpAnnualReportThemes.filter(c => c.theme),
       careIntro: document.getElementById('hp-care-intro').value.trim(),
       careProvided: hpCareProvided.filter(Boolean),
       facilities: hpFacilities.filter(Boolean),
@@ -2673,6 +2712,43 @@ function hpAddCiwRow() {
 function hpRemoveCiwRow(i) {
   hpCiwThemes.splice(i, 1);
   hpRenderCiwRows();
+}
+
+// ── Annual Report Themes ─────────────────────────────────────────────────────
+function hpRenderAnnualReportRows() {
+  const tbody = document.getElementById('hp-ar-tbody');
+  const empty = document.getElementById('hp-ar-empty');
+  if (!hpAnnualReportThemes.length) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  tbody.innerHTML = hpAnnualReportThemes.map((row, i) => `
+    <tr>
+      <td><input class="field-input" type="text" value="${esc(row.theme)}" onchange="hpAnnualReportThemes[${i}].theme=this.value" style="font-weight:600;font-size:0.85rem" placeholder="e.g. Well-being"></td>
+      <td>
+        <select class="field-select" onchange="hpAnnualReportThemes[${i}].rating=this.value" style="font-size:0.85rem;padding:0.4rem 0.6rem">
+          <option value="Excellent" ${row.rating==='Excellent'?'selected':''}>Excellent</option>
+          <option value="Good" ${row.rating==='Good'?'selected':''}>Good</option>
+          <option value="Adequate" ${row.rating==='Adequate'?'selected':''}>Adequate</option>
+          <option value="Poor" ${row.rating==='Poor'?'selected':''}>Poor</option>
+          <option value="N/A" ${row.rating==='N/A'?'selected':''}>N/A</option>
+        </select>
+      </td>
+      <td><button class="btn btn-danger btn-sm" onclick="hpRemoveAnnualReportRow(${i})">🗑️</button></td>
+    </tr>
+  `).join('');
+}
+function hpAddAnnualReportRow() {
+  hpAnnualReportThemes.push({ theme: '', rating: 'Excellent' });
+  hpRenderAnnualReportRows();
+  const inputs = document.querySelectorAll('#hp-ar-tbody input');
+  if (inputs.length) inputs[inputs.length - 1].focus();
+}
+function hpRemoveAnnualReportRow(i) {
+  hpAnnualReportThemes.splice(i, 1);
+  hpRenderAnnualReportRows();
 }
 
 // ── Care Provided ────────────────────────────────────────────────────────────

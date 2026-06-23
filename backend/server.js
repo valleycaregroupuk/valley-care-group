@@ -272,7 +272,7 @@ function sanitiseHomePageExtras(hp) {
       a: sanitise(f.a).slice(0, 2000),
     })).filter((f) => f.q && f.a);
   }
-  ['availabilityLine', 'lastInspectionDate', 'awardsNote', 'ciwPdfUrl', 'virtualTourUrl', 'brochureUrl', 'ciwInspectionDate', 'careIntro'].forEach((k) => {
+  ['availabilityLine', 'lastInspectionDate', 'awardsNote', 'ciwPdfUrl', 'virtualTourUrl', 'brochureUrl', 'ciwInspectionDate', 'careIntro', 'annualReportDate', 'annualReportUrl', 'annualReportPdfUrl'].forEach((k) => {
     if (out[k] !== undefined) out[k] = sanitise(out[k]).slice(0, 500);
   });
   if (out.structuredAddress !== undefined) out.structuredAddress = sanitise(out.structuredAddress).slice(0, 300);
@@ -305,6 +305,13 @@ function sanitiseHomePageExtras(hp) {
   // CIW inspection themes
   if (Array.isArray(out.ciwThemes)) {
     out.ciwThemes = out.ciwThemes.slice(0, 10).map((c) => ({
+      theme: sanitise(c.theme).slice(0, 120),
+      rating: sanitise(c.rating).slice(0, 60),
+    })).filter((c) => c.theme);
+  }
+  // Annual Report themes
+  if (Array.isArray(out.annualReportThemes)) {
+    out.annualReportThemes = out.annualReportThemes.slice(0, 10).map((c) => ({
       theme: sanitise(c.theme).slice(0, 120),
       rating: sanitise(c.rating).slice(0, 60),
     })).filter((c) => c.theme);
@@ -607,6 +614,10 @@ function defaultContent() {
           { theme: 'Environment', rating: 'Good' },
           { theme: 'Leadership', rating: 'Excellent' }
         ],
+        annualReportDate: '',
+        annualReportUrl: '',
+        annualReportPdfUrl: '',
+        annualReportThemes: [],
         careIntro: 'Glan-yr-Afon provides specialist nursing and residential care, with a focus on individual needs in a supportive environment.',
         careProvided: [
           'Nursing care (RGN-led)',
@@ -685,6 +696,10 @@ function defaultContent() {
           { theme: 'Environment', rating: 'Good' },
           { theme: 'Leadership & Management', rating: 'Excellent' },
         ],
+        annualReportDate: '',
+        annualReportUrl: '',
+        annualReportPdfUrl: '',
+        annualReportThemes: [],
         careIntro: 'Llys Gwyn provides personalised residential care with freshly cooked meals and a full activities programme in a homely environment.',
         careProvided: [
           'Residential care for older people',
@@ -754,6 +769,10 @@ function defaultContent() {
         },
         ciwInspectionDate: '',
         ciwThemes: [],
+        annualReportDate: '',
+        annualReportUrl: '',
+        annualReportPdfUrl: '',
+        annualReportThemes: [],
         careIntro: 'Ty Pentwyn provides nursing and residential care with specialist support for dementia, learning disability, autism, physical disability, and sensory impairment.',
         careProvided: [
           'Nursing care',
